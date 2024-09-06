@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { db, collection, addDoc } from './../firebase';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -7,34 +9,70 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
-  const [alertType, setAlertType] = useState(''); // 'success' or 'error'
+  const [alertType, setAlertType] = useState(''); 
+  const navigate = useNavigate();
+
+  const signUpUser = async (email, password) => {
+    const auth = getAuth();
+    
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      return { success: true, user };
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return { success: false, errorCode, errorMessage };
+    }
+  };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (password !== confirmPassword) {
-      setAlertMessage("Passwords do not match.");
-      setAlertType('error');
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, 'users'), {
-        name,
-        email,
-        password
+	event.preventDefault();
+    const result = await signUpUser(email, password);
+    console.log(email,password);
+    const { uid } = result.user;
+    
+    if (result.success) {
+      const auth = getAuth();
+      if (password !== confirmPassword) {
+        setAlertMessage("Passwords do not match.");
+        setAlertType('error');
+        return;
+      }
+    
+      try {
+        await addDoc(collection(db, 'users'), {
+          uid,
+          name,
+          email
+        });
+        setAlertMessage("User added successfully.");
+        setAlertType('success');
+        setName('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        setAlertMessage("Error adding user. Please try again.");
+        setAlertType('error');
+      }
+    
+      signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        navigate('/linkedlist');
+      })
+      .catch(() => {
+        alert('Username or password is incorrect');
       });
-      setAlertMessage("User added successfully.");
-      setAlertType('success');
-      // Reset form
-      setName('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-    } catch (error) {
-      console.error("Error adding document: ", error);
-      setAlertMessage("Error adding user. Please try again.");
-      setAlertType('error');
+    
+    } else {
+      if (result.errorCode === 'auth/email-already-in-use') {
+        alert('The email address is already in use. Please use a different email.');
+      } else {
+        alert('Sign-up failed: ' + result.errorMessage);
+      }
+      console.error('Signup failed:', result.errorMessage);
     }
   };
 
@@ -113,7 +151,7 @@ function SignUp() {
         </div>
       )}
     </div>
-  );
+	);
 }
 
 export default SignUp;

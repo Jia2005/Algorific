@@ -1,21 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const Node = ({ node, isFirst, x, y, prevPointer, nextX, nextY }) => (
+const Node = ({ node, isFirst, x, y, prevPointer, nextX, nextY, isTraversed }) => (
   <div style={{ position: 'absolute', left: x, top: y }}>
     <motion.div
       style={{
         ...styles.node,
         backgroundColor: node.color,
+        border: isTraversed ? '3px solid crimson' : 'none',
       }}
       animate={{ scale: [1.5, 1], opacity: [0.5, 1] }}
       transition={{ duration: 0.5 }}
     >
       {node.value}
-      {isFirst && <div style={styles.startLabel}><br></br>Start</div>}
+      {isFirst && <div style={styles.startLabel}><br />Start</div>}
     </motion.div>
     <div style={styles.pointerLabel}>
-      <br></br><b>Pointer: {prevPointer || 'null'}</b>
+      <br /><b>Pointer: {prevPointer || 'null'}</b>
     </div>
     {nextX !== undefined && nextY !== undefined && (
       <motion.div
@@ -26,17 +27,16 @@ const Node = ({ node, isFirst, x, y, prevPointer, nextX, nextY }) => (
         }}
         animate={{ opacity: [0, 1] }}
         transition={{ duration: 0.5 }}
-      >
-      </motion.div>
+      />
     )}
   </div>
 );
 
 const Link = ({ from, to }) => {
-  const startX = from.x + 100; 
-  const startY = from.y + 25;  
-  const endX = to.x;          
-  const endY = to.y + 25;     
+  const startX = from.x + 100;
+  const startY = from.y + 25;
+  const endX = to.x;
+  const endY = to.y + 25;
 
   const midX = (startX + endX) / 2;
   const midY = (startY + endY) / 2;
@@ -45,16 +45,16 @@ const Link = ({ from, to }) => {
     <svg
       style={{
         position: 'absolute',
-        left: midX - 50, 
-        top: midY,   
-        width: '85px',  
-        height: '12px', 
+        left: midX - 50,
+        top: midY,
+        width: '85px',
+        height: '12px',
         zIndex: -1,
       }}
       xmlns="http://www.w3.org/2000/svg"
     >
       <line
-        x1="0" y1="5" x2="100" y2="5" 
+        x1="0" y1="5" x2="100" y2="5"
         stroke="black"
         strokeWidth="3"
         markerEnd="url(#arrowhead)"
@@ -76,14 +76,13 @@ const Link = ({ from, to }) => {
   );
 };
 
-
-
 const LinkedList = () => {
   const [nodes, setNodes] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState(null);
   const [message, setMessage] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+  const [traversedNodes, setTraversedNodes] = useState([]);
   const containerRef = useRef(null);
 
   const addNode = (value) => {
@@ -116,9 +115,21 @@ const LinkedList = () => {
     });
   };
 
-  const searchNode = (value) => {
-    const node = nodes.find((node) => node.value === value);
-    setMessage(node ? `Found ${value}` : 'Value not found');
+  const searchNode = async (value) => {
+    const newTraversedNodes = [];
+    for (const node of nodes) {
+      newTraversedNodes.push(node.value);
+      setTraversedNodes([...newTraversedNodes]);
+      
+      if (node.value === value) {
+        setMessage(`Found ${value}`);
+        return;
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+    
+    setMessage('Value not found');
   };
 
   const handleModeChange = (newMode) => {
@@ -153,7 +164,7 @@ const LinkedList = () => {
   return (
     <div style={styles.container} ref={containerRef}>
       <header style={styles.header}>
-        <h1 style={{ fontSize: '40px' }}><br></br>Linked List Visualization</h1>
+        <h1 style={{ fontSize: '40px' }}><br />Linked List Visualization</h1>
       </header>
       <div style={styles.listContainer}>
         {nodes.length === 0 ? (
@@ -182,6 +193,7 @@ const LinkedList = () => {
                   prevPointer={index === 0 ? 'null' : nodes[index - 1].value}
                   nextX={index < nodes.length - 1 ? nodes[index + 1].x : undefined}
                   nextY={index < nodes.length - 1 ? nodes[index + 1].y : undefined}
+                  isTraversed={traversedNodes.includes(node.value)}
                 />
               </React.Fragment>
             ))}
@@ -234,7 +246,7 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     minHeight: '320px',
-    width: '100%',
+    width: '90%',
     overflowX: 'auto',
   },
   node: {
