@@ -1,0 +1,306 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+const Node = ({ node, isFirst, x, y, prevPointer, nextX, nextY }) => (
+  <div style={{ position: 'absolute', left: x, top: y }}>
+    <motion.div
+      style={{
+        ...styles.node,
+        backgroundColor: node.color,
+      }}
+      animate={{ scale: [1.5, 1], opacity: [0.5, 1] }}
+      transition={{ duration: 0.5 }}
+    >
+      {node.value}
+      {isFirst && <div style={styles.startLabel}><br></br>Start</div>}
+    </motion.div>
+    <div style={styles.pointerLabel}>
+      <br></br><b>Pointer: {prevPointer || 'null'}</b>
+    </div>
+    {nextX !== undefined && nextY !== undefined && (
+      <motion.div
+        style={{
+          position: 'absolute',
+          left: x + 100,
+          top: y + 25,
+        }}
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 0.5 }}
+      >
+      </motion.div>
+    )}
+  </div>
+);
+
+const Link = ({ from, to }) => {
+  const startX = from.x + 100; 
+  const startY = from.y + 25;  
+  const endX = to.x;          
+  const endY = to.y + 25;     
+
+  const midX = (startX + endX) / 2;
+  const midY = (startY + endY) / 2;
+
+  return (
+    <svg
+      style={{
+        position: 'absolute',
+        left: midX - 50, 
+        top: midY,   
+        width: '85px',  
+        height: '12px', 
+        zIndex: -1,
+      }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line
+        x1="0" y1="5" x2="100" y2="5" 
+        stroke="black"
+        strokeWidth="3"
+        markerEnd="url(#arrowhead)"
+      />
+      <defs>
+        <marker
+          id="arrowhead"
+          markerWidth="10"
+          markerHeight="10"
+          refX="0"
+          refY="5"
+          orient="auto"
+          fill="black"
+        >
+          <polygon points="0 0, 10 5, 0 10" />
+        </marker>
+      </defs>
+    </svg>
+  );
+};
+
+
+
+const LinkedList = () => {
+  const [nodes, setNodes] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [mode, setMode] = useState(null);
+  const [message, setMessage] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
+  const containerRef = useRef(null);
+
+  const addNode = (value) => {
+    const newNode = {
+      value,
+      color: 'blue',
+      x: (nodes.length * 150) + 50,
+      y: 100,
+    };
+    setNodes((prevNodes) => [...prevNodes, newNode]);
+    setMessage(`Added ${value}`);
+    setInputValue('');
+    setIsAdding(true);
+  };
+
+  const deleteNode = (value) => {
+    setNodes((prevNodes) => {
+      const indexToRemove = prevNodes.findIndex(node => node.value === value);
+      if (indexToRemove === -1) {
+        setMessage('Value not found for deletion');
+        return prevNodes;
+      }
+      const newNodes = prevNodes.filter((_, index) => index !== indexToRemove);
+      const updatedNodes = newNodes.map((node, index) => ({
+        ...node,
+        x: index * 150 + 50,
+      }));
+      setMessage(`Deleted ${value}`);
+      return updatedNodes;
+    });
+  };
+
+  const searchNode = (value) => {
+    const node = nodes.find((node) => node.value === value);
+    setMessage(node ? `Found ${value}` : 'Value not found');
+  };
+
+  const handleModeChange = (newMode) => {
+    setMode(newMode);
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleConfirm = () => {
+    const intValue = parseInt(inputValue, 10);
+    if (isNaN(intValue)) {
+      setInputValue('');
+      return;
+    }
+
+    if (mode === 'add') {
+      addNode(intValue);
+    } else if (mode === 'delete') {
+      deleteNode(intValue);
+    } else if (mode === 'search') {
+      searchNode(intValue);
+    }
+    setIsAdding(false);
+  };
+
+  useEffect(() => {
+    containerRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [nodes]);
+
+  return (
+    <div style={styles.container} ref={containerRef}>
+      <header style={styles.header}>
+        <h1 style={{ fontSize: '40px' }}><br></br>Linked List Visualization</h1>
+      </header>
+      <div style={styles.listContainer}>
+        {nodes.length === 0 ? (
+          <p style={styles.emptyMessage}>The list is empty</p>
+        ) : (
+          <>
+            {nodes.map((node, index) => (
+              <React.Fragment key={index}>
+                {index < nodes.length - 1 && (
+                  <Link
+                    from={{
+                      x: nodes[index].x,
+                      y: nodes[index].y
+                    }}
+                    to={{
+                      x: nodes[index + 1].x,
+                      y: nodes[index + 1].y
+                    }}
+                  />
+                )}
+                <Node
+                  node={node}
+                  isFirst={index === 0}
+                  x={node.x}
+                  y={node.y}
+                  prevPointer={index === 0 ? 'null' : nodes[index - 1].value}
+                  nextX={index < nodes.length - 1 ? nodes[index + 1].x : undefined}
+                  nextY={index < nodes.length - 1 ? nodes[index + 1].y : undefined}
+                />
+              </React.Fragment>
+            ))}
+          </>
+        )}
+      </div>
+
+      {message && <p style={styles.message}>{message}</p>}
+
+      <div style={styles.inputContainer}>
+        <div style={styles.modeContainer}>
+          <button onClick={() => handleModeChange('add')} style={styles.button}>Add</button>
+          <button onClick={() => handleModeChange('delete')} style={styles.button}>Delete</button>
+          <button onClick={() => handleModeChange('search')} style={styles.button}>Search</button>
+        </div>
+
+        {mode && (
+          <div style={styles.inputSection}>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder={`Enter value to ${mode}`}
+              style={styles.textInput}
+            />
+            <button onClick={handleConfirm} style={styles.button}>Confirm {mode}</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
+    position: 'relative',
+    minHeight: '100vh',
+  },
+  header: {
+    marginBottom: '20px',
+    textAlign: 'center',
+  },
+  listContainer: {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    minHeight: '320px',
+    width: '100%',
+    overflowX: 'auto',
+  },
+  node: {
+    width: '100px',
+    height: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '10px',
+    borderRadius: '5px',
+    color: '#fff',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    backgroundColor: '#87CEFA',
+    textAlign: 'center',
+    position: 'relative',
+  },
+  startLabel: {
+    position: 'absolute',
+    bottom: '-30px',
+    fontSize: '20px',
+    color: 'black',
+  },
+  pointerLabel: {
+    position: 'absolute',
+    bottom: '-45px',
+    right: '5px',
+    fontSize: '18px',
+    color: 'black',
+  },
+  emptyMessage: {
+    color: '#888',
+  },
+  message: {
+    color: 'red',
+    marginTop: '10px',
+    fontSize: '18px',
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  modeContainer: {
+    marginBottom: '10px',
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    margin: '5px',
+  },
+  inputSection: {
+    marginBottom: '20px',
+  },
+  textInput: {
+    padding: '10px',
+    fontSize: '16px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    marginRight: '10px',
+  },
+};
+
+export default LinkedList;
