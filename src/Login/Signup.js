@@ -8,13 +8,10 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertType, setAlertType] = useState(''); 
   const navigate = useNavigate();
 
   const signUpUser = async (email, password) => {
     const auth = getAuth();
-    
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -27,50 +24,51 @@ function SignUp() {
   };
 
   const handleSubmit = async (event) => {
-	event.preventDefault();
+    event.preventDefault();
+
+    if (password !== confirmPassword) {
+      window.alert("Passwords do not match.");
+      return;
+    }
+
     const result = await signUpUser(email, password);
-    console.log(email,password);
-    const { uid } = result.user;
-    
+
     if (result.success) {
-      const auth = getAuth();
-      if (password !== confirmPassword) {
-        setAlertMessage("Passwords do not match.");
-        setAlertType('error');
-        return;
+      const { user } = result;
+      if (user) {
+        const { uid } = user;
+
+        try {
+          await addDoc(collection(db, 'users'), {
+            uid,
+            name,
+            email
+          });
+          setName('');
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+
+          signInWithEmailAndPassword(getAuth(), email, password)
+            .then(() => {
+              window.alert('User added successfully.');
+              navigate('/linkedlist');
+            })
+            .catch(() => {
+              window.alert('Error signing in. Please try again.');
+            });
+        } catch (error) {
+          console.error("Error adding document: ", error);
+          window.alert("Error adding user. Please try again.");
+        }
+      } else {
+        window.alert('User creation failed. Please try again.');
       }
-    
-      try {
-        await addDoc(collection(db, 'users'), {
-          uid,
-          name,
-          email
-        });
-        setAlertMessage("User added successfully.");
-        setAlertType('success');
-        setName('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        setAlertMessage("Error adding user. Please try again.");
-        setAlertType('error');
-      }
-    
-      signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate('/linkedlist');
-      })
-      .catch(() => {
-        alert('Username or password is incorrect');
-      });
-    
     } else {
       if (result.errorCode === 'auth/email-already-in-use') {
-        alert('The email address is already in use. Please use a different email.');
+        window.alert('The email address is already in use. Please use a different email.');
       } else {
-        alert('Sign-up failed: ' + result.errorMessage);
+        window.alert('Sign-up failed: ' + result.errorMessage);
       }
       console.error('Signup failed:', result.errorMessage);
     }
@@ -135,23 +133,8 @@ function SignUp() {
           </button>
         </div>
       </form>
-
-      {alertMessage && (
-        <div
-          style={{
-            marginTop: '20px',
-            padding: '10px',
-            backgroundColor: alertType === 'success' ? '#d4edda' : '#f8d7da',
-            color: alertType === 'success' ? '#155724' : '#721c24',
-            border: `1px solid ${alertType === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
-            borderRadius: '4px'
-          }}
-        >
-          {alertMessage}
-        </div>
-      )}
     </div>
-	);
+  );
 }
 
 export default SignUp;
