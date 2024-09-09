@@ -4,7 +4,6 @@ import LinkedList from './LinkedList';
 import Stacks from './Stacks';
 import Queues from './Queues';
 import Auth from './Login/Auth';
-
 const App = () => {
   return (
       <Router>

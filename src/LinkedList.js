@@ -81,21 +81,47 @@ const LinkedList = () => {
   const [inputValue, setInputValue] = useState('');
   const [mode, setMode] = useState(null);
   const [message, setMessage] = useState('');
-  const [isAdding, setIsAdding] = useState(false);
+  const [position, setPosition] = useState(null);
   const [traversedNodes, setTraversedNodes] = useState([]);
   const containerRef = useRef(null);
 
-  const addNode = (value) => {
+  const addNode = (value, position) => {
     const newNode = {
       value,
       color: 'blue',
-      x: (nodes.length * 150) + 50,
+      x: 0,
       y: 100,
     };
-    setNodes((prevNodes) => [...prevNodes, newNode]);
-    setMessage(`Added ${value}`);
-    setInputValue('');
-    setIsAdding(true);
+
+    setNodes((prevNodes) => {
+      if (position === 'start') {
+        const updatedNodes = [newNode, ...prevNodes].map((node, index) => ({
+          ...node,
+          x: index * 150 + 50,
+        }));
+        setMessage(`Added ${value} at the start`);
+        return updatedNodes;
+      } else if (position !== null && position >= 0 && position < prevNodes.length) {
+        const index = position + 1;
+        const updatedNodes = [
+          ...prevNodes.slice(0, index),
+          newNode,
+          ...prevNodes.slice(index),
+        ].map((node, index) => ({
+          ...node,
+          x: index * 150 + 50,
+        }));
+        setMessage(`Added ${value} after node ${prevNodes[position].value}`);
+        return updatedNodes;
+      } else {
+        const updatedNodes = [...prevNodes, newNode].map((node, index) => ({
+          ...node,
+          x: index * 150 + 50,
+        }));
+        setMessage(`Added ${value}`);
+        return updatedNodes;
+      }
+    });
   };
 
   const deleteNode = (value) => {
@@ -123,6 +149,7 @@ const LinkedList = () => {
       
       if (node.value === value) {
         setMessage(`Found ${value}`);
+        setTimeout(() => setTraversedNodes([]), 2000); // Remove highlight after 2 seconds
         return;
       }
       
@@ -134,10 +161,15 @@ const LinkedList = () => {
 
   const handleModeChange = (newMode) => {
     setMode(newMode);
+    setPosition(null);
   };
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+  };
+
+  const handlePositionChange = (e) => {
+    setPosition(parseInt(e.target.value, 10));
   };
 
   const handleConfirm = () => {
@@ -148,13 +180,16 @@ const LinkedList = () => {
     }
 
     if (mode === 'add') {
-      addNode(intValue);
+      addNode(intValue, null);
+    } else if (mode === 'add-start') {
+      addNode(intValue, 'start');
+    } else if (mode === 'add-after') {
+      addNode(intValue, position);
     } else if (mode === 'delete') {
       deleteNode(intValue);
     } else if (mode === 'search') {
       searchNode(intValue);
     }
-    setIsAdding(false);
   };
 
   useEffect(() => {
@@ -206,6 +241,8 @@ const LinkedList = () => {
       <div style={styles.inputContainer}>
         <div style={styles.modeContainer}>
           <button onClick={() => handleModeChange('add')} style={styles.button}>Add</button>
+          <button onClick={() => handleModeChange('add-start')} style={styles.button}>Add at Start</button>
+          <button onClick={() => handleModeChange('add-after')} style={styles.button}>Add after a Value</button>
           <button onClick={() => handleModeChange('delete')} style={styles.button}>Delete</button>
           <button onClick={() => handleModeChange('search')} style={styles.button}>Search</button>
         </div>
@@ -216,9 +253,20 @@ const LinkedList = () => {
               type="text"
               value={inputValue}
               onChange={handleInputChange}
-              placeholder={`Enter value to ${mode}`}
+              placeholder={`Value to ${mode}`}
               style={styles.textInput}
             />
+            {mode === 'add-after' && nodes.length > 0 && (
+              <div style={styles.inputWrapper}>
+                <input
+                  type="number"
+                  value={position || ''}
+                  onChange={handlePositionChange}
+                  placeholder="Index"
+                  style={styles.textInput}
+                />
+              </div>
+            )}
             <button onClick={handleConfirm} style={styles.button}>Confirm {mode}</button>
           </div>
         )}
@@ -291,6 +339,10 @@ const styles = {
     alignItems: 'center',
   },
   modeContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    maxWidth: '700px',
     marginBottom: '10px',
   },
   button: {
@@ -307,10 +359,17 @@ const styles = {
     marginBottom: '20px',
   },
   textInput: {
+    width: '150px',
     padding: '10px',
     fontSize: '16px',
     borderRadius: '5px',
     border: '1px solid #ccc',
+    marginRight: '10px',
+  },
+  inputWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     marginRight: '10px',
   },
 };
