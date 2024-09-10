@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { db, collection, addDoc } from './../firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { db, collection, doc, setDoc } from './../firebase';  
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
@@ -8,6 +8,7 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error] = useState(null); 
   const navigate = useNavigate();
 
   const signUpUser = async (email, password) => {
@@ -17,9 +18,7 @@ function SignUp() {
       const user = userCredential.user;
       return { success: true, user };
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      return { success: false, errorCode, errorMessage };
+      return { success: false, errorCode: error.code, errorMessage: error.message };
     }
   };
 
@@ -35,42 +34,45 @@ function SignUp() {
 
     if (result.success) {
       const { user } = result;
-      if (user) {
-        const { uid } = user;
 
+      if (user) {
         try {
-          await addDoc(collection(db, 'users'), {
-            uid,
+          const userRef = doc(db, 'users', user.uid);
+          await setDoc(userRef, {
             name,
-            email
+            email,
+            age: '',
+            phone: '',
+            profilePic: ''
           });
+
           setName('');
           setEmail('');
           setPassword('');
           setConfirmPassword('');
 
-          signInWithEmailAndPassword(getAuth(), email, password)
-            .then(() => {
-              window.alert('User added successfully.');
-              navigate('/linkedlist');
-            })
-            .catch(() => {
-              window.alert('Error signing in. Please try again.');
-            });
+          await signInWithEmailAndPassword(getAuth(), email, password);
+          navigate('/linkedlist');
         } catch (error) {
-          console.error("Error adding document: ", error);
-          window.alert("Error adding user. Please try again.");
+          window.alert("Error adding document: " + error.message);
         }
       } else {
         window.alert('User creation failed. Please try again.');
       }
     } else {
-      if (result.errorCode === 'auth/email-already-in-use') {
-        window.alert('The email address is already in use. Please use a different email.');
-      } else {
-        window.alert('Sign-up failed: ' + result.errorMessage);
+      switch (result.errorCode) {
+        case 'auth/email-already-in-use':
+          window.alert('The email address is already in use. Please use a different email.');
+          break;
+        case 'auth/invalid-email':
+          window.alert('Invalid email address. Please check and try again.');
+          break;
+        case 'auth/weak-password':
+          window.alert('The password is too weak. Please use a stronger password.');
+          break;
+        default:
+          window.alert('Sign-up failed: ' + result.errorMessage);
       }
-      console.error('Signup failed:', result.errorMessage);
     }
   };
 
@@ -79,6 +81,7 @@ function SignUp() {
       <form name="sign-up" onSubmit={handleSubmit}>
         <br /><br />
         <h1 align="center" style={{ color: 'white' }}>Create your Account</h1>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <label>
           <span style={{ color: 'white' }}>Name</span>
           <input

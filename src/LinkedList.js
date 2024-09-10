@@ -242,7 +242,7 @@ const LinkedList = () => {
         <div style={styles.modeContainer}>
           <button onClick={() => handleModeChange('add')} style={styles.button}>Add</button>
           <button onClick={() => handleModeChange('add-start')} style={styles.button}>Add at Start</button>
-          <button onClick={() => handleModeChange('add-after')} style={styles.button}>Add after a Value</button>
+          <button onClick={() => handleModeChange('add-after')} style={styles.button}>Add after a Index</button>
           <button onClick={() => handleModeChange('delete')} style={styles.button}>Delete</button>
           <button onClick={() => handleModeChange('search')} style={styles.button}>Search</button>
         </div>

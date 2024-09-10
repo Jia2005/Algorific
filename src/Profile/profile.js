@@ -4,11 +4,10 @@ import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
 import { faUserCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';   
-import './Profile.css';  
+import './profile.css';  
 import { Link } from 'react-router-dom';
 
-
-const UserProfile = ({setComponent}) => {  
+const UserProfile = ({ setComponent }) => {  
   const auth = getAuth();  
   const db = getFirestore();  
   const storage = getStorage();  
@@ -19,86 +18,8 @@ const UserProfile = ({setComponent}) => {
   const [age, setAge] = useState('');  
   const [email, setEmail] = useState('');  
   const [phone, setPhone] = useState('');  
-  const [role, setRole] = useState('');  
   const [file, setFile] = useState(null);  
   const [isEditing, setIsEditing] = useState(false); 
-  const [selectedComponent, setSelectedComponent] = useState('Home');
-
-  const handleMenuClick = (componentName) => {
-    setSelectedComponent(componentName);
-  };
-
-  const renderSelectedComponent = (component) => {
-    switch (component) {
-      case 'LP_Landing':
-        return <LP_Landing />;
-      case 'Financial Aid':
-        return <Form/>
-      case 'TrackYourApplication':
-        return <TrackYourApplication />;
-      case 'CreateQuizPage':
-        return <CreateQuizPage />;
-      case 'TeacherLanding':
-        return <TeacherLanding />;
-      case 'TeacherInput':
-        return <TeacherInput/>;
-      case 'ProgressReport':
-        return <ProgressReport />;
-      case 'ScheduleMeeting':
-        return <ScheduleMeeting />;
-      case 'ApplicationReviewPage':
-        return <ApplicationReviewPage />;
-      case 'FundsDisbursementPage':
-        return <FundsDisbursementPage />;
-      default:
-        return <div>Home</div>;
-
-    }
-  };
-
-  const renderSidebarMenu = () => {
-    const menuItems = {
-      Student: [
-        { text: 'Home', component: '' },
-        { text: 'Learning Platform', component: 'LP_Landing' },
-        { text: 'Financial Aid', component: 'Financial Aid' }, // Form component heres
-        { text: 'Track Your Application', component: 'TrackYourApplication' },
-        { text: 'Change Password', component: '' },
-      ],
-      Teacher: [
-        { text: 'Home', component: '' },
-        { text: 'Learning Platform', component: 'TeacherLanding' },
-        { text: 'Quiz Creation', component: 'CreateQuizPage' },
-        { text: 'Create Student Report', component: 'TeacherInput' },
-        { text: 'Change Password', component: '' },
-      ],
-      Parent: [
-        { text: 'Home', component: '' },
-        { text: 'Learning Platform', component: 'LP_Landing' },
-        { text: 'Progress Report', component: 'ProgressReport' },
-        { text: 'Interact with Teacher', component: 'ScheduleMeeting' },
-        { text: 'Change Password', component: '' },
-      ],
-      Admin: [
-        { text: 'Home', component: '' },
-        { text: 'View and Approve Applications', component: 'ApplicationReviewPage' },
-        { text: 'Approve Funds', component: 'FundsDisbursementPage' },
-        { text: 'Statistical Report', component: '' },
-        { text: 'Manage Users', component: '' },
-        { text: 'Change Password', component: '' },
-      ]
-    };
-  
-    return (
-      <ul>
-        {menuItems[role]?.map((item, index) => (
-          <li key={index} className="center" onClick={() => setComponent(renderSelectedComponent(item.component))}>
-            <Link to="/home">{item.text}</Link>
-          </li>
-        )) || <li className="center">Home</li>}
-      </ul>
-    );
-  };
 
   useEffect(() => {  
     const unsubscribe = onAuthStateChanged(auth, async (user) => {  
@@ -109,16 +30,13 @@ const UserProfile = ({setComponent}) => {
         if (userDoc.exists()) {  
           const userData = userDoc.data();  
           setUser(user);  
-          setName(userData.name);  
-          setAge(userData.age);  
-          setEmail(userData.email);  
-          setPhone(userData.phone);  
-          
-          // Set role based on the type  
-          setRole(mapRole(userData.type));  
+          setName(userData.name || '');  
+          setAge(userData.age || '');  
+          setEmail(userData.email || '');  
+          setPhone(userData.phone || '');  
 
           if (userData.profilePic) {  
-            const profilePicUrl = await getDownloadURL(ref(storage,`profile_pictures/${user.uid}`));  
+            const profilePicUrl = await getDownloadURL(ref(storage, `profile_pictures/${user.uid}`));  
             setProfilePic(profilePicUrl);  
           }  
         }  
@@ -128,21 +46,11 @@ const UserProfile = ({setComponent}) => {
     return () => unsubscribe();  
   }, [auth, db, storage]);  
 
-  const mapRole = (roleNumber) => {  
-    switch (roleNumber) {  
-      case 1: return 'Student';  
-      case 2: return 'Teacher';  
-      case 3: return 'Parent';  
-      case 4: return 'Admin';  
-      default: return 'Unknown';  
-    }  
-  };  
-
   const handleSignOut = () => {
     signOut(auth).then(() => {
       window.location.href = '/login';
-    }).catch((error) => {
-      alert('There are some server issues');
+    }).catch(() => {
+      window.alert('There are some server issues.');
     });
   };
 
@@ -182,7 +90,7 @@ const UserProfile = ({setComponent}) => {
       name,  
       age,  
       email,  
-      phone,
+      phone  
     });  
     setIsEditing(false);  
   };  
@@ -208,10 +116,15 @@ const UserProfile = ({setComponent}) => {
           </div>
           <hr className="sidebar-divider" />
           <div className="sidebar-menu">
-            {renderSidebarMenu()}
+            <ul>
+              <li className="center">
+                <Link to="/home">Home</Link>
+              </li>
+            </ul>
           </div>
           <div className='log'>
-          <button className="logout-button" onClick={handleSignOut}>Logout</button></div>
+            <button className="logout-button" onClick={handleSignOut}>Logout</button>
+          </div>
         </div>
       </div>
       <div className="profile-details">
@@ -229,16 +142,16 @@ const UserProfile = ({setComponent}) => {
           <div className="detail-block">
             <p><strong>Phone No.:</strong> {isEditing ? <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</p>
           </div>
-          <div className="detail-block">
-            <p><strong>Role:</strong> {role} </p>
-          </div>
           <div className='upload-image'>
             <input type="file" onChange={handleFileChange} />
-          </div><br></br>
-          <button className='upload-image-btn' onClick={handleUpload}>Upload Profile Picture</button>
+          </div>
+          <button className='upload-image-btn' onClick={handleUpload}>Upload Profile Picture</button><br></br><br></br>
           <div className="profile-action-buttons">
-            <button className="edit-button" onClick={handleEdit} style={{position: 'relative', bottom: '-20px'}}>Edit Profile</button>
-            <button className="save-button" onClick={handleSave} style={{position: 'relative', bottom: '-20px', float: 'right'}}>Save Changes</button>
+            {isEditing ? (
+              <button className="save-button" onClick={handleSave}>Save Changes</button>
+            ) : (
+              <button className="edit-button" onClick={handleEdit}>Edit Profile</button>
+            )}
           </div>
         </div>
       </div>
