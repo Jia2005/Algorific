@@ -209,3 +209,21 @@
   transform: scale(1.03);
   transition: 0.5s;
 }
+
+.avatar-options {
+  display: flex;
+  gap: 10px; /* Spacing between avatars */
+}
+
+.avatar-option {
+  width: 50px; /* Set smaller width */
+  height: 50px; /* Set smaller height */
+  cursor: pointer;
+  border-radius: 50%; /* Make them circular if desired */
+  border: 2px solid transparent;
+  transition: border 0.3s;
+}
+
+.avatar-option:hover {
+  border: 2px solid #007bff; /* Highlight on hover */
+}
