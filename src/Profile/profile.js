@@ -79,9 +79,19 @@ const UserProfile = ({ setComponent }) => {
   };
 
   const handleAvatarSelection = async (avatarUrl) => {
-    setProfilePic(avatarUrl);
-    const userRef = doc(db, 'users', user.uid);
-    await updateDoc(userRef, { profilePic: avatarUrl });
+    if (!user || !user.uid) {
+      window.alert('User is not authenticated. Please log in.');
+      return;
+    }
+  
+    try {
+      setProfilePic(avatarUrl);
+      const userRef = doc(db, 'users', user.uid);
+      await updateDoc(userRef, { profilePic: avatarUrl });
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+      window.alert('Error updating avatar. Please try again.');
+    }
   };
 
   const handleDeleteProfilePic = async () => {  
@@ -164,16 +174,16 @@ const UserProfile = ({ setComponent }) => {
             </button>
             {isChoosingAvatar && (
               <div className="avatar-options">
-                {avatarOptions.map((avatarUrl, index) => (
-                  <img
-                    key={index}
-                    src={avatarUrl}
-                    alt={`Avatar ${index + 1}`}
-                    className="avatar-option"
-                    onClick={() => handleAvatarSelection(avatarUrl)}
-                  />
-                ))}
-              </div>
+              {avatarOptions.map((avatarUrl, index) => (
+                <img
+                  key={index}
+                  src={avatarUrl}
+                  alt={`Avatar ${index + 1}`}
+                  className="avatar-option"
+                  onClick={() => handleAvatarSelection(avatarUrl)}
+                />
+              ))}
+            </div>
             )}
           </div>
 
