@@ -7,6 +7,14 @@ import { faUserCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import './profile.css';  
 import { Link } from 'react-router-dom';
 
+const avatarOptions = [
+  'https://cdn-icons-png.freepik.com/256/9436/9436366.png?ga=GA1.1.1547364823.1726078972&semt=ais_hybrid',
+  'https://cdn-icons-png.freepik.com/256/2945/2945512.png?ga=GA1.1.1547364823.1726078972&semt=ais_hybrid',
+  'https://cdn-icons-png.freepik.com/256/435/435058.png?ga=GA1.1.1547364823.1726078972&semt=ais_hybrid',
+  'https://cdn-icons-png.freepik.com/256/2945/2945512.png?ga=GA1.1.1547364823.1726078972&semt=ais_hybrid',
+  'https://cdn-icons-png.freepik.com/256/1985/1985783.png?ga=GA1.1.1547364823.1726078972&semt=ais_hybrid'
+];
+
 const UserProfile = ({ setComponent }) => {  
   const auth = getAuth();  
   const db = getFirestore();  
@@ -20,6 +28,7 @@ const UserProfile = ({ setComponent }) => {
   const [phone, setPhone] = useState('');  
   const [file, setFile] = useState(null);  
   const [isEditing, setIsEditing] = useState(false); 
+  const [isChoosingAvatar, setIsChoosingAvatar] = useState(false);
 
   useEffect(() => {  
     const unsubscribe = onAuthStateChanged(auth, async (user) => {  
@@ -67,7 +76,23 @@ const UserProfile = ({ setComponent }) => {
       const userRef = doc(db, 'users', user.uid);  
       await updateDoc(userRef, { profilePic: profilePicUrl });  
     }  
-  };  
+  };
+
+  const handleAvatarSelection = async (avatarUrl) => {
+    if (!user || !user.uid) {
+      window.alert('User is not authenticated. Please log in.');
+      return;
+    }
+  
+    try {
+      setProfilePic(avatarUrl);
+      const userRef = doc(db, 'users', user.uid);
+      await updateDoc(userRef, { profilePic: avatarUrl });
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+      window.alert('Error updating avatar. Please try again.');
+    }
+  };
 
   const handleDeleteProfilePic = async () => {  
     if (profilePic) {  
@@ -142,6 +167,26 @@ const UserProfile = ({ setComponent }) => {
           <div className="detail-block">
             <p><strong>Phone No.:</strong> {isEditing ? <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</p>
           </div>
+          
+          <div className="avatar-selection">
+            <button onClick={() => setIsChoosingAvatar(!isChoosingAvatar)}>
+              {isChoosingAvatar ? 'Hide Avatars' : 'Choose an Avatar'}
+            </button>
+            {isChoosingAvatar && (
+              <div className="avatar-options">
+              {avatarOptions.map((avatarUrl, index) => (
+                <img
+                  key={index}
+                  src={avatarUrl}
+                  alt={`Avatar ${index + 1}`}
+                  className="avatar-option"
+                  onClick={() => handleAvatarSelection(avatarUrl)}
+                />
+              ))}
+            </div>
+            )}
+          </div>
+
           <div className='upload-image'>
             <input type="file" onChange={handleFileChange} />
           </div>
