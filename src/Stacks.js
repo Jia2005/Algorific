@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 
 const Stacks = () => {
   const [stack, setStack] = useState([]);
-  const [stackSize, setStackSize] = useState(5); // Default stack size
+  const [stackSize, setStackSize] = useState(5); 
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [isPushing, setIsPushing] = useState(false);
@@ -118,6 +118,7 @@ const styles = {
     marginBottom: '10px',
     textAlign: 'center',
     zIndex: 10,
+    color:'black',
   },
   stackContainer: {
     width: '100%',
@@ -175,6 +176,7 @@ const styles = {
   label: {
     fontSize: '18px',
     marginRight: '10px',
+    color:'black',
   },
   numberInput: {
     width: '60px',
@@ -190,8 +192,9 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
-    padding: '10px 20px',
     fontSize: '16px',
+    height:'50px',
+    width:'100px',
     borderRadius: '5px',
     cursor: 'pointer',
     margin: '10px',
@@ -200,7 +203,8 @@ const styles = {
     backgroundColor: '#f44336',
     color: '#fff',
     border: 'none',
-    padding: '10px 20px',
+    height:'50px',
+    width:'120px',
     fontSize: '16px',
     borderRadius: '5px',
     cursor: 'pointer',

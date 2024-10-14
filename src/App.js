@@ -11,22 +11,11 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Route for the homepage */}
-        <Route path="/" element={<HomePage />} />
-
-        {/* Route for the login page */}
-        <Route path="/login" element={<Auth />} />
-
-        {/* Route for Linked List page */}
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<Auth />} />
         <Route path="/linkedlist" element={<LinkedList />} />
-
-        {/* Route for Stack page */}
         <Route path="/stack" element={<Stacks />} />
-
-        {/* Route for Queue page */}
         <Route path="/queue" element={<Queues />} />
-
-        {/* Route for the user profile page */}
         <Route path="/profile" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
 
 const Node = ({ node, isFirst, x, y, nextPointer, isTraversed }) => (
   <div style={{ position: 'absolute', left: x, top: y }}>
@@ -140,10 +139,9 @@ const LinkedList = () => {
       if (node.value === value) {
         setMessage(`Found ${value}`);
         await new Promise(resolve => setTimeout(resolve, 2000));
-        // After delay, remove highlight and reset colors
         setTraversedNodes([]);
-        nodes.forEach((n) => n.color = 'blue'); // Reset colors
-        setNodes([...nodes]); // Force re-render
+        nodes.forEach((n) => n.color = 'blue'); 
+        setNodes([...nodes]); 
         return;
       }
       

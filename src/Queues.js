@@ -1,4 +1,3 @@
-import { height } from '@fortawesome/free-solid-svg-icons/fa0';
 import React, { useState } from 'react';
 
 const QueueVisualization = () => {
