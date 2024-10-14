@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import { height } from '@fortawesome/free-solid-svg-icons/fa0';
+import React, { useState } from 'react';
 
-const Queues = () => {
+const QueueVisualization = () => {
   const [queue, setQueue] = useState([]);
   const [maxSize, setMaxSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
@@ -32,6 +33,11 @@ const Queues = () => {
     }
   };
 
+  const resetQueue = () => {
+    setQueue([]);
+    setMessage('Queue reset!');
+  };
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
@@ -45,7 +51,7 @@ const Queues = () => {
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={{ fontSize: '40px' }}><br></br>Queue Visualization</h1>
+        <h1 style={{ fontSize: '40px' }}>Queue Visualization</h1>
       </header>
       <div style={styles.queueContainer}>
         <div style={styles.queue}>
@@ -79,6 +85,9 @@ const Queues = () => {
           <button onClick={handleEnqueueClick} style={styles.primaryButton}>
             Enqueue
           </button>
+          <button onClick={dequeue} style={styles.primaryButton}>
+            Dequeue
+          </button>
         </div>
 
         {isEnqueuing && (
@@ -90,15 +99,15 @@ const Queues = () => {
               placeholder="Enter value to enqueue"
               style={styles.textInput}
             />
-            <button onClick={enqueue} style={styles.secondaryButton}>
+            <button onClick={enqueue} style={styles.secondary2Button}>
               Confirm Enqueue
             </button>
           </div>
         )}
 
         <div style={styles.buttonContainer}>
-          <button onClick={dequeue} style={styles.primaryButton}>
-            Dequeue
+          <button onClick={resetQueue} style={styles.secondaryButton}>
+            Reset Queue
           </button>
         </div>
       </div>
@@ -113,10 +122,12 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: '20px',
+    backgroundColor:'white',
   },
   header: {
     marginBottom: '20px',
     textAlign: 'center',
+    color:'black',
   },
   queueContainer: {
     width: '100%',
@@ -174,6 +185,7 @@ const styles = {
   label: {
     fontSize: '18px',
     marginRight: '10px',
+    color:'black',
   },
   numberInput: {
     width: '60px',
@@ -189,19 +201,32 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
-    padding: '10px 20px',
     fontSize: '16px',
-    borderRadius: '5px',
+    borderRadius: '10px',
     cursor: 'pointer',
     margin: '10px',
+    alignItems:'center',
+    height:'50px',
+    width:'100px',
   },
   secondaryButton: {
     backgroundColor: '#f44336',
     color: '#fff',
     border: 'none',
-    padding: '10px 20px',
+    height:'50px',
+    width:'150px',
     fontSize: '16px',
-    borderRadius: '5px',
+    borderRadius: '10px',
+    cursor: 'pointer',
+  },
+  secondary2Button: {
+    backgroundColor: 'blue',
+    color: '#fff',
+    border: 'none',
+    height:'50px',
+    width:'150px',
+    fontSize: '16px',
+    borderRadius: '10px',
     cursor: 'pointer',
   },
   textInput: {
@@ -218,4 +243,4 @@ const styles = {
   },
 };
 
-export default Queues;
+export default QueueVisualization;

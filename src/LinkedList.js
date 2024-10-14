@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
 
-const Node = ({ node, isFirst, x, y, prevPointer, nextX, nextY, isTraversed }) => (
+const Node = ({ node, isFirst, x, y, nextPointer, isTraversed }) => (
   <div style={{ position: 'absolute', left: x, top: y }}>
     <motion.div
       style={{
@@ -16,19 +17,8 @@ const Node = ({ node, isFirst, x, y, prevPointer, nextX, nextY, isTraversed }) =
       {isFirst && <div style={styles.startLabel}><br />Start</div>}
     </motion.div>
     <div style={styles.pointerLabel}>
-      <br /><b>Pointer: {prevPointer || 'null'}</b>
+      <br /><b>Pointer: {nextPointer || 'null'}</b>
     </div>
-    {nextX !== undefined && nextY !== undefined && (
-      <motion.div
-        style={{
-          position: 'absolute',
-          left: x + 100,
-          top: y + 25,
-        }}
-        animate={{ opacity: [0, 1] }}
-        transition={{ duration: 0.5 }}
-      />
-    )}
   </div>
 );
 
@@ -89,7 +79,7 @@ const LinkedList = () => {
     const newNode = {
       value,
       color: 'blue',
-      x: 0,
+      x: nodes.length * 150 + 50,
       y: 100,
     };
 
@@ -101,8 +91,8 @@ const LinkedList = () => {
         }));
         setMessage(`Added ${value} at the start`);
         return updatedNodes;
-      } else if (position !== null && position >= 0 && position < prevNodes.length) {
-        const index = position + 1;
+      } else if (position !== null && position > 0 && position < prevNodes.length) {
+        const index = position;
         const updatedNodes = [
           ...prevNodes.slice(0, index),
           newNode,
@@ -111,7 +101,7 @@ const LinkedList = () => {
           ...node,
           x: index * 150 + 50,
         }));
-        setMessage(`Added ${value} after node ${prevNodes[position].value}`);
+        setMessage(`Added ${value} after node ${prevNodes[index - 1].value}`);
         return updatedNodes;
       } else {
         const updatedNodes = [...prevNodes, newNode].map((node, index) => ({
@@ -149,7 +139,11 @@ const LinkedList = () => {
       
       if (node.value === value) {
         setMessage(`Found ${value}`);
-        setTimeout(() => setTraversedNodes([]), 2000); // Remove highlight after 2 seconds
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        // After delay, remove highlight and reset colors
+        setTraversedNodes([]);
+        nodes.forEach((n) => n.color = 'blue'); // Reset colors
+        setNodes([...nodes]); // Force re-render
         return;
       }
       
@@ -184,7 +178,11 @@ const LinkedList = () => {
     } else if (mode === 'add-start') {
       addNode(intValue, 'start');
     } else if (mode === 'add-after') {
-      addNode(intValue, position);
+      if (position > 0 && position <= nodes.length) {
+        addNode(intValue, position);
+      } else {
+        setMessage('Invalid index. Please choose a valid index to add after (greater than 0).');
+      }
     } else if (mode === 'delete') {
       deleteNode(intValue);
     } else if (mode === 'search') {
@@ -211,8 +209,8 @@ const LinkedList = () => {
                 {index < nodes.length - 1 && (
                   <Link
                     from={{
-                      x: nodes[index].x,
-                      y: nodes[index].y
+                      x: node.x,
+                      y: node.y
                     }}
                     to={{
                       x: nodes[index + 1].x,
@@ -225,9 +223,7 @@ const LinkedList = () => {
                   isFirst={index === 0}
                   x={node.x}
                   y={node.y}
-                  prevPointer={index === 0 ? 'null' : nodes[index - 1].value}
-                  nextX={index < nodes.length - 1 ? nodes[index + 1].x : undefined}
-                  nextY={index < nodes.length - 1 ? nodes[index + 1].y : undefined}
+                  nextPointer={index < nodes.length - 1 ? nodes[index + 1].value : 'null'}
                   isTraversed={traversedNodes.includes(node.value)}
                 />
               </React.Fragment>
@@ -242,7 +238,7 @@ const LinkedList = () => {
         <div style={styles.modeContainer}>
           <button onClick={() => handleModeChange('add')} style={styles.button}>Add</button>
           <button onClick={() => handleModeChange('add-start')} style={styles.button}>Add at Start</button>
-          <button onClick={() => handleModeChange('add-after')} style={styles.button}>Add after a Index</button>
+          <button onClick={() => handleModeChange('add-after')} style={styles.button}>After Index</button>
           <button onClick={() => handleModeChange('delete')} style={styles.button}>Delete</button>
           <button onClick={() => handleModeChange('search')} style={styles.button}>Search</button>
         </div>
@@ -262,7 +258,7 @@ const LinkedList = () => {
                   type="number"
                   value={position || ''}
                   onChange={handlePositionChange}
-                  placeholder="Index"
+                  placeholder="Index (greater than 0)"
                   style={styles.textInput}
                 />
               </div>
@@ -283,10 +279,12 @@ const styles = {
     padding: '20px',
     position: 'relative',
     minHeight: '100vh',
+    backgroundColor: 'white',
   },
   header: {
     marginBottom: '20px',
     textAlign: 'center',
+    color: 'black',
   },
   listContainer: {
     position: 'relative',
@@ -346,14 +344,17 @@ const styles = {
     marginBottom: '10px',
   },
   button: {
-    backgroundColor: '#4CAF50',
+    background: 'linear-gradient(90deg, #4CAF50, #45a049)',
     color: '#fff',
     border: 'none',
-    padding: '10px 20px',
+    height:'50px',
+    width:'100px',
     fontSize: '16px',
-    borderRadius: '5px',
+    borderRadius: '10px',
     cursor: 'pointer',
     margin: '5px',
+    transition: 'background 0.3s, box-shadow 0.3s',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   },
   inputSection: {
     marginBottom: '20px',
