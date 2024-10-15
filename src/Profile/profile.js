@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';  
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';  
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';  
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
 import { faUserCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';   
 import './profile.css';  
@@ -18,15 +17,13 @@ const avatarOptions = [
 const UserProfile = ({ setComponent }) => {  
   const auth = getAuth();  
   const db = getFirestore();  
-  const storage = getStorage();  
 
   const [user, setUser] = useState(null);  
-  const [profilePic, setProfilePic] = useState('');  
+  const [avatarIndex, setAvatarIndex] = useState(null);  
   const [name, setName] = useState('');  
   const [age, setAge] = useState('');  
   const [email, setEmail] = useState('');  
   const [phone, setPhone] = useState('');  
-  const [file, setFile] = useState(null);  
   const [isEditing, setIsEditing] = useState(false); 
   const [isChoosingAvatar, setIsChoosingAvatar] = useState(false);
 
@@ -44,18 +41,17 @@ const UserProfile = ({ setComponent }) => {
           setEmail(userData.email || '');  
           setPhone(userData.phone || '');  
 
-          if (userData.profilePic) {  
-            const profilePicUrl = await getDownloadURL(ref(storage, `profile_pictures/${user.uid}`));  
-            setProfilePic(profilePicUrl);  
+          if (userData.avatarIndex) {  
+            setAvatarIndex(userData.avatarIndex);  // Storing avatar index
           } else {
-            setProfilePic('');
+            setAvatarIndex(null);
           }
         }  
       }  
     });  
 
     return () => unsubscribe();  
-  }, [auth, db, storage]);  
+  }, [auth, db]);  
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -65,47 +61,21 @@ const UserProfile = ({ setComponent }) => {
     });
   };
 
-  const handleFileChange = (e) => {  
-    setFile(e.target.files[0]);  
-  };  
-
-  const handleUpload = async () => {  
-    if (file) {  
-      const storageRef = ref(storage, `profile_pictures/${user.uid}`);  
-      await uploadBytes(storageRef, file);  
-      const profilePicUrl = await getDownloadURL(storageRef);  
-      setProfilePic(profilePicUrl);  
-      const userRef = doc(db, 'users', user.uid);  
-      await updateDoc(userRef, { profilePic: profilePicUrl });  
-    }  
-  };
-
-  const handleAvatarSelection = async (avatarUrl) => {
+  const handleAvatarSelection = async (index) => {
     if (!user || !user.uid) {
       window.alert('User is not authenticated. Please log in.');
       return;
     }
   
     try {
-      setProfilePic(avatarUrl);
+      setAvatarIndex(index);  // Setting avatar index
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { profilePic: avatarUrl });
+      await updateDoc(userRef, { avatarIndex: index });  // Store index in Firestore
     } catch (error) {
       console.error("Error updating avatar:", error);
       window.alert('Error updating avatar. Please try again.');
     }
   };
-
-  const handleDeleteProfilePic = async () => {  
-    if (profilePic) {  
-      const storageRef = ref(storage, `profile_pictures/${user.uid}`);  
-      await deleteObject(storageRef);  
-      setProfilePic('');  
-
-      const userRef = doc(db, 'users', user.uid);  
-      await updateDoc(userRef, { profilePic: '' });  
-    }  
-  };  
 
   const handleEdit = () => {  
     setIsEditing(true);  
@@ -127,13 +97,8 @@ const UserProfile = ({ setComponent }) => {
       <div className="sidebar">
         <div>
           <div className="profile-pic">
-            {profilePic ? (
-              <>
-                <img src={profilePic} alt="Profile" className="circular-pic" />
-                <button className="delete-pic-btn" onClick={handleDeleteProfilePic}>
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
-              </>
+            {avatarIndex !== null ? (
+              <img src={avatarOptions[avatarIndex - 1]} alt="Profile" className="circular-pic" />  // Display avatar based on index
             ) : (
               <FontAwesomeIcon icon={faUserCircle} size="9x" />
             )}
@@ -182,17 +147,13 @@ const UserProfile = ({ setComponent }) => {
                     src={avatarUrl}
                     alt={`Avatar ${index + 1}`}
                     className="avatar-option"
-                    onClick={() => handleAvatarSelection(avatarUrl)}
+                    onClick={() => handleAvatarSelection(index + 1)}  // Save index + 1
                   />
                 ))}
               </div>
             )}
           </div><br></br>
 
-          <div className='upload-image'>
-            <input type="file" onChange={handleFileChange} />
-          </div>
-          <button className='upload-image-btn' onClick={handleUpload}>Upload Profile Picture</button><br></br><br></br>
           <div className="profile-action-buttons">
             {isEditing ? (
               <button className="save-button" onClick={handleSave}>Save Changes</button>
