@@ -6,6 +6,7 @@ import Queues from './Queues';
 import Auth from './Login/Auth';
 import UserProfile from './Profile/profile';
 import HomePage from './HomePage'; 
+import Bstgame from './bstgame';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/stack" element={<Stacks />} />
         <Route path="/queue" element={<Queues />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/bstgame" element={<Bstgame />} />
       </Routes>
     </BrowserRouter>
   );

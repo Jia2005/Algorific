@@ -42,7 +42,7 @@ const Card = ({ imgSrc, title, description }) => {
         <h3>{title}</h3>
         <p>{description}</p>
         <button onClick={() => window.location.href='/queue'}>Learn</button>
-        <button onClick={() => window.location.href='#'}>Play a game</button>
+        <button onClick={() => window.location.href='/bstgame'}>Play a game</button>
       </div>
     </div>
   );
