@@ -78,7 +78,7 @@ function SignUp() {
 
   return (
     <div>
-      <form name="sign-up" onSubmit={handleSubmit}>
+      <form name="sign-up" onSubmit={handleSubmit} className='signform'>
         <br /><br />
         <h1 align="center" style={{ color: 'white' }}>Create your Account</h1>
         {error && <p style={{ color: 'red' }}>{error}</p>}

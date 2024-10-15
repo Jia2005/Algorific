@@ -34,7 +34,7 @@ function Login() {
 
   return (
     <div>
-      <form name="login" onSubmit={handleSubmit}>
+      <form name="login" onSubmit={handleSubmit} className='logform'>
         <br /><br />
         <h1 align="center" style={{ color: 'white' }}>Login</h1>
         <label>

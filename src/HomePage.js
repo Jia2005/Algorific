@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './HomePage.css'; // Ensure to import your CSS file
+import './HomePage.css';
 
 const Navbar = () => {
   const [navbarClass, setNavbarClass] = useState('navbar');
@@ -88,7 +88,7 @@ const AboutSection = () => {
         <h1><b>About Us</b></h1>
         <p style={{ fontSize: '18px' }}>
           <b><em>
-            <strong>Algorific</strong> is dedicated to making Data Science accessible and engaging for all...
+            <strong>Algorific</strong> is dedicated to making Data Science accessible and engaging for all. Our mission is to simplify complex Data Science concepts through high-quality animated courses that transform learning into an enjoyable adventure. Each lesson is designed to be engaging and easy to understand, incorporating interactive exercises and quizzes to enhance comprehension. We strive to make Data Science education available to everyone, regardless of their background, and aim to inspire the next generation of data scientists, analysts, and enthusiasts by merging animation with data science education.
           </em></b>
         </p>
       </div>
@@ -103,7 +103,7 @@ const ContactUs = () => {
         <h1><b>Join Us!</b></h1>
         <p style={{ fontSize: '18px' }}>
           <b><em>
-            Are you passionate about building interactive and fun algorithms? ...
+          Are you passionate about building interactive and fun algorithms? We invite you to join our team and contribute to creating engaging, gamified learning experiences. Together, we can make learning data structures exciting and accessible for everyone!
           </em></b>
         </p>    
       </section>
