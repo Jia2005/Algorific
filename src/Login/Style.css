@@ -9,10 +9,17 @@
 body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
 }
 
 .in,
 .btn {
+    height: max-content;
+  padding: 0px 10px;
+  width: max-content;
     border: none;
     outline: none;
     background: none;
@@ -31,10 +38,10 @@ body {
     position: relative;
     width: 900px;
     height: 550px;
-    margin: 0 auto 100px;
-    margin-top: 50px;
+    margin: 0 auto ;
+    display: flex;
     background: #6a0dad;
-    
+    border: 2px solid black;
 }
 
 .logform {
@@ -84,10 +91,12 @@ body {
 }
 
 .btn {
+
     display: block;
     margin: 0 auto;
-    width: 260px;
-    height: 36px;
+    height: max-content;
+  padding: 0px 30px;
+  width: max-content;
     border-radius: 30px;
     color: #fff;
     font-size: 15px;
