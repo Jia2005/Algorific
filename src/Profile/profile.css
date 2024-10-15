@@ -201,9 +201,9 @@
   background-color: #28a745;
   color: white;
   border: none;
-  padding: 5px 5px;
-  width: auto;
-  height: auto;
+  height: max-content;
+  padding: 0px 10px;
+  width: max-content;
   border-radius: 4px;
   margin-bottom: 10px;
   cursor: pointer;
