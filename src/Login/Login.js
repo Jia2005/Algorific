@@ -62,7 +62,7 @@ function Login() {
           />
         </label>
         <div>
-          <button type="submit" className="submit btn" style={{ backgroundColor: '#000000', color: 'rgb(255, 255, 255)' }}>
+          <button type="submit" className="submit btn" style={{ backgroundColor: '#000000', color: 'rgb(255, 255, 255)', alignSelf:'center' }}>
             Login
           </button>
         </div>
