@@ -55,7 +55,7 @@ const UserProfile = ({ setComponent }) => {
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
-      window.location.href = '/login';
+      window.location.href = '/';
     }).catch(() => {
       window.alert('There are some server issues.');
     });
