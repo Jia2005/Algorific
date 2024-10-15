@@ -52,7 +52,7 @@ function SignUp() {
           setConfirmPassword('');
 
           await signInWithEmailAndPassword(getAuth(), email, password);
-          navigate('/linkedlist');
+          navigate('/home');
         } catch (error) {
           window.alert("Error adding document: " + error.message);
         }

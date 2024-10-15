@@ -76,7 +76,7 @@ const CardContainer = () => {
         title="Binary Search Tree" 
         description="A binary search tree (BST) arranges nodes so left children are smaller than their parents."
         learnLink="/bst"
-        playLink="/bst-game"
+        playLink="/bstgame"
       />
       <Card 
         imgSrc={huff}
