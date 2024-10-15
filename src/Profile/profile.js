@@ -47,7 +47,9 @@ const UserProfile = ({ setComponent }) => {
           if (userData.profilePic) {  
             const profilePicUrl = await getDownloadURL(ref(storage, `profile_pictures/${user.uid}`));  
             setProfilePic(profilePicUrl);  
-          }  
+          } else {
+            setProfilePic('');
+          }
         }  
       }  
     });  
@@ -174,16 +176,16 @@ const UserProfile = ({ setComponent }) => {
             </button>
             {isChoosingAvatar && (
               <div className="avatar-options">
-              {avatarOptions.map((avatarUrl, index) => (
-                <img
-                  key={index}
-                  src={avatarUrl}
-                  alt={`Avatar ${index + 1}`}
-                  className="avatar-option"
-                  onClick={() => handleAvatarSelection(avatarUrl)}
-                />
-              ))}
-            </div>
+                {avatarOptions.map((avatarUrl, index) => (
+                  <img
+                    key={index}
+                    src={avatarUrl}
+                    alt={`Avatar ${index + 1}`}
+                    className="avatar-option"
+                    onClick={() => handleAvatarSelection(avatarUrl)}
+                  />
+                ))}
+              </div>
             )}
           </div><br></br>
 

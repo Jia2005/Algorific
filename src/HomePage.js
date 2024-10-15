@@ -22,16 +22,15 @@ const Navbar = () => {
 
   return (
     <div className={navbarClass} id="myNavbar">
+      <a href="/" style={{backgroundColor:'red'}}>Logout</a>
       <a href='/profile'>Profile</a>
       <a href="#dashboard">Dashboard</a>
-      <a href="#services">Learn</a>
       <a href="#about">Algorithm</a>
-      <a href="#contact">Quiz</a>
     </div>
   );
 };
 
-const Card = ({ imgSrc, title, description }) => {
+const Card = ({ imgSrc, title, description, learnLink, playLink }) => {
   return (
     <div className="card">
       <div className="face front">
@@ -41,8 +40,8 @@ const Card = ({ imgSrc, title, description }) => {
       <div className="face back">
         <h3>{title}</h3>
         <p>{description}</p>
-        <button onClick={() => window.location.href='/queue'}>Learn</button>
-        <button onClick={() => window.location.href='/bstgame'}>Play a game</button>
+        <button onClick={() => window.location.href=learnLink}>Learn</button>
+        <button onClick={() => window.location.href=playLink}>Play a game</button>
       </div>
     </div>
   );
@@ -55,31 +54,43 @@ const CardContainer = () => {
         imgSrc={queue}
         title="Queue" 
         description="A queue is a linear data structure that follows the First-In-First-Out (FIFO) principle."
+        learnLink="/queue"
+        playLink="/queue-game"
       />
       <Card 
         imgSrc={stack}
         title="Stack" 
         description="A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle."
+        learnLink="/stack"
+        playLink="/stack-game"
       />
       <Card 
         imgSrc={ll}
         title="Linked List" 
         description="A linked list is a linear data structure consisting of nodes, each containing a value and a reference."
+        learnLink="/linked-list"
+        playLink="/linked-list-game"
       />
       <Card 
         imgSrc={bst} 
         title="Binary Search Tree" 
         description="A binary search tree (BST) arranges nodes so left children are smaller than their parents."
+        learnLink="/bst"
+        playLink="/bst-game"
       />
       <Card 
         imgSrc={huff}
         title="Huffman Coding" 
         description="Huffman coding is a compression technique that assigns shorter codes to more frequent characters."
+        learnLink="/huffman"
+        playLink="/huffman-game"
       />
       <Card 
         imgSrc={hash} 
         title="Hashing" 
         description="Hashing transforms input data into a fixed-size string of characters, typically serving as a unique identifier."
+        learnLink="/hashing"
+        playLink="/hashing-game"
       />
     </div>
   );
@@ -92,9 +103,8 @@ const AboutSection = () => {
         <img src={about} alt="About Us" className='imgabout' />
       </div>
       <div className="about-us-text">
-        <h1><b>About Us</b></h1>
         <p style={{ fontSize: '18px', color: 'black' }}>
-          <b><em>
+          <b><em><br></br>
             <strong>Algorific</strong> is dedicated to making Data Science accessible and engaging for all. Our mission is to simplify complex Data Science concepts through high-quality animated courses that transform learning into an enjoyable adventure. Each lesson is designed to be engaging and easy to understand, incorporating interactive exercises and quizzes to enhance comprehension. We strive to make Data Science education available to everyone, regardless of their background, and aim to inspire the next generation of data scientists, analysts, and enthusiasts by merging animation with data science education.
           </em></b>
         </p>
@@ -153,16 +163,16 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <h2>Follow Us</h2>
+        <h2>Follow Us</h2><br></br>
         <div className="social-icons">
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faInstagram} /> Instagram
+            <FontAwesomeIcon icon={faInstagram} /> 
           </a>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faFacebookF} /> Facebook
+            <FontAwesomeIcon icon={faFacebookF} /> 
           </a>
           <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faLinkedinIn} /> LinkedIn
+            <FontAwesomeIcon icon={faLinkedinIn} /> 
           </a>
         </div>
       </div>
