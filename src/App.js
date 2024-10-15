@@ -5,7 +5,7 @@ import Stacks from './Stacks';
 import Queues from './Queues';
 import Auth from './Login/Auth';
 import UserProfile from './Profile/profile';
-import HomePage from './HomePage'; // Ensure this path is correct
+import HomePage from './HomePage'; 
 
 const App = () => {
   return (

@@ -14,7 +14,7 @@ function Login() {
     
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/linkedlist');
+      navigate('/home');
     } catch (error) {
       const errorCode = error.code;
 
