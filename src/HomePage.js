@@ -10,7 +10,7 @@ import profileLogo from './Images/profile.jpg';
 import './HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
   const [navbarClass, setNavbarClass] = useState('navbar');
 
@@ -23,7 +23,9 @@ const Navbar = () => {
   return (
     <div className={navbarClass} id="myNavbar">
       <a href="/" style={{backgroundColor:'red'}}>Logout</a>
-      <a href='/profile'>Profile</a>
+      <a href='/profile'>
+        <FontAwesomeIcon icon={faUser} style={{ marginRight: '8px' }} />
+      </a>
       <a href="#dashboard">Dashboard</a>
       <a href="#about">Algorithm</a>
     </div>
@@ -166,13 +168,13 @@ const Footer = () => {
         <h2>Follow Us</h2><br></br>
         <div className="social-icons">
           <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faInstagram} /> 
+            <FontAwesomeIcon icon={faInstagram}  style={{height:'4vh'}}/> 
           </a>
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faFacebookF} /> 
+            <FontAwesomeIcon icon={faFacebookF}  style={{height:'4vh'}}/> 
           </a>
           <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faLinkedinIn} /> 
+            <FontAwesomeIcon icon={faLinkedinIn} style={{height:'4vh'}} /> 
           </a>
         </div>
       </div>
