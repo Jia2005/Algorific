@@ -70,7 +70,7 @@ const CardContainer = () => {
         imgSrc={ll}
         title="Linked List" 
         description="A linked list is a linear data structure consisting of nodes, each containing a value and a reference."
-        learnLink="/linked-list"
+        learnLink="/linkedlist"
         playLink="/linked-list-game"
       />
       <Card 
