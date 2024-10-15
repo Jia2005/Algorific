@@ -154,7 +154,7 @@ const UserProfile = ({ setComponent }) => {
       </div>
       <div className="profile-details">
         <div className="detail-block-container">
-          <h2>Profile Details</h2>
+          <h2 style={{color:'black'}}>Profile Details</h2>
           <div className="detail-block">
             <p><strong>Name:</strong> {isEditing ? <input type="text" value={name} onChange={(e) => setName(e.target.value)} /> : name}</p>
           </div>
@@ -169,7 +169,7 @@ const UserProfile = ({ setComponent }) => {
           </div>
           
           <div className="avatar-selection">
-            <button onClick={() => setIsChoosingAvatar(!isChoosingAvatar)}>
+            <button className='hide' onClick={() => setIsChoosingAvatar(!isChoosingAvatar)}>
               {isChoosingAvatar ? 'Hide Avatars' : 'Choose an Avatar'}
             </button>
             {isChoosingAvatar && (
@@ -185,7 +185,7 @@ const UserProfile = ({ setComponent }) => {
               ))}
             </div>
             )}
-          </div>
+          </div><br></br>
 
           <div className='upload-image'>
             <input type="file" onChange={handleFileChange} />
