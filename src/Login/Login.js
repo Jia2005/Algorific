@@ -36,10 +36,12 @@ function Login() {
     <div>
       <form name="login" onSubmit={handleSubmit} className='logform'>
         <br /><br />
-        <h1 align="center" style={{ color: 'white' }}>Login</h1>
+        <h1 align="center" >Login</h1>
+        <div className='field'>
         <label>
-          <span style={{ color: 'white' }}>Email</span>
-          <input
+          Email
+        </label>
+        <input
             className='in'
             type="email"
             name="email"
@@ -48,10 +50,12 @@ function Login() {
             placeholder="Enter Email Address"
             style={{ fontSize: '16px' }}
           />
-        </label>
+        </div>
+        <div className='field'>
         <label>
-          <span style={{ color: 'white' }}>Password</span>
-          <input
+          Password
+        </label>
+        <input
             className='in'
             type="password"
             name="password"
@@ -60,7 +64,7 @@ function Login() {
             placeholder="Enter Password"
             style={{ fontSize: '16px' }}
           />
-        </label>
+        </div>
         <div>
           <button type="submit" className="submit btn" style={{ backgroundColor: '#000000', color: 'rgb(255, 255, 255)', alignSelf:'center' }}>
             Login
