@@ -12,6 +12,7 @@ function Auth() {
   };
 
   return (
+    <div className='main_auth'>
     <div className={`cont ${isSignup ? 's--signup' : ''}`}>
       <div className="form sign-in">
         <LoginForm />
@@ -19,17 +20,18 @@ function Auth() {
       <div className="sub-cont">
         <div className="img" style={{ backgroundColor: 'black' }}>
           <div className="img__text m--up">
-            <h3 style={{ color: '#6a0dad' }}>Don't have an account? Please Sign up!</h3>
+            <h3 style={{ color: 'navy' }}>Don't have an account? Please Sign up!</h3>
           </div>
           <div className="img__text m--in">
-            <h3 style={{ color: '#6a0dad' }}>If you already have an account, just sign in.</h3>
+            <h3 style={{ color: 'navy' }}>If you already have an account, just sign in.</h3>
           </div>
           <ToggleButton toggleForm={toggleForm} />
         </div>
-        <div className="form sign-up" style={{ backgroundColor: '#6a0dad' }}>
+        <div className="form sign-up" style={{ backgroundColor: '#89d0ff' }}>
           <SignupForm />
         </div>
       </div>
+    </div>
     </div>
   );
 }

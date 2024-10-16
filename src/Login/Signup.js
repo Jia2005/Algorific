@@ -80,11 +80,13 @@ function SignUp() {
     <div>
       <form name="sign-up" onSubmit={handleSubmit} className='signform'>
         <br /><br />
-        <h1 align="center" style={{ color: 'white' }}>Create your Account</h1>
+        <h1 align="center">Create your Account</h1>
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        <div className='field'>
         <label>
-          <span style={{ color: 'white' }}>Name</span>
-          <input
+          Name
+        </label>
+        <input
             className='in'
             type="text"
             name="name"
@@ -93,10 +95,12 @@ function SignUp() {
             placeholder="Enter your Name"
             style={{ fontSize: '16px' }}
           />
-        </label>
+        </div>
+        <div className='field'>
         <label>
-          <span style={{ color: 'white' }}>Email</span>
-          <input
+          Email
+        </label>
+        <input
             className='in'
             type="email"
             name="email"
@@ -105,10 +109,12 @@ function SignUp() {
             placeholder="Enter Email Address"
             style={{ fontSize: '16px' }}
           />
-        </label>
+        </div>
+        <div className='field'>
         <label>
-          <span style={{ color: 'white' }}>Password</span>
-          <input
+          Password
+        </label>
+        <input
             className='in'
             type="password"
             name="password"
@@ -117,10 +123,12 @@ function SignUp() {
             placeholder="Enter Password"
             style={{ fontSize: '16px' }}
           />
-        </label>
+        </div>
+        <div className='field'>
         <label>
-          <span style={{ color: 'white' }}>Confirm Password</span>
-          <input
+          Confirm Password
+        </label>
+        <input
             className='in'
             type="password"
             name="confirm_password"
@@ -129,7 +137,7 @@ function SignUp() {
             placeholder="Confirm your Password"
             style={{ fontSize: '16px' }}
           />
-        </label>
+        </div>
         <div>
           <button type="submit" className="submit btn" style={{ backgroundColor: '#000000', color: 'rgb(255, 255, 255)' }}>
             Sign Up
