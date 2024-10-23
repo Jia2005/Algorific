@@ -1,15 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 const Stacks = () => {
   const [stack, setStack] = useState([]);
   const [stackSize, setStackSize] = useState(5); 
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
-  const [isPushing, setIsPushing] = useState(false);
-
-  const handlePushClick = () => {
-    setIsPushing(true);
-  };
 
   const push = () => {
     if (stack.length < stackSize) {
@@ -19,7 +14,6 @@ const Stacks = () => {
     } else {
       setMessage('Stack Full');
     }
-    setIsPushing(false);
   };
 
   const pop = () => {
@@ -75,26 +69,18 @@ const Stacks = () => {
           </label>
         </div>
 
-        <div style={styles.buttonContainer}>
-          <button onClick={handlePushClick} style={styles.primaryButton}>
+        <div style={styles.pushInputContainer}>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter value to push"
+            style={styles.textInput}
+          />
+          <button onClick={push} style={styles.secondaryButton}>
             Push
           </button>
         </div>
-
-        {isPushing && (
-          <div style={styles.pushInputContainer}>
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter value to push"
-              style={styles.textInput}
-            />
-            <button onClick={push} style={styles.secondaryButton}>
-              Confirm Push
-            </button>
-          </div>
-        )}
 
         <div style={styles.buttonContainer}>
           <button onClick={pop} style={styles.primaryButton}>
@@ -118,7 +104,7 @@ const styles = {
     marginBottom: '10px',
     textAlign: 'center',
     zIndex: 10,
-    color:'black',
+    color: 'black',
   },
   stackContainer: {
     width: '100%',
@@ -176,7 +162,7 @@ const styles = {
   label: {
     fontSize: '18px',
     marginRight: '10px',
-    color:'black',
+    color: 'black',
   },
   numberInput: {
     width: '60px',
@@ -189,33 +175,32 @@ const styles = {
     marginBottom: '10px',
   },
   primaryButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#f44336',
     color: '#fff',
     border: 'none',
     fontSize: '16px',
-    height:'40px',
-    width:'100px',
-    marginTop:'6px',
+    height: '40px',
+    width: '100px',
+    marginTop: '6px',
     marginBottom: '6px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     borderRadius: '5px',
     cursor: 'pointer',
     margin: '10px',
   },
   secondaryButton: {
-    backgroundColor: '#f44336',
+    backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
-    height:'40px',
-    width:'120px',
+    height: '40px',
+    width: '100px',
     fontSize: '16px',
-    marginTop:'6px',
-    marginBottom: '6px',
+    marginLeft: '10px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     borderRadius: '5px',
     cursor: 'pointer',
   },
@@ -225,6 +210,7 @@ const styles = {
     borderRadius: '5px',
     border: '1px solid #ccc',
     marginRight: '10px',
+    width: '200px',
   },
   pushInputContainer: {
     marginBottom: '20px',

@@ -22,47 +22,17 @@ const Node = ({ node, isFirst, x, y, nextPointer, isTraversed }) => (
 );
 
 const Link = ({ from, to }) => {
-  const startX = from.x + 100;
-  const startY = from.y + 25;
-  const endX = to.x;
-  const endY = to.y + 25;
+  const lineStyle = {
+    position: 'absolute',
+    left: from.x + 100,
+    top: from.y + 25,
+    width: to.x - (from.x + 100),
+    height: '5px',
+    backgroundColor: 'black',
+    zIndex: -1,
+  };
 
-  const midX = (startX + endX) / 2;
-  const midY = (startY + endY) / 2;
-
-  return (
-    <svg
-      style={{
-        position: 'absolute',
-        left: midX - 50,
-        top: midY,
-        width: '85px',
-        height: '12px',
-        zIndex: -1,
-      }}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <line
-        x1="0" y1="5" x2="100" y2="5"
-        stroke="black"
-        strokeWidth="3"
-        markerEnd="url(#arrowhead)"
-      />
-      <defs>
-        <marker
-          id="arrowhead"
-          markerWidth="10"
-          markerHeight="10"
-          refX="0"
-          refY="5"
-          orient="auto"
-          fill="black"
-        >
-          <polygon points="0 0, 10 5, 0 10" />
-        </marker>
-      </defs>
-    </svg>
-  );
+  return <div style={lineStyle} />;
 };
 
 const LinkedList = () => {
@@ -140,8 +110,8 @@ const LinkedList = () => {
         setMessage(`Found ${value}`);
         await new Promise(resolve => setTimeout(resolve, 2000));
         setTraversedNodes([]);
-        nodes.forEach((n) => n.color = 'blue'); 
-        setNodes([...nodes]); 
+        nodes.forEach((n) => n.color = 'blue');
+        setNodes([...nodes]);
         return;
       }
       
@@ -186,6 +156,8 @@ const LinkedList = () => {
     } else if (mode === 'search') {
       searchNode(intValue);
     }
+
+    setInputValue('');
   };
 
   useEffect(() => {
@@ -204,18 +176,6 @@ const LinkedList = () => {
           <>
             {nodes.map((node, index) => (
               <React.Fragment key={index}>
-                {index < nodes.length - 1 && (
-                  <Link
-                    from={{
-                      x: node.x,
-                      y: node.y
-                    }}
-                    to={{
-                      x: nodes[index + 1].x,
-                      y: nodes[index + 1].y
-                    }}
-                  />
-                )}
                 <Node
                   node={node}
                   isFirst={index === 0}
@@ -224,6 +184,18 @@ const LinkedList = () => {
                   nextPointer={index < nodes.length - 1 ? nodes[index + 1].value : 'null'}
                   isTraversed={traversedNodes.includes(node.value)}
                 />
+                {index < nodes.length - 1 && (
+                  <Link
+                    from={{
+                      x: node.x,
+                      y: node.y,
+                    }}
+                    to={{
+                      x: nodes[index + 1].x,
+                      y: nodes[index + 1].y,
+                    }}
+                  />
+                )}
               </React.Fragment>
             ))}
           </>
@@ -261,7 +233,7 @@ const LinkedList = () => {
                 />
               </div>
             )}
-            <button onClick={handleConfirm} style={styles.button}>Confirm {mode}</button>
+            <button onClick={handleConfirm} style={styles.button}>Confirm</button>
           </div>
         )}
       </div>
@@ -345,8 +317,8 @@ const styles = {
     background: 'linear-gradient(90deg, #4CAF50, #45a049)',
     color: '#fff',
     border: 'none',
-    height:'50px',
-    width:'100px',
+    height: '45px',
+    width: '100px',
     fontSize: '16px',
     borderRadius: '10px',
     cursor: 'pointer',
@@ -360,7 +332,9 @@ const styles = {
   textInput: {
     width: '150px',
     padding: '10px',
+    height: '45px',
     fontSize: '16px',
+    marginBottom: '15px',
     borderRadius: '5px',
     border: '1px solid #ccc',
     marginRight: '10px',

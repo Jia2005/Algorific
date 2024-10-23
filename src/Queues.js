@@ -78,9 +78,7 @@ const QueueVisualization = () => {
               style={styles.numberInput}
             />
           </label>
-        </div>
-
-        <div style={styles.buttonContainer}>
+      </div>    
 
         {isEnqueuing && (
           <div style={styles.enqueueInputContainer}>
@@ -93,13 +91,13 @@ const QueueVisualization = () => {
             />
             <button onClick={enqueue} style={styles.secondary2Button}>
               Enqueue
-            </button>
-          
-          <button onClick={dequeue} style={styles.primaryButton}>
-           Dequeue
-         </button>
+            </button>        
          </div>
         )}
+        <div>
+        <button onClick={dequeue} style={styles.primaryButton}>
+           Dequeue
+         </button>
         </div>
         
         <div style={styles.buttonContainer}>
@@ -202,7 +200,6 @@ const styles = {
     borderRadius: '10px',
     cursor: 'pointer',
     margin: '10px',
-    alignItems:'center',
     height:'40px',
     width:'100px',
     marginTop:'6px',
