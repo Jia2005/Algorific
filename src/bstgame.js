@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 function TreeNode(key) {
     return { left: null, right: null, val: key };
@@ -44,11 +46,12 @@ function postOrderTraversal(root, result) {
 
 const Bstgame = () => {
     const [bst, setBst] = useState(null);
-    const [traversalMethod, setTraversalMethod] = useState('in-order');
+    const [traversalMethod, setTraversalMethod] = useState('In-order');
     const [traversalValues, setTraversalValues] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [userInput, setUserInput] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const numbers = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100) + 1);
@@ -68,11 +71,11 @@ const Bstgame = () => {
 
     const traversal = (method, root, result) => {
         switch (method) {
-            case 'in-order':
+            case 'In-order':
                 return inOrderTraversal(root, result);
-            case 'pre-order':
+            case 'Pre-order':
                 return preOrderTraversal(root, result);
-            case 'post-order':
+            case 'Post-order':
                 return postOrderTraversal(root, result);
             default:
                 return [];
@@ -83,14 +86,26 @@ const Bstgame = () => {
         const guess = parseInt(userInput, 10);
         if (!isNaN(guess) && currentIndex < traversalValues.length - 1) {
             const correctNextNumber = traversalValues[currentIndex + 1];
-            if (guess === correctNextNumber) {
+            if (guess === correctNextNumber && currentIndex <= traversalValues.length - 3) {
                 setScore(score + 1);
-                alert('Correct!');
+                swal("Correct!","Keep Going ✨💎","success");
+            } else if (guess === correctNextNumber && currentIndex == traversalValues.length - 2) {
+                setScore(score + 1);
+                swal(`Your final score is ${score}`)
+                .then((value) => {
+                    navigate('/home');
+                });
             } else {
-                alert(`Wrong! Next was ${correctNextNumber}`);
+                swal("Wrong!",`The next number in series was ${correctNextNumber}`,"error");
             }
             setCurrentIndex(currentIndex + 1);
             setUserInput('');
+        }
+        if(currentIndex == traversalValues.length - 1) {
+            swal(`Your final score is ${score}`)
+            .then((value) => {
+                navigate('/home');
+            });
         }
     };
 
@@ -105,13 +120,13 @@ const Bstgame = () => {
                 </text>
                 {node.left && (
                     <>
-                        <line x1={x} y1={y} x2={x - dx} y2={y + 60} stroke="black" />
+                        <line x1={x-20} y1={y} x2={x - 20 - dx} y2={y + 60} stroke="black" />
                         {renderTree(node.left, x - dx, y + 60, dx / 2)}
                     </>
                 )}
                 {node.right && (
                     <>
-                        <line x1={x} y1={y} x2={x + dx} y2={y + 60} stroke="black" />
+                        <line x1={x+20} y1={y} x2={x + 20 + dx} y2={y + 60} stroke="black" />
                         {renderTree(node.right, x + dx, y + 60, dx / 2)}
                     </>
                 )}
@@ -120,9 +135,9 @@ const Bstgame = () => {
     };
 
     return (
-        <div className="App">
+        <div className="App" style={{padding: "20px 0"}}>
             <h1 style={{ color: 'black' }}>BST Traversal Game</h1><br />
-            <select onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
+            <select style={{fontSize: "18px"}} onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
                 <option value="in-order">In-order</option>
                 <option value="pre-order">Pre-order</option>
                 <option value="post-order">Post-order</option>
@@ -132,21 +147,19 @@ const Bstgame = () => {
             <svg width="800" height="400">
                 {renderTree(bst, 400, 20, 200)}
             </svg>
-            {currentIndex < traversalValues.length ? (
-                <div>
-                    <h2 style={{ color: 'black' }}>Current number: {traversalValues[currentIndex]}</h2><br />
-                    <input
-                        type="text"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleGuess();
-                        }}
-                    />
-                </div>
-            ) : (
-                <h4>Game Over! Final Score: {score}</h4>
-            )}
+            <div style={{color: "black"}}>
+                <h2>Current number: {traversalValues[currentIndex]}</h2><br />
+                What will be the next number ?
+                <input
+                    type="text"
+                    style={{marginLeft: "20px"}}
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleGuess();
+                    }}
+                />
+            </div>
         </div>
     );
 };

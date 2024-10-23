@@ -104,7 +104,7 @@ body {
     margin: 0 10px;
   }
   
-  button {
+  .card button, .contact-us-text button {
     background-color: #bb66f8;
     border: none;
     color: white;
