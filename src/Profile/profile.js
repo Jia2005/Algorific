@@ -110,31 +110,41 @@ const UserProfile = ({ setComponent }) => {
           <div className="sidebar-menu">
             <ul>
               <li className="center">
-                <Link to="/home">Home</Link>
+                <Link to="/home" style={{textAlign:'left'}}>Home</Link></li>
+                <li><Link to="#about">Algorithm</Link></li>
+                <li><Link to="#dash">Dashboard</Link>
               </li>
             </ul>
           </div>
-          <div className='log'>
-            <button className="logout-button" onClick={handleSignOut}>Logout</button>
+          <div className='log' >
+            <button className="logout-button" style={{alignSelf:'left'}} onClick={handleSignOut}>Logout</button>
           </div>
         </div>
       </div>
       <div className="profile-details">
         <div className="detail-block-container">
-          <h2 style={{color:'black'}}>Profile Details</h2>
-          <div className="detail-block">
-            <p><strong>Name:</strong> {isEditing ? <input type="text" value={name} onChange={(e) => setName(e.target.value)} /> : name}</p>
-          </div>
-          <div className="detail-block">
-            <p><strong>Age:</strong> {isEditing ? <input type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}</p>
-          </div>
-          <div className="detail-block">
-            <p><strong>Email:</strong> {isEditing ? <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /> : email}</p>
-          </div>
-          <div className="detail-block">
-            <p><strong>Phone No.:</strong> {isEditing ? <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</p>
-          </div>
-          
+          <h2 style={{color:'black', marginBottom:'18px'}}>Profile Details</h2>
+          <table className="profile-table" style={{color:'black'}}>
+            <tbody>
+              <tr>
+                <td style={{width:'100px', paddingBottom:'10px'}}><strong>Name:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="text" value={name} onChange={(e) => setName(e.target.value)} /> : name}</td>
+              </tr>
+              <tr>
+                <td style={{paddingBottom:'10px'}}><strong>Age:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}</td>
+              </tr>
+              <tr>
+                <td style={{paddingBottom:'10px'}}><strong>Email:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /> : email}</td>
+              </tr>
+              <tr>
+                <td style={{paddingBottom:'10px'}}><strong>Phone No:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
           <div className="avatar-selection">
             <button className='hide' onClick={() => setIsChoosingAvatar(!isChoosingAvatar)}>
               {isChoosingAvatar ? 'Hide Avatars' : 'Choose an Avatar'}
