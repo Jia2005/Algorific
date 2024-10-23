@@ -5,7 +5,7 @@ const QueueVisualization = () => {
   const [maxSize, setMaxSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
-  const [isEnqueuing, setIsEnqueuing] = useState(false);
+  const [isEnqueuing, setIsEnqueuing] = useState(true);
 
   const handleEnqueueClick = () => {
     setIsEnqueuing(true);
@@ -19,7 +19,7 @@ const QueueVisualization = () => {
     } else {
       setMessage('Queue is full!');
     }
-    setIsEnqueuing(false);
+    setIsEnqueuing(true);
   };
 
   const dequeue = () => {
@@ -81,13 +81,6 @@ const QueueVisualization = () => {
         </div>
 
         <div style={styles.buttonContainer}>
-          <button onClick={handleEnqueueClick} style={styles.primaryButton}>
-            Enqueue
-          </button>
-          <button onClick={dequeue} style={styles.primaryButton}>
-            Dequeue
-          </button>
-        </div>
 
         {isEnqueuing && (
           <div style={styles.enqueueInputContainer}>
@@ -99,11 +92,16 @@ const QueueVisualization = () => {
               style={styles.textInput}
             />
             <button onClick={enqueue} style={styles.secondary2Button}>
-              Confirm Enqueue
+              Enqueue
             </button>
-          </div>
+          
+          <button onClick={dequeue} style={styles.primaryButton}>
+           Dequeue
+         </button>
+         </div>
         )}
-
+        </div>
+        
         <div style={styles.buttonContainer}>
           <button onClick={resetQueue} style={styles.secondaryButton}>
             Reset Queue
@@ -205,26 +203,41 @@ const styles = {
     cursor: 'pointer',
     margin: '10px',
     alignItems:'center',
-    height:'50px',
+    height:'40px',
     width:'100px',
+    marginTop:'6px',
+    marginBottom: '6px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:'center',
   },
   secondaryButton: {
     backgroundColor: '#f44336',
     color: '#fff',
     border: 'none',
-    height:'50px',
+    height:'40px',
     width:'150px',
+    marginTop:'6px',
+    marginBottom: '6px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:'center',
     fontSize: '16px',
     borderRadius: '10px',
     cursor: 'pointer',
   },
   secondary2Button: {
-    backgroundColor: 'blue',
+    backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
-    height:'50px',
-    width:'150px',
+    height:'40px',
+    width:'100px',
     fontSize: '16px',
+    marginTop:'6px',
+    marginBottom: '6px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: "center",
     borderRadius: '10px',
     cursor: 'pointer',
   },

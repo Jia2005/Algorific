@@ -9,6 +9,7 @@ import HomePage from './HomePage';
 import BSTApp from './Game/bst';
 import Bstgame from './bstgame';
 import Water from './Game/water';
+import HashTable from './hash';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/linkedlist" element={<LinkedList />} />
         <Route path="/stack" element={<Stacks />} />
         <Route path="/queue" element={<Queues />} />
+        <Route path="/hash" element={<HashTable />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/algo" element={<BSTApp />} />
         <Route path="/bstgame" element={<Bstgame />} />

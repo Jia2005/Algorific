@@ -91,7 +91,7 @@ const CardContainer = () => {
         imgSrc={hash} 
         title="Hashing" 
         description="Hashing transforms input data into a fixed-size string of characters, typically serving as a unique identifier."
-        learnLink="/hashing"
+        learnLink="/hash"
         playLink="/hashing-game"
       />
     </div>
@@ -165,6 +165,8 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <h2>Follow Us</h2>
+      </div>
+      <div className='footer-content2'>
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
           <FontAwesomeIcon icon={faInstagram}  style={{height:'4vh'}}/> 
         </a>
