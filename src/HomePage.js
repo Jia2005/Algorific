@@ -22,9 +22,9 @@ const Navbar = () => {
 
   return (
     <div className={navbarClass} id="myNavbar">
-      <a href="/" style={{backgroundColor:'red'}}>Logout</a>
+      <a href="/" className='logout'>Logout</a>
       <a href='/profile'>
-        <FontAwesomeIcon icon={faUser} style={{ marginRight: '8px' }} />
+        <FontAwesomeIcon icon={faUser} />
       </a>
       <a href="#dashboard">Dashboard</a>
       <a href="#about">Algorithm</a>
@@ -102,13 +102,12 @@ const AboutSection = () => {
   return (
     <div className="about-section">
       <div className="about-us-image">
-        <img src={about} alt="About Us" className='imgabout' />
+        <img src="https://filovault-crypta.com/wp-content/uploads/2020/09/who-we-are.png" alt="About Us" className='imgabout' />
       </div>
       <div className="about-us-text">
-        <p style={{ fontSize: '18px', color: 'black' }}>
-          <b><em><br></br>
+        <p style={{ fontSize: '18px', color: 'black', textAlign: "justify" }}>
+          <br></br>
             <strong>Algorific</strong> is dedicated to making Data Science accessible and engaging for all. Our mission is to simplify complex Data Science concepts through high-quality animated courses that transform learning into an enjoyable adventure. Each lesson is designed to be engaging and easy to understand, incorporating interactive exercises and quizzes to enhance comprehension. We strive to make Data Science education available to everyone, regardless of their background, and aim to inspire the next generation of data scientists, analysts, and enthusiasts by merging animation with data science education.
-          </em></b>
         </p>
       </div>
     </div>
@@ -120,10 +119,10 @@ const ContactUs = () => {
     <div className="contact-us">
       <section className="join-us-text">
         <h1><b>Join Us!</b></h1>
-        <p style={{ fontSize: '18px', color: 'black' }}>
-          <b><em>
+        <p style={{ fontSize: '18px', color: 'black', textAlign: "justify" }}>
+          
           Are you passionate about building interactive and fun algorithms? We invite you to join our team and contribute to creating engaging, gamified learning experiences. Together, we can make learning data structures exciting and accessible for everyone!
-          </em></b>
+          
         </p>    
       </section>
     
@@ -165,18 +164,16 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <h2>Follow Us</h2><br></br>
-        <div className="social-icons">
-          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faInstagram}  style={{height:'4vh'}}/> 
-          </a>
-          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faFacebookF}  style={{height:'4vh'}}/> 
-          </a>
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faLinkedinIn} style={{height:'4vh'}} /> 
-          </a>
-        </div>
+        <h2>Follow Us</h2>
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+          <FontAwesomeIcon icon={faInstagram}  style={{height:'4vh'}}/> 
+        </a>
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+          <FontAwesomeIcon icon={faFacebookF}  style={{height:'4vh'}}/> 
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+          <FontAwesomeIcon icon={faLinkedinIn} style={{height:'4vh'}} /> 
+        </a>
       </div>
     </footer>
   );
@@ -188,7 +185,7 @@ const HomePage = () => {
       <Navbar />
       <div className="logo">
         <a href="/home" className="navlogo">
-          <div className="logoo" style={{ fontSize: '25px', color: 'white' }}>ALGORIFIC</div>
+          <div className="logoo" style={{ fontSize: '25px', color: 'white'}}>ALGORIFIC</div>
         </a>
       </div>
       <CardContainer />
