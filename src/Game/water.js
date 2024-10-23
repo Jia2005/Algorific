@@ -1,88 +1,78 @@
 import React, { useState } from 'react';
 import './water.css';
 
+const pastelColors = [
+  'rgba(255, 182, 193, 1)', // Pink
+  'rgba(135, 206, 235, 1)', // Light Blue
+  'rgba(152, 251, 152, 1)', // Pale Green
+  'rgba(255, 218, 185, 1)', // Peach
+];
+
+const generateTubes = (numTubes, numColors) => {
+  const tubes = [];
+  for (let i = 0; i < numTubes; i++) {
+    const tube = Array.from({ length: 5 }, () => 
+      pastelColors[Math.floor(Math.random() * numColors)]
+    );
+    tubes.push(tube);
+  }
+  return tubes;
+};
+
 const Water = () => {
-  const initialContainers = [
-    ['red', 'blue', 'green', 'red'],
-    ['yellow', 'blue', 'green'],
-    ['red', 'yellow'],
-    ['blue', 'green', 'yellow'],
-    [], // Empty cup added
-  ];
-
-  const [containers, setContainers] = useState(initialContainers);
+  const [tubes, setTubes] = useState(generateTubes(5, 4));
+  const [selectedTube, setSelectedTube] = useState(null);
   const [score, setScore] = useState(0);
-  const [selectedDrop, setSelectedDrop] = useState(null);
 
-  const moveDrop = (toIndex) => {
-    if (selectedDrop === null) return;
-
-    const fromIndex = selectedDrop.fromIndex;
-    const newContainers = [...containers];
-    const movingDrop = newContainers[fromIndex].pop();
-
-    if (canMove(movingDrop, newContainers[toIndex])) {
-      newContainers[toIndex].push(movingDrop);
-      setContainers(newContainers);
-      setSelectedDrop(null);
-
-      if (checkForScoreIncrease(newContainers)) {
-        setScore(score + 1);
+  const handleTubeClick = (index) => {
+    if (selectedTube === null) {
+      if (tubes[index].length > 0) {
+        setSelectedTube(index);
       }
     } else {
-      newContainers[fromIndex].push(movingDrop);
+      if (selectedTube !== index && 
+          (tubes[index].length === 0 || tubes[index][tubes[index].length - 1] === tubes[selectedTube][tubes[selectedTube].length - 1])) {
+        
+        const liquidToPour = tubes[selectedTube].pop();
+        const newTubes = [...tubes];
+        newTubes[index].push(liquidToPour);
+        setTubes(newTubes);
+
+        // Check if the tube is now complete
+        if (newTubes[index].length === 5 && checkCompleteTube(newTubes[index])) {
+          setScore(score + 1);  // Increase score
+          newTubes[index] = [];  // Empty the tube after completing
+        }
+
+        setTubes(newTubes);
+        setSelectedTube(null);
+      }
     }
   };
 
-  const canMove = (movingDrop, toContainer) => {
-    return toContainer.length === 0 || toContainer[toContainer.length - 1] === movingDrop;
-  };
-
-  const checkForScoreIncrease = (containers) => {
-    return containers.some(container => {
-      return container.length > 0 && container.every(drop => drop === container[0]);
-    });
+  const checkCompleteTube = (tube) => {
+    return tube.every(color => color === tube[0]);
   };
 
   return (
-    <div className="app">
-      <h1>Water Sort Game</h1>
+    <div className="game-container">
+      <h1>Test Tube Sorting Game</h1>
       <div className="score">Score: {score}</div>
-      <div className="containers">
-        {containers.map((container, index) => (
-          <Container
+      <div className="tubes">
+        {tubes.map((tube, index) => (
+          <div
             key={index}
-            index={index}
-            drops={container}
-            moveDrop={moveDrop}
-            setSelectedDrop={setSelectedDrop}
-          />
+            className={`tube ${selectedTube === index ? 'selected' : ''}`}
+            onClick={() => handleTubeClick(index)}
+          >
+            {tube.slice().reverse().map((color, idx) => (
+              <div key={idx} className="liquid" style={{ backgroundColor: color }} />
+            ))}
+          </div>
         ))}
       </div>
     </div>
   );
-};
-
-const Container = ({ drops, index, moveDrop, setSelectedDrop }) => {
-  return (
-    <div className="container" onClick={() => moveDrop(index)}>
-      {drops.map((color, dropIndex) => (
-        <ColorDrop
-          key={dropIndex}
-          color={color}
-          onClick={() => {
-            const dropPosition = drops.length - 1 - dropIndex;
-            if (dropPosition === 0) return;
-            setSelectedDrop({ fromIndex: index, color });
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-const ColorDrop = ({ color, onClick }) => {
-  return <div className={`color-drop ${color}`} onClick={onClick}></div>;
 };
 
 export default Water;

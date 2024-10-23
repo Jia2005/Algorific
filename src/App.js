@@ -9,6 +9,8 @@ import HomePage from './HomePage';
 import BSTApp from './Game/bst';
 import Bstgame from './bstgame';
 import Water from './Game/water';
+import HashingGame from './HashingGame'; // Ensure the file name matches
+import HuffmanGame from './HuffmanGame';
 
 const App = () => {
   return (
@@ -22,7 +24,9 @@ const App = () => {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/algo" element={<BSTApp />} />
         <Route path="/bstgame" element={<Bstgame />} />
-        <Route path="/water" element={<Water/>} />
+        <Route path="/water" element={<Water />} />
+        <Route path="/hashing" element={<HashingGame />} />
+        <Route path="/huffmangame" element={<HuffmanGame />} /> {/* Updated path to lowercase */}
       </Routes>
     </BrowserRouter>
   );
