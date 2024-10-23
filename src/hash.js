@@ -1,78 +1,78 @@
 import React, { useState } from 'react';
+import './hash.css'; 
 
 const HashTable = () => {
-  const [tableSize, setTableSize] = useState('');
-  const [value, setValue] = useState('');
-  const [hashTable, setHashTable] = useState([]);
-  const [collisions, setCollisions] = useState(0);
+    const [tableSize, setTableSize] = useState(0);
+    const [hashTable, setHashTable] = useState([]);
+    const [inputNumber, setInputNumber] = useState('');
+    const [animationQueue, setAnimationQueue] = useState([]);
 
-  const handleTableSizeChange = (e) => {
-    setTableSize(e.target.value);
-  };
+    const handleTableSize = () => {
+        setHashTable(new Array(tableSize).fill(null));
+    };
 
-  const handleValueChange = (e) => {
-    setValue(e.target.value);
-  };
+    const handleInputNumber = () => {
+        const number = parseInt(inputNumber, 10);
+        if (isNaN(number)) return;
 
-  const insertValue = () => {
-    const size = parseInt(tableSize);
-    if (isNaN(size) || size <= 0 || size > 10) {
-      alert('Please enter a valid table size between 1 and 10.');
-      return;
-    }
+        const index = number % tableSize;
+        const newHashTable = [...hashTable];
+        let currentIndex = index;
 
-    const newHashTable = [...hashTable];
-    let index = value % size;
-    let startIndex = index;
+        const animations = [`Number: ${number}, Index: ${index}`];
 
-    while (newHashTable[index] !== undefined) {
-      collisions += 1;
-      index = (index + 1) % size;
-      if (index === startIndex) {
-        alert('The table is full');
-        return;
-      }
-    }
+        while (newHashTable[currentIndex] !== null) {
+            animations.push(`Index ${currentIndex} occupied, trying next index.`);
+            currentIndex = (currentIndex + 1) % tableSize;
+        }
 
-    newHashTable[index] = value;
-    setHashTable(newHashTable);
-    setCollisions(collisions);
-    setValue('');
-  };
+        newHashTable[currentIndex] = number;
+        setHashTable(newHashTable);
+        setAnimationQueue(animations);
+        setInputNumber('');
+    };
 
-  return (
-    <div className="container">
-      <h1>Hash Table Visualization</h1>
-      <div className="input-group">
-        <h2 className="heading">Enter Table Size</h2>
-        <input
-          type="number"
-          value={tableSize}
-          onChange={handleTableSizeChange}
-          placeholder="Table Size"
-        />
-      </div>
-      <div className="input-group">
-        <h2 className="heading">Enter Value</h2>
-        <input
-          type="text"
-          value={value}
-          onChange={handleValueChange}
-          placeholder="Value to Insert"
-        />
-      </div>
-      <button onClick={insertValue}>Insert Value</button>
-      <h2>Hash Table</h2>
-      <ul className="hash-table">
-        {hashTable.map((item, index) => (
-          <li key={index}>
-            Index {index}: {item !== undefined ? item : 'Empty'}
-          </li>
-        ))}
-      </ul>
-      <h2>Collisions: {collisions}</h2>
-    </div>
-  );
+    return (
+        <div className="hash-table-container">
+            <h1>Hash Table with Linear Probing</h1>
+            {!hashTable.length ? (
+                <>
+                    <input
+                        type="number"
+                        value={tableSize}
+                        onChange={(e) => setTableSize(e.target.value)}
+                        placeholder="Enter table size"
+                    />
+                    <button onClick={handleTableSize}>Create Table</button>
+                </>
+            ) : (
+                <>
+                    <input
+                        type="number"
+                        value={inputNumber}
+                        onChange={(e) => setInputNumber(e.target.value)}
+                        placeholder="Enter number to add"
+                    />
+                    <button onClick={handleInputNumber}>Add Number</button>
+                </>
+            )}
+            <div className="hash-table">
+                {hashTable.map((value, index) => (
+                    <div
+                        key={index}
+                        className={`hash-table-cell ${value !== null ? 'filled' : ''}`}
+                    >
+                        {value !== null ? value : '-'}
+                    </div>
+                ))}
+            </div>
+            <div className="animation-log">
+                {animationQueue.map((anim, idx) => (
+                    <div key={idx} className="animation-message">{anim}</div>
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export default HashTable;

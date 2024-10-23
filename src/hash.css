@@ -1,0 +1,34 @@
+.hash-table-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.hash-table {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.hash-table-cell {
+    border: 1px solid #333;
+    padding: 20px;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.hash-table-cell.filled {
+    background-color: #4caf50; 
+}
+
+.animation-log {
+    margin-top: 20px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.animation-message {
+    animation: fadeIn 0.5s;
+}
+
