@@ -22,9 +22,9 @@ const Navbar = () => {
 
   return (
     <div className={navbarClass} id="myNavbar">
-      <a href="/" style={{backgroundColor:'red'}}>Logout</a>
+      <a href="/" className='logout'>Logout</a>
       <a href='/profile'>
-        <FontAwesomeIcon icon={faUser} style={{ marginRight: '8px' }} />
+        <FontAwesomeIcon icon={faUser} />
       </a>
       <a href="#dashboard">Dashboard</a>
       <a href="#about">Algorithm</a>
@@ -188,7 +188,7 @@ const HomePage = () => {
       <Navbar />
       <div className="logo">
         <a href="/home" className="navlogo">
-          <div className="logoo" style={{ fontSize: '25px', color: 'white' }}>ALGORIFIC</div>
+          <div className="logoo" style={{ fontSize: '25px', color: 'white'}}>ALGORIFIC</div>
         </a>
       </div>
       <CardContainer />
