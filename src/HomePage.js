@@ -26,8 +26,8 @@ const Navbar = () => {
       <a href='/profile'>
         <FontAwesomeIcon icon={faUser} />
       </a>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#about">Algorithm</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/algo">Algorithm</a>
     </div>
   );
 };
@@ -102,7 +102,7 @@ const AboutSection = () => {
   return (
     <div className="about-section">
       <div className="about-us-image">
-        <img src="https://filovault-crypta.com/wp-content/uploads/2020/09/who-we-are.png" alt="About Us" className='imgabout' />
+        <img src= "https://captura.ivi.int/wp-content/uploads/2023/08/WHO-We-Are.png" alt="About Us" className='imgabout' style={{height:'380px', width:'600px'}}/>
       </div>
       <div className="about-us-text">
         <p style={{ fontSize: '18px', color: 'black', textAlign: "justify" }}>
