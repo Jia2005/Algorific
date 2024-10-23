@@ -6,7 +6,9 @@ import Queues from './Queues';
 import Auth from './Login/Auth';
 import UserProfile from './Profile/profile';
 import HomePage from './HomePage'; 
+import BSTApp from './Game/bst';
 import Bstgame from './bstgame';
+import Water from './Game/water';
 
 const App = () => {
   return (
@@ -18,7 +20,9 @@ const App = () => {
         <Route path="/stack" element={<Stacks />} />
         <Route path="/queue" element={<Queues />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/algo" element={<BSTApp />} />
         <Route path="/bstgame" element={<Bstgame />} />
+        <Route path="/water" element={<Water/>} />
       </Routes>
     </BrowserRouter>
   );

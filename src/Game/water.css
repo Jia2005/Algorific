@@ -1,0 +1,42 @@
+.app {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .score {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .containers {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .container {
+    width: 100px;
+    height: 200px;
+    border: 2px solid #000;
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .color-drop {
+    width: 80%;
+    height: 20px;
+    margin: 2px;
+    border-radius: 5px;
+  }
+  
+  .red { background-color: red; }
+  .green { background-color: green; }
+  .blue { background-color: blue; }
+  .yellow { background-color: yellow; }
+  
