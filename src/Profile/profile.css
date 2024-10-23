@@ -124,9 +124,14 @@
   align-self: center;
   background-color: #dc3545;
   color: white;
-  height: max-content;
+  margin-left: 20px;
+  font-size: 16px;
   padding: 0px 10px;
-  width: max-content;
+  height: 40px;
+  width: 120px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -157,13 +162,13 @@
 }
 .-container {
   display: grid;
-  grid-template-columns: 150px 1fr; /* First column for labels, second for inputs/values */
-  gap: 10px 20px; /* Adjusts spacing between label and input/value */
-  max-width: 500px; /* Set a max-width for the container */
+  grid-template-columns: 150px 1fr; 
+  gap: 10px 20px; 
+  max-width: 500px; 
 }
 .detail-block label {
-  text-align: right; /* Align the labels to the right */
-  padding-right: 10px; /* Add spacing between the label and the input/value */
+  text-align: right; 
+  padding-right: 10px; 
 }
 
 .detail-block p {
@@ -176,32 +181,32 @@
   background-color: #15afdd;
   color: white;
   border: none;
+  font-size: 16px;
   padding: 5px 5px;
-  height: max-content;
   padding: 0px 10px;
-  width: max-content;
   border-radius: 4px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 10px;
   transition: background-color 0.3s ease;
+  height: 40px;
+  width: 150px;
 }
 .hide {
   background-color: #1b7569;
   color: white;
+  font-size: 16px;
   border: none;
   align-items: center;
-  height: max-content;
   padding: 0px 10px;
-  width: max-content;
+  height: 40px;
+  width: 150px;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
-
-
 
 .edit-button:hover {
   background-color: #0056b3;
@@ -213,9 +218,10 @@
   background-color: #28a745;
   color: white;
   border: none;
-  height: max-content;
   padding: 0px 10px;
-  width: max-content;
+  height: 40px;
+  width: 150px;
+  font-size: 16px;
   border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
