@@ -164,7 +164,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <h2>Follow Us</h2>
+        <h2 style={{color:'white'}}>Follow Us</h2>
       </div>
       <div className='footer-content2'>
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">

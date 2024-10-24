@@ -185,7 +185,7 @@ const styles = {
   numberInput: {
     width: '60px',
     textAlign: 'center',
-    marginLeft: '10px',
+    marginLeft: '100px',
     padding: '5px',
     fontSize: '16px',
   },

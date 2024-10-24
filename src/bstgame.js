@@ -152,7 +152,7 @@ const Bstgame = () => {
                 What will be the next number ?
                 <input
                     type="text"
-                    style={{marginLeft: "20px"}}
+                    style={{justifyContent:'center', display:'flex', alignContent:'center'}}
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                     onKeyDown={(e) => {

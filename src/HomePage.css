@@ -280,6 +280,8 @@ body {
   .card .back h3 {
     font-size: 30px;
     margin-top: 20px;
+    font-weight: bold;
+    color: white;
     letter-spacing: 2px;
   }
   
