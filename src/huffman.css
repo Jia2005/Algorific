@@ -1,0 +1,54 @@
+.game-container {
+    text-align: center;
+    margin: 50px;
+  }
+
+  .codes {
+    color: black; /* Change text color to black */
+    background-color: #f0f0f0; /* Optional: Add a light background for contrast */
+    padding: 10px; /* Optional: Add some padding for spacing */
+    border-radius: 5px; /* Optional: Round the corners */
+  }
+  
+  
+  input {
+    padding: 15px;
+    width: 300px;
+    font-size: 16px;
+    border: 2px solid #007BFF; /* Highlighted border */
+    border-radius: 5px; /* Rounded corners */
+    outline: none; /* Remove outline on focus */
+    transition: border-color 0.3s;
+  }
+  
+  input:focus {
+    border-color: #0056b3; /* Darker blue on focus */
+  }
+  
+  button {
+    padding: 5px 10px; /* Smaller button */
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 10px; /* Add space above the button */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .output {
+    margin: 20px 0;
+    font-size: 20px;
+    color: black; /* Change color to black */
+  }
+  
+  h1, h2 {
+    color: black; /* Change all headers to black */
+  }
+  
