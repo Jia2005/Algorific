@@ -42,7 +42,7 @@ const UserProfile = ({ setComponent }) => {
           setPhone(userData.phone || '');  
 
           if (userData.avatarIndex) {  
-            setAvatarIndex(userData.avatarIndex);  // Storing avatar index
+            setAvatarIndex(userData.avatarIndex);  
           } else {
             setAvatarIndex(null);
           }
@@ -68,9 +68,9 @@ const UserProfile = ({ setComponent }) => {
     }
   
     try {
-      setAvatarIndex(index);  // Setting avatar index
+      setAvatarIndex(index);  
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { avatarIndex: index });  // Store index in Firestore
+      await updateDoc(userRef, { avatarIndex: index });  
     } catch (error) {
       console.error("Error updating avatar:", error);
       window.alert('Error updating avatar. Please try again.');
@@ -96,45 +96,55 @@ const UserProfile = ({ setComponent }) => {
     <div className="profile-container">
       <div className="sidebar">
         <div>
-          <div className="profile-pic">
+          <div className="profile-pic" style={{marginBottom:'60px'}}>
             {avatarIndex !== null ? (
-              <img src={avatarOptions[avatarIndex - 1]} alt="Profile" className="circular-pic" />  // Display avatar based on index
+              <img src={avatarOptions[avatarIndex - 1]} alt="Profile" className="circular-pic" />  
             ) : (
               <FontAwesomeIcon icon={faUserCircle} size="9x" />
             )}
           </div>
-          <div className="profile-name">
+          <div className="profile-name" style={{color:'white'}}>
             {name}
           </div>
           <hr className="sidebar-divider" />
           <div className="sidebar-menu">
             <ul>
               <li className="center">
-                <Link to="/home">Home</Link>
+                <Link to="/home" style={{textAlign:'left', color:'white'}}>Home</Link></li>
+                <li><Link to="/algo" style={{color:'white'}}>Algorithm</Link></li>
+                <li><Link to="/dashboard" style={{color:'white'}}>Dashboard</Link>
               </li>
             </ul>
           </div>
-          <div className='log'>
-            <button className="logout-button" onClick={handleSignOut}>Logout</button>
+          <div className='log' >
+            <button className="logout-button" style={{alignSelf:'left'}} onClick={handleSignOut}>Logout</button>
           </div>
         </div>
       </div>
       <div className="profile-details">
         <div className="detail-block-container">
-          <h2 style={{color:'black'}}>Profile Details</h2>
-          <div className="detail-block">
-            <p><strong>Name:</strong> {isEditing ? <input type="text" value={name} onChange={(e) => setName(e.target.value)} /> : name}</p>
-          </div>
-          <div className="detail-block">
-            <p><strong>Age:</strong> {isEditing ? <input type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}</p>
-          </div>
-          <div className="detail-block">
-            <p><strong>Email:</strong> {isEditing ? <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /> : email}</p>
-          </div>
-          <div className="detail-block">
-            <p><strong>Phone No.:</strong> {isEditing ? <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</p>
-          </div>
-          
+          <h2 style={{color:'black', marginBottom:'18px'}}>Profile Details</h2>
+          <table className="profile-table" style={{color:'black'}}>
+            <tbody>
+              <tr>
+                <td style={{width:'100px', paddingBottom:'10px'}}><strong>Name:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="text" value={name} onChange={(e) => setName(e.target.value)} /> : name}</td>
+              </tr>
+              <tr>
+                <td style={{paddingBottom:'10px'}}><strong>Age:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="number" value={age} onChange={(e) => setAge(e.target.value)} /> : age}</td>
+              </tr>
+              <tr>
+                <td style={{paddingBottom:'10px'}}><strong>Email:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /> : email}</td>
+              </tr>
+              <tr>
+                <td style={{paddingBottom:'10px'}}><strong>Phone No:</strong></td>
+                <td style={{paddingBottom:'10px'}}>{isEditing ? <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} /> : phone}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
           <div className="avatar-selection">
             <button className='hide' onClick={() => setIsChoosingAvatar(!isChoosingAvatar)}>
               {isChoosingAvatar ? 'Hide Avatars' : 'Choose an Avatar'}

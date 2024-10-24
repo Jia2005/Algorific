@@ -1,162 +1,226 @@
 import React, { useState, useEffect } from "react";
-import './bst.css';
 
 const bstAlgo = [
   "function insert(node, value) {",
-  "  if (node == null) {",
-  "    return newNode(value);",
-  "  }",
-  "  if (value < node.value) {",
-  "    node.left = insert(node.left, value);",
-  "  } else if (value > node.value) {",
-  "    node.right = insert(node.right, value);",
-  "  }",
-  "  return node;",
+  "    if (node == null) {",
+  "        return newNode(value);",
+  "    }",
+  "    if (value < node.value) {",
+  "        node.left = insert(node.left, value);",
+  "    } else if (value > node.value) {",
+  "        node.right = insert(node.right, value);",
+  "    }",
+  "    return node;",
   "}",
+  "",
   "function newNode(value) {",
-  "  return { value: value, left: null, right: null };",
+  "    return { value: value, left: null, right: null };",
   "}"
 ];
 
+// Initial Binary Search Tree
 const initialTree = {
   value: 50,
   left: { value: 30, left: { value: 20, left: null, right: null }, right: { value: 40, left: null, right: null } },
   right: { value: 70, left: { value: 60, left: null, right: null }, right: { value: 80, left: null, right: null } }
 };
 
-function BSTApp() {
-  const [currentLine, setCurrentLine] = useState(0);
-  const [tree, setTree] = useState(initialTree);
-  const [highlightedNode, setHighlightedNode] = useState(null);
-  const [traversePath, setTraversePath] = useState([]);
+// Line for tree connections
+const TreeLine = ({ x1, y1, x2, y2 }) => (
+  <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#000" strokeWidth="2" />
+);
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      if (currentLine < bstAlgo.length) {
-        const step = bstAlgo[currentLine];
-        executeStep(step);
-        setCurrentLine((prev) => prev + 1);
+// Tree Node component
+const TreeNode = ({ value, isHighlighted, isTraversed }) => (
+  <g>
+    <circle
+      r="20"
+      fill="#3498db"
+      stroke={isHighlighted ? "#ff4444" : isTraversed ? "#ffeb3b" : "#000"}
+      strokeWidth="4"
+    />
+    <text
+      fill="white"
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize="14"
+      fontWeight="bold"
+    >
+      {value}
+    </text>
+  </g>
+);
+
+const BSTApp = () => {
+  const [tree, setTree] = useState(initialTree);
+  const [currentNode, setCurrentNode] = useState(tree);
+  const [valueToInsert] = useState(25);
+  const [explanation, setExplanation] = useState("Press Enter to start execution");
+  const [currentLine, setCurrentLine] = useState(0); // Track the current line being executed
+
+  const calculateNodePosition = (node, x, y, level, width) => {
+    if (!node) return null;
+    const newWidth = width / 2;
+    const yOffset = 80;
+
+    const leftChild = calculateNodePosition(node.left, x - newWidth, y + yOffset, level + 1, newWidth);
+    const rightChild = calculateNodePosition(node.right, x + newWidth, y + yOffset, level + 1, newWidth);
+
+    return {
+      ...node,
+      x,
+      y,
+      children: {
+        left: leftChild,
+        right: rightChild
       }
-    }
+    };
   };
 
-  const executeStep = (step) => {
-    if (step.includes("insert")) {
-      const valueToInsert = 25;
-      if (!isValueInTree(tree, valueToInsert)) {
-        const path = traverseToInsert(tree, valueToInsert);
-        setTraversePath(path);
-        setTree(insertNode(tree, valueToInsert));
+  const renderConnections = (node) => {
+    if (!node) return null;
+    const connections = [];
+
+    if (node.children.left) {
+      connections.push(
+        <TreeLine
+          key={`${node.value}-${node.children.left.value}`}
+          x1={node.x}
+          y1={node.y}
+          x2={node.children.left.x}
+          y2={node.children.left.y}
+        />
+      );
+    }
+    if (node.children.right) {
+      connections.push(
+        <TreeLine
+          key={`${node.value}-${node.children.right.value}`}
+          x1={node.x}
+          y1={node.y}
+          x2={node.children.right.x}
+          y2={node.children.right.y}
+        />
+      );
+    }
+
+    return [
+      ...connections,
+      node.children.left && renderConnections(node.children.left),
+      node.children.right && renderConnections(node.children.right)
+    ];
+  };
+
+  const renderNodes = (node) => {
+    if (!node) return null;
+    return (
+      <>
+        <g transform={`translate(${node.x},${node.y})`}>
+          <TreeNode value={node.value} isHighlighted={currentNode && currentNode.value === node.value} />
+        </g>
+        {node.children.left && renderNodes(node.children.left)}
+        {node.children.right && renderNodes(node.children.right)}
+      </>
+    );
+  };
+
+  const executeStep = () => {
+    if (currentNode === null) return;
+
+    // Update explanation and highlight current line
+    if (currentLine < bstAlgo.length) {
+      setExplanation(bstAlgo[currentLine]);
+      setCurrentLine(prevLine => prevLine + 1); // Move to the next line
+    }
+
+    if (valueToInsert < currentNode.value) {
+      if (currentNode.left === null) {
+        setExplanation(`Inserting ${valueToInsert} to the left of ${currentNode.value}`);
+        const updatedTree = insertNode(tree, valueToInsert);
+        setTree(updatedTree);
+        setCurrentNode(null);
       } else {
-        setHighlightedNode(valueToInsert);
+        setExplanation(`Traversing left from ${currentNode.value}`);
+        setCurrentNode(currentNode.left);
       }
+    } else if (valueToInsert > currentNode.value) {
+      if (currentNode.right === null) {
+        setExplanation(`Inserting ${valueToInsert} to the right of ${currentNode.value}`);
+        const updatedTree = insertNode(tree, valueToInsert);
+        setTree(updatedTree);
+        setCurrentNode(null);
+      } else {
+        setExplanation(`Traversing right from ${currentNode.value}`);
+        setCurrentNode(currentNode.right);
+      }
+    } else {
+      setExplanation(`${valueToInsert} already exists in the tree`);
+      setCurrentNode(null);
     }
   };
 
   const insertNode = (node, value) => {
-    if (node == null) return newNode(value);
-    if (value < node.value) node.left = insertNode(node.left, value);
-    else if (value > node.value) node.right = insertNode(node.right, value);
-    return node;
-  };
+    if (node == null) {
+      return { value, left: null, right: null };
+    }
 
-  const newNode = (value) => {
-    return { value: value, left: null, right: null };
-  };
+    if (value < node.value) {
+      return { ...node, left: insertNode(node.left, value) };
+    } else if (value > node.value) {
+      return { ...node, right: insertNode(node.right, value) };
+    }
 
-  const isValueInTree = (node, value) => {
-    if (!node) return false;
-    if (node.value === value) return true;
-    return value < node.value ? isValueInTree(node.left, value) : isValueInTree(node.right, value);
-  };
-
-  const traverseToInsert = (node, value, path = []) => {
-    if (!node) return path;
-    path.push(node.value);
-    if (value < node.value) return traverseToInsert(node.left, value, path);
-    else if (value > node.value) return traverseToInsert(node.right, value, path);
-    return path;
-  };
-
-  const renderTree = (node) => {
-    if (!node) return null;
-    return (
-      <div className="node-container">
-        <div
-          className={`node ${highlightedNode === node.value ? "highlight" : ""} ${traversePath.includes(node.value) ? "traverse" : ""}`}
-        >
-          {node.value}
-        </div>
-        <div className="children">
-          <div className="left">{renderTree(node.left)}</div>
-          <div className="right">{renderTree(node.right)}</div>
-        </div>
-      </div>
-    );
+    return node; // Node already exists
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHighlightedNode(null);
-      setTraversePath([]);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [highlightedNode, traversePath]);
+    const handleKeyPress = (e) => {
+      if (e.key === "Enter") {
+        executeStep();
+      }
+    };
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
+  }, [currentNode, currentLine]); // Re-run effect on currentNode or currentLine change
+
+  const positionedTree = calculateNodePosition(tree, 300, 50, 0, 300);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        fontFamily: "monospace",
-        color: "#fff",
-        backgroundColor: "#282c34"
-      }}
-      onKeyDown={handleKeyPress}
-      tabIndex="0"
-    >
-      <div
-        style={{
-          flex: 1,
-          backgroundColor: "#f8f9fa",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-          color: "#000",
-          overflowY: "auto"
-        }}
-      >
-        <h3>BST Algorithm - Step by Step</h3>
-        <pre>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap:'40px', height: '100vh', backgroundColor: '#f0f4f8' }}>
+      <div style={{height:'85vh',flex: 1, padding: '20px', display: 'flex',marginLeft:'15px', flexDirection: 'column', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <h1 style={{ color: '#333', marginBottom: '16px' }}>Binary Search Tree Visualization</h1>
+        <p style={{ color: '#555', marginBottom: '16px' }}>{explanation}</p>
+        <svg width="600" height="400" style={{ backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+          {positionedTree && (
+            <>
+              {renderConnections(positionedTree)}
+              {renderNodes(positionedTree)}
+            </>
+          )}
+        </svg>
+      </div>
+      <div style={{marginRight:'15px',height:'85vh', flex: 1, padding: '20px', display: 'flex', flexDirection: 'column', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <h1 style={{ color: '#333', marginBottom: '16px' }}>BST Insertion Algorithm</h1>
+        <p style={{ color: '#555', marginBottom: '16px' }}>Inserting value: {valueToInsert}</p>
+        <pre style={{ backgroundColor: '#f8f8f8', padding: '16px', borderRadius: '8px', overflowX: 'auto' }}>
           {bstAlgo.map((line, index) => (
-            <code
+            <div
               key={index}
               style={{
-                backgroundColor: index === currentLine ? "yellow" : "inherit",
-                color: index === currentLine ? "#000" : "#000"
+                fontFamily: 'monospace',
+                padding: '8px',
+                backgroundColor: "transparent",
+                color: "#333"
               }}
             >
               {line}
-            </code>
+            </div>
           ))}
         </pre>
       </div>
-      <div
-        style={{
-          flex: 1,
-          backgroundColor: "#282c34",
-          padding: "20px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <div className="tree-visualization">{renderTree(tree)}</div>
-      </div>
     </div>
   );
-}
+};
 
 export default BSTApp;
+

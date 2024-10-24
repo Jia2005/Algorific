@@ -9,8 +9,10 @@ import HomePage from './HomePage';
 import BSTApp from './Game/bst';
 import Bstgame from './bstgame';
 import Water from './Game/water';
-import HashingGame from './HashingGame'; // Ensure the file name matches
+import HashingGame from './HashingGame';
 import HuffmanGame from './HuffmanGame';
+import Dashboard from './Dashboard/dashboard';
+import HashTable from './hash';
 
 const App = () => {
   return (
@@ -21,12 +23,14 @@ const App = () => {
         <Route path="/linkedlist" element={<LinkedList />} />
         <Route path="/stack" element={<Stacks />} />
         <Route path="/queue" element={<Queues />} />
+        <Route path="/hash" element={<HashTable />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/algo" element={<BSTApp />} />
         <Route path="/bstgame" element={<Bstgame />} />
         <Route path="/water" element={<Water />} />
         <Route path="/hashing" element={<HashingGame />} />
-        <Route path="/huffmangame" element={<HuffmanGame />} /> {/* Updated path to lowercase */}
+        <Route path="/huffmangame" element={<HuffmanGame />} /> 
+        <Route path="/dashboard" element={<Dashboard/>} />
       </Routes>
     </BrowserRouter>
   );

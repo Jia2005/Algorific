@@ -22,7 +22,11 @@
   position: relative;
   margin-bottom: 20px;
 }
-
+.center{
+  display: flex;
+  flex-direction: column;
+  
+}
 .circular-pic {
   width: 150px;
   height: 150px;
@@ -81,11 +85,10 @@
 
 .sidebar-menu li {
   margin: 12px 0;
-  padding: 10px;
+  padding: 5px 10px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: flex;
-  align-items: center;
 }
 
 .sidebar-menu li:hover {
@@ -118,17 +121,21 @@
 }
 
 .logout-button {
-  
+  align-self: center;
   background-color: #dc3545;
   color: white;
-  height: max-content;
+  margin-left: 20px;
+  font-size: 16px;
   padding: 0px 10px;
-  width: max-content;
+  height: 40px;
+  width: 120px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  align-self: center;
 }
 
 .logout-button:hover {
@@ -136,8 +143,8 @@
   transform: scale(1.03);
   transition: 0.5s;
 }
-
 .profile-details {
+
   flex: 1;
   padding: 20px;
   background-color: #ffffff;
@@ -147,15 +154,25 @@
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 30px;
 }
 
 .detail-block {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+.-container {
+  display: grid;
+  grid-template-columns: 150px 1fr; 
+  gap: 10px 20px; 
+  max-width: 500px; 
+}
+.detail-block label {
+  text-align: right; 
+  padding-right: 10px; 
 }
 
 .detail-block p {
-  margin: 0;
+  margin-bottom: 10px;
   font-size: 1rem;
   color: #555;
 }
@@ -164,32 +181,32 @@
   background-color: #15afdd;
   color: white;
   border: none;
+  font-size: 16px;
   padding: 5px 5px;
-  height: max-content;
   padding: 0px 10px;
-  width: max-content;
   border-radius: 4px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 10px;
   transition: background-color 0.3s ease;
+  height: 40px;
+  width: 150px;
 }
 .hide {
   background-color: #1b7569;
   color: white;
+  font-size: 16px;
   border: none;
   align-items: center;
-  height: max-content;
   padding: 0px 10px;
-  width: max-content;
-  border-radius: 4px;
+  height: 40px;
+  width: 150px;
+  border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
-
-
 
 .edit-button:hover {
   background-color: #0056b3;
@@ -201,10 +218,11 @@
   background-color: #28a745;
   color: white;
   border: none;
-  height: max-content;
   padding: 0px 10px;
-  width: max-content;
-  border-radius: 4px;
+  height: 40px;
+  width: 150px;
+  font-size: 16px;
+  border-radius: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -217,12 +235,14 @@
 }
 
 .log {
-  
-  
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 65px;
 }
-
+.log button{
+  padding: 0 40px;
+  align-self: center;
+}
 
 
 

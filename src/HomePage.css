@@ -104,7 +104,7 @@ body {
     margin: 0 10px;
   }
   
-  button {
+  .card button, .contact-us-text button {
     background-color: #bb66f8;
     border: none;
     color: white;
@@ -419,19 +419,22 @@ body {
 
   .footer-content {
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .footer-content a {
+  .footer-content2 a {
     color: white;
     padding: 0 20px;
   }
 
-  .footer-content a:hover {
+  .footer-content2 a:hover {
     color: #89d0ff;
   }
 
   .footer-content h2 {
-    text-align: left;
+    text-align: center;
     padding-left: 20px;
+    padding-bottom: 20px;
   }
   
