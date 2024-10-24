@@ -9,6 +9,7 @@ import HomePage from './HomePage';
 import BSTApp from './Game/bst';
 import Bstgame from './bstgame';
 import Water from './Game/water';
+import Dashboard from './Dashboard/dashboard';
 import HashTable from './hash';
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/algo" element={<BSTApp />} />
         <Route path="/bstgame" element={<Bstgame />} />
         <Route path="/water" element={<Water/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
       </Routes>
     </BrowserRouter>
   );

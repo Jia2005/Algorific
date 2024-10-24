@@ -96,23 +96,23 @@ const UserProfile = ({ setComponent }) => {
     <div className="profile-container">
       <div className="sidebar">
         <div>
-          <div className="profile-pic">
+          <div className="profile-pic" style={{marginBottom:'60px'}}>
             {avatarIndex !== null ? (
               <img src={avatarOptions[avatarIndex - 1]} alt="Profile" className="circular-pic" />  
             ) : (
               <FontAwesomeIcon icon={faUserCircle} size="9x" />
             )}
           </div>
-          <div className="profile-name">
+          <div className="profile-name" style={{color:'white'}}>
             {name}
           </div>
           <hr className="sidebar-divider" />
           <div className="sidebar-menu">
             <ul>
               <li className="center">
-                <Link to="/home" style={{textAlign:'left'}}>Home</Link></li>
-                <li><Link to="/algo">Algorithm</Link></li>
-                <li><Link to="/dashboard">Dashboard</Link>
+                <Link to="/home" style={{textAlign:'left', color:'white'}}>Home</Link></li>
+                <li><Link to="/algo" style={{color:'white'}}>Algorithm</Link></li>
+                <li><Link to="/dashboard" style={{color:'white'}}>Dashboard</Link>
               </li>
             </ul>
           </div>
