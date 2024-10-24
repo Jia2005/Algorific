@@ -7,10 +7,6 @@ const QueueVisualization = () => {
   const [message, setMessage] = useState('');
   const [isEnqueuing, setIsEnqueuing] = useState(true);
 
-  const handleEnqueueClick = () => {
-    setIsEnqueuing(true);
-  };
-
   const enqueue = () => {
     if (queue.length < maxSize) {
       setQueue([...queue, inputValue]);

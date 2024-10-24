@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';  
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';  
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
-import { faUserCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';   
+import { faUserCircle} from '@fortawesome/free-solid-svg-icons';   
 import './profile.css';  
 import { Link } from 'react-router-dom';
 

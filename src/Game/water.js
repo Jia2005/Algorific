@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
 import './water.css';
-import { color } from 'framer-motion';
 
 const pastelColors = [
-  'rgba(255, 182, 193, 1)', // Pink
-  'rgba(135, 206, 235, 1)', // Light Blue
-  'rgba(152, 251, 152, 1)', // Pale Green
-  'rgba(255, 218, 185, 1)', // Peach
+  'rgba(255, 182, 193, 1)', 
+  'rgba(135, 206, 235, 1)', 
+  'rgba(152, 251, 152, 1)', 
+  'rgba(255, 218, 185, 1)', 
 ];
 
-// Function to generate tubes with liquids
 const generateTubes = (numTubes, boxSize, colors) => {
   const tubes = [];
   const totalLiquids = colors.flatMap(color => Array(boxSize).fill(color));
-  // Shuffle the liquids
   for (let i = totalLiquids.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [totalLiquids[i], totalLiquids[j]] = [totalLiquids[j], totalLiquids[i]];
   }
 
   for (let i = 0; i < numTubes; i++) {
-    tubes.push(totalLiquids.splice(0, boxSize)); // Take 5 liquids for each tube
+    tubes.push(totalLiquids.splice(0, boxSize)); 
   }
 
   return tubes;
 };
 
 const Water = () => {
-  const boxSize = 5; // Fixed box size
-  const numTubes = 7; // Total number of tubes (5 filled + 2 free)
-  const initialTubes = generateTubes(5, boxSize, pastelColors); // Generate filled tubes
-  const [tubes, setTubes] = useState([...initialTubes, [], []]); // Add two empty tubes for sorting
+  const boxSize = 5;  
+  const initialTubes = generateTubes(5, boxSize, pastelColors); 
+  const [tubes, setTubes] = useState([...initialTubes, [], []]); 
   const [selectedTube, setSelectedTube] = useState(null);
   const [score, setScore] = useState(0);
 
@@ -48,10 +44,9 @@ const Water = () => {
         newTubes[index].push(liquidToPour);
         setTubes(newTubes);
 
-        // Check if the tube is now complete
         if (newTubes[index].length === boxSize && checkCompleteTube(newTubes[index])) {
-          setScore(score + 1);  // Increase score
-          newTubes[index] = [];  // Empty the tube after completing
+          setScore(score + 1); 
+          newTubes[index] = [];  
         }
 
         setTubes(newTubes);

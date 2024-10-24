@@ -12,7 +12,6 @@ import Water from './Game/water';
 import HashingGame from './HashingGame';
 import HuffmanGame from './HuffmanGame';
 import Dashboard from './Dashboard/dashboard';
-import HashTable from './hash';
 
 const App = () => {
   return (

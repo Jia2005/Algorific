@@ -3,22 +3,14 @@ import bst from './Images/bst.jpg';
 import queue from './Images/queue.jpg';
 import ll from './Images/ll.jpg';
 import huff from './Images/huff.jpg';
-import about from './Images/about.jpg';
 import hash from './Images/hashing.jpg';
 import stack from './Images/stacks.jpg';
-import profileLogo from './Images/profile.jpg';
 import './HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
-  const [navbarClass, setNavbarClass] = useState('navbar');
-
-  const toggleNavbar = () => {
-    setNavbarClass(prevClass => 
-      prevClass === 'navbar' ? 'navbar responsive' : 'navbar'
-    );
-  };
+  const [navbarClass] = useState('navbar');
 
   return (
     <div className={navbarClass} id="myNavbar">

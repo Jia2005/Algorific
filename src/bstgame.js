@@ -61,7 +61,7 @@ const Bstgame = () => {
         });
         setBst(newBst);
         setTraversalValues(traversal(traversalMethod, newBst, []));
-    }, []);
+    }, [traversalMethod]);
 
     useEffect(() => {
         if (bst) {
@@ -89,7 +89,7 @@ const Bstgame = () => {
             if (guess === correctNextNumber && currentIndex <= traversalValues.length - 3) {
                 setScore(score + 1);
                 swal("Correct!","Keep Going ✨💎","success");
-            } else if (guess === correctNextNumber && currentIndex == traversalValues.length - 2) {
+            } else if (guess === correctNextNumber && currentIndex === traversalValues.length - 2) {
                 setScore(score + 1);
                 swal(`Your final score is ${score}`)
                 .then((value) => {
@@ -101,7 +101,7 @@ const Bstgame = () => {
             setCurrentIndex(currentIndex + 1);
             setUserInput('');
         }
-        if(currentIndex == traversalValues.length - 1) {
+        if(currentIndex === traversalValues.length - 1) {
             swal(`Your final score is ${score}`)
             .then((value) => {
                 navigate('/home');
@@ -138,9 +138,9 @@ const Bstgame = () => {
         <div className="App" style={{padding: "20px 0"}}>
             <h1 style={{ color: 'black' }}>BST Traversal Game</h1><br />
             <select style={{fontSize: "18px"}} onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
-                <option value="in-order">In-order</option>
-                <option value="pre-order">Pre-order</option>
-                <option value="post-order">Post-order</option>
+                <option value="In-order">In-order</option>
+                <option value="Pre-order">Pre-order</option>
+                <option value="Post-order">Post-order</option>
             </select><br /><br />
             <h2 style={{ color: 'black' }}>Score: {score}</h2><br />
             <h2 style={{ color: 'black' }}>Current Traversal: {traversalMethod}</h2><br />

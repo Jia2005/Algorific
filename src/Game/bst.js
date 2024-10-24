@@ -181,7 +181,7 @@ const BSTApp = () => {
     };
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [currentNode, currentLine]); // Re-run effect on currentNode or currentLine change
+  }, [currentNode, currentLine]); 
 
   const positionedTree = calculateNodePosition(tree, 300, 50, 0, 300);
 
