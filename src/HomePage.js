@@ -64,7 +64,7 @@ const CardContainer = () => {
         title="Stack" 
         description="A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle."
         learnLink="/stack"
-        playLink="/stack-game"
+        playLink="/water"
       />
       <Card 
         imgSrc={ll}
@@ -85,7 +85,7 @@ const CardContainer = () => {
         title="Huffman Coding" 
         description="Huffman coding is a compression technique that assigns shorter codes to more frequent characters."
         learnLink="/huffman"
-        playLink="/huffman-game"
+        playLink="/huffmangame"
       />
       <Card 
         imgSrc={hash} 
@@ -164,7 +164,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <h2>Follow Us</h2>
+        <h2 style={{color:'white'}}>Follow Us</h2>
       </div>
       <div className='footer-content2'>
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">

@@ -5,8 +5,10 @@
   
   .sidebar {
     width: 250px;
-    background-color: black;
-    color: white;
+    background-color: white;
+    font-weight: bold;
+    color: black;
+    display: flex;
     padding: 20px;
     display: flex;
     flex-direction: column;
