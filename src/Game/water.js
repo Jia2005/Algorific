@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './water.css';
+import { color } from 'framer-motion';
 
 const pastelColors = [
   'rgba(255, 182, 193, 1)', // Pink
@@ -8,19 +9,28 @@ const pastelColors = [
   'rgba(255, 218, 185, 1)', // Peach
 ];
 
-const generateTubes = (numTubes, numColors) => {
+// Function to generate tubes with liquids
+const generateTubes = (numTubes, boxSize, colors) => {
   const tubes = [];
-  for (let i = 0; i < numTubes; i++) {
-    const tube = Array.from({ length: 5 }, () => 
-      pastelColors[Math.floor(Math.random() * numColors)]
-    );
-    tubes.push(tube);
+  const totalLiquids = colors.flatMap(color => Array(boxSize).fill(color));
+  // Shuffle the liquids
+  for (let i = totalLiquids.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [totalLiquids[i], totalLiquids[j]] = [totalLiquids[j], totalLiquids[i]];
   }
+
+  for (let i = 0; i < numTubes; i++) {
+    tubes.push(totalLiquids.splice(0, boxSize)); // Take 5 liquids for each tube
+  }
+
   return tubes;
 };
 
 const Water = () => {
-  const [tubes, setTubes] = useState(generateTubes(5, 4));
+  const boxSize = 5; // Fixed box size
+  const numTubes = 7; // Total number of tubes (5 filled + 2 free)
+  const initialTubes = generateTubes(5, boxSize, pastelColors); // Generate filled tubes
+  const [tubes, setTubes] = useState([...initialTubes, [], []]); // Add two empty tubes for sorting
   const [selectedTube, setSelectedTube] = useState(null);
   const [score, setScore] = useState(0);
 
@@ -39,7 +49,7 @@ const Water = () => {
         setTubes(newTubes);
 
         // Check if the tube is now complete
-        if (newTubes[index].length === 5 && checkCompleteTube(newTubes[index])) {
+        if (newTubes[index].length === boxSize && checkCompleteTube(newTubes[index])) {
           setScore(score + 1);  // Increase score
           newTubes[index] = [];  // Empty the tube after completing
         }
@@ -57,7 +67,7 @@ const Water = () => {
   return (
     <div className="game-container">
       <h1>Test Tube Sorting Game</h1>
-      <div className="score">Score: {score}</div>
+      <div className="score" style={{color:'black'}}>Score: {score}</div>
       <div className="tubes">
         {tubes.map((tube, index) => (
           <div

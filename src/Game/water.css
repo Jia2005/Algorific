@@ -1,8 +1,6 @@
-/* TestTubeSortingGame.css */
+/* water.css */
 .game-container {
   text-align: center;
-  padding: 20px;
-  background-color: white;
 }
 
 .tubes {
@@ -12,32 +10,27 @@
 }
 
 .tube {
-  width: 80px;
-  height: 200px;
+  width: 80px; /* Fixed width */
+  height: 200px; /* Fixed height */
   border: 2px solid black;
   margin: 0 10px;
   position: relative;
-  cursor: pointer;
-  background-color: white;
-  transition: background-color 0.3s;
-}
-
-.tube.selected {
-  border-color: red; /* Highlight selected tube */
-  background-color: rgba(255, 0, 0, 0.1); /* Light background for selected */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Ensure liquids start from the bottom */
 }
 
 .liquid {
   width: 100%;
-  height: 40px;
-  margin: 2px 0;
-  border-radius: 5px;
+  height: 40px; /* Each liquid occupies 1/5th of the tube */
 }
 
-/* water.css */
+.selected {
+  border-color: blue; /* Highlight selected tube */
+}
+
 .score {
   font-size: 24px;
   font-weight: bold;
-  color: black; /* Change to your desired color */
-  margin-bottom: 20px; /* Add space below the score */
+  margin-bottom: 20px;
 }
