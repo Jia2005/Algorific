@@ -42,7 +42,7 @@ const UserProfile = ({ setComponent }) => {
           setPhone(userData.phone || '');  
 
           if (userData.avatarIndex) {  
-            setAvatarIndex(userData.avatarIndex);  // Storing avatar index
+            setAvatarIndex(userData.avatarIndex);  
           } else {
             setAvatarIndex(null);
           }
@@ -68,9 +68,9 @@ const UserProfile = ({ setComponent }) => {
     }
   
     try {
-      setAvatarIndex(index);  // Setting avatar index
+      setAvatarIndex(index);  
       const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, { avatarIndex: index });  // Store index in Firestore
+      await updateDoc(userRef, { avatarIndex: index });  
     } catch (error) {
       console.error("Error updating avatar:", error);
       window.alert('Error updating avatar. Please try again.');
@@ -98,7 +98,7 @@ const UserProfile = ({ setComponent }) => {
         <div>
           <div className="profile-pic">
             {avatarIndex !== null ? (
-              <img src={avatarOptions[avatarIndex - 1]} alt="Profile" className="circular-pic" />  // Display avatar based on index
+              <img src={avatarOptions[avatarIndex - 1]} alt="Profile" className="circular-pic" />  
             ) : (
               <FontAwesomeIcon icon={faUserCircle} size="9x" />
             )}
@@ -111,8 +111,8 @@ const UserProfile = ({ setComponent }) => {
             <ul>
               <li className="center">
                 <Link to="/home" style={{textAlign:'left'}}>Home</Link></li>
-                <li><Link to="#about">Algorithm</Link></li>
-                <li><Link to="#dash">Dashboard</Link>
+                <li><Link to="/algo">Algorithm</Link></li>
+                <li><Link to="/dashboard">Dashboard</Link>
               </li>
             </ul>
           </div>
