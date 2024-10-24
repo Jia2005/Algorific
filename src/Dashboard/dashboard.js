@@ -44,7 +44,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="sidebar">
         <div className="user-profile">
-          <h2 style={{fontWeight:'bold', alignSelf:'top'}}>Jia Harisinghani</h2>
+          <h2 style={{fontWeight:'bold'}}>Jia Harisinghani</h2>
           <hr className="sidebar-divider" />
           <div className="sidebar-menu">
             <ul>
