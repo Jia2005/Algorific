@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import './dashboard.css';
+import { Link } from 'react-router-dom';
 
 Chart.register(
   CategoryScale,
@@ -43,17 +44,20 @@ function Dashboard() {
     <div className="dashboard">
       <div className="sidebar">
         <div className="user-profile">
-          <h3>Jia Harisinghani</h3>
-        </div>
-        <nav>
-          <ul>
-            <li>Home</li>
-            <li>Algorithm</li>
-            <li>Profile</li>
-          </ul>
-        </nav>
-        <div className="logout">
-          <button>Logout</button>
+          <h2 style={{fontWeight:'bold', alignSelf:'top'}}>Jia Harisinghani</h2>
+          <hr className="sidebar-divider" />
+          <div className="sidebar-menu">
+            <ul>
+              <li className="center">
+                <Link to="/home" style={{color:'black'}}>Home</Link></li>
+                <li><Link to="/algo" style={{color:'black'}}>Algorithm</Link></li>
+                <li><Link to="/dashboard" style={{color:'black'}}>Dashboard</Link>
+              </li>
+            </ul>
+          </div>
+          <div className='log' >
+            <button Link to="/" className="logout-button" style={{alignSelf:'left'}}>Logout</button>
+          </div>
         </div>
       </div>
 

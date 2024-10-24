@@ -80,15 +80,15 @@ const HuffmanGame = () => {
 
   return (
     <div className="game-container">
-      <h1>Huffman Encoding Game</h1>
+      <h1>Huffman Encoding Game</h1><br></br>
       <input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Enter text to encode"
-      />
-      <button onClick={handleEncode}>Encode It!</button>
-      <button onClick={handleClear}>Clear</button>
+      /><br></br>
+      <button onClick={handleEncode} className='hash-button'>Encode It!</button>
+      <button onClick={handleClear} className='hash-button'>Clear</button>
       <div className="output">
         <h2>Encoded Output:</h2>
         <p>{encodedOutput}</p>
@@ -99,10 +99,10 @@ const HuffmanGame = () => {
         <pre>{Object.entries(codes).map(([char, code]) => `${char}: ${code}`).join('\n')}</pre>
       </div>
       <div className="examples">
-        <h3>Example Inputs:</h3>
-        <button onClick={() => setInput('hello')}>hello</button>
-        <button onClick={() => setInput('huffman encoding')}>huffman encoding</button>
-        <button onClick={() => setInput('data compression')}>data compression</button>
+        <br></br><h3>Example Inputs:</h3><br></br>
+        <button onClick={() => setInput('hello world')} className='hash-button'>hello world</button>
+        <button onClick={() => setInput('huffman encoding')} className='hash-button'>huffman encoding</button>
+        <button onClick={() => setInput('data compression')} className='hash-button'>data compression</button>
       </div>
     </div>
   );

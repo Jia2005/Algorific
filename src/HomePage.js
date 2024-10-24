@@ -64,7 +64,7 @@ const CardContainer = () => {
         title="Stack" 
         description="A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle."
         learnLink="/stack"
-        playLink="/stack-game"
+        playLink="/water"
       />
       <Card 
         imgSrc={ll}
@@ -85,7 +85,7 @@ const CardContainer = () => {
         title="Huffman Coding" 
         description="Huffman coding is a compression technique that assigns shorter codes to more frequent characters."
         learnLink="/huffman"
-        playLink="/huffman-game"
+        playLink="/huffmangame"
       />
       <Card 
         imgSrc={hash} 
