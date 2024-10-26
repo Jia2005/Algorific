@@ -87,10 +87,10 @@ const Bstgame = () => {
         if (!isNaN(guess) && currentIndex < traversalValues.length - 1) {
             const correctNextNumber = traversalValues[currentIndex + 1];
             if (guess === correctNextNumber && currentIndex <= traversalValues.length - 3) {
-                setScore(score + 1);
+                setScore(score + 10);
                 swal("Correct!","Keep Going ✨💎","success");
             } else if (guess === correctNextNumber && currentIndex === traversalValues.length - 2) {
-                setScore(score + 1);
+                setScore(score + 10);
                 swal(`Your final score is ${score}`)
                 .then((value) => {
                     navigate('/home');

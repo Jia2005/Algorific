@@ -1,4 +1,3 @@
-/* water.css */
 .game-container {
   text-align: center;
 }
@@ -10,27 +9,57 @@
 }
 
 .tube {
-  width: 80px; /* Fixed width */
-  height: 200px; /* Fixed height */
+  width: 80px; 
+  height: 200px; 
   border: 2px solid black;
   margin: 0 10px;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Ensure liquids start from the bottom */
+  justify-content: flex-end;
 }
 
 .liquid {
   width: 100%;
-  height: 40px; /* Each liquid occupies 1/5th of the tube */
+  height: 40px; 
+  transition: background-color 0.3s;
 }
 
 .selected {
-  border-color: blue; /* Highlight selected tube */
+  border: 4px solid black; 
 }
 
 .score {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+}
+
+.game-container {
+  text-align: center;
+}
+
+.tubes {
+  display: flex;
+  justify-content: center;
+}
+
+.tube.filled {
+  background-color: rgba(255, 255, 255, 0.7); 
+  pointer-events: none; 
+}
+
+.lid {
+  position: relative;
+  z-index: 1;
+}
+
+.lid-overlay {
+  position: absolute;
+  top: -10px; 
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  border: 1px solid #000;
 }

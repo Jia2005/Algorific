@@ -25,7 +25,7 @@ const Queues = () => {
   const enqueue = () => {
     if (isNaN(inputValue) || inputValue.trim() === '') {
       setMessage('Invalid Input');
-      setInputValue('');
+      setInputValue('')
       return;
     }
 

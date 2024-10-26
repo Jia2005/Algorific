@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './water.css';
 
 const pastelColors = [
-  'rgba(255, 182, 193, 1)', 
-  'rgba(135, 206, 235, 1)', 
-  'rgba(152, 251, 152, 1)', 
-  'rgba(255, 218, 185, 1)', 
+  'rgba(255, 182, 193, 1)',
+  'rgba(135, 206, 235, 1)',
+  'rgba(152, 251, 152, 1)',
+  'rgba(255, 218, 185, 1)',
 ];
 
 const generateTubes = (numTubes, boxSize, colors) => {
@@ -17,18 +17,19 @@ const generateTubes = (numTubes, boxSize, colors) => {
   }
 
   for (let i = 0; i < numTubes; i++) {
-    tubes.push(totalLiquids.splice(0, boxSize)); 
+    tubes.push(totalLiquids.splice(0, boxSize));
   }
 
   return tubes;
 };
 
 const Water = () => {
-  const boxSize = 5;  
-  const initialTubes = generateTubes(5, boxSize, pastelColors); 
-  const [tubes, setTubes] = useState([...initialTubes, [], []]); 
+  const boxSize = 5;
+  const initialTubes = generateTubes(5, boxSize, pastelColors);
+  const [tubes, setTubes] = useState([...initialTubes, [], []]);
   const [selectedTube, setSelectedTube] = useState(null);
   const [score, setScore] = useState(0);
+  const [filledTubes, setFilledTubes] = useState([]);
 
   const handleTubeClick = (index) => {
     if (selectedTube === null) {
@@ -36,17 +37,19 @@ const Water = () => {
         setSelectedTube(index);
       }
     } else {
-      if (selectedTube !== index && 
+      if (selectedTube !== index &&
           (tubes[index].length === 0 || tubes[index][tubes[index].length - 1] === tubes[selectedTube][tubes[selectedTube].length - 1])) {
         
         const liquidToPour = tubes[selectedTube].pop();
         const newTubes = [...tubes];
-        newTubes[index].push(liquidToPour);
-        setTubes(newTubes);
+
+        if (newTubes[index].length < boxSize) {
+          newTubes[index].push(liquidToPour);
+        }
 
         if (newTubes[index].length === boxSize && checkCompleteTube(newTubes[index])) {
-          setScore(score + 1); 
-          newTubes[index] = [];  
+          setScore(score + 10);
+          setFilledTubes([...filledTubes, index]); 
         }
 
         setTubes(newTubes);
@@ -61,13 +64,13 @@ const Water = () => {
 
   return (
     <div className="game-container">
-      <h1>Test Tube Sorting Game</h1>
-      <div className="score" style={{color:'black'}}>Score: {score}</div>
+      <h1>Stack Implementation Game</h1>
+      <div className="score" style={{ color: 'black' }}>Score: {score}</div>
       <div className="tubes">
         {tubes.map((tube, index) => (
           <div
             key={index}
-            className={`tube ${selectedTube === index ? 'selected' : ''}`}
+            className={`tube ${selectedTube === index ? 'selected' : ''} ${filledTubes.includes(index) ? 'filled' : ''}`}
             onClick={() => handleTubeClick(index)}
           >
             {tube.slice().reverse().map((color, idx) => (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const Stacks = () => {
   const [stack, setStack] = useState([]);
@@ -6,21 +6,6 @@ const Stacks = () => {
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Delete') {
-        pop();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [stack]);
 
   const push = () => {
     if (isNaN(inputValue) || inputValue.trim() === '') {
@@ -38,7 +23,7 @@ const Stacks = () => {
     setInputValue('');
   };
 
-  const pop = () => {
+  const pop = useCallback(() => {
     if (stack.length > 0) {
       const poppedValue = stack[stack.length - 1];
       setStack((prevStack) => prevStack.slice(0, -1));
@@ -46,7 +31,7 @@ const Stacks = () => {
     } else {
       setMessage('Stack Empty');
     }
-  };
+  }, [stack]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -63,6 +48,21 @@ const Stacks = () => {
       push();
     }
   };
+
+  useEffect(() => {
+    inputRef.current.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Delete') {
+        pop();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [pop]); // Now using pop in the dependencies
 
   return (
     <div style={styles.container}>
