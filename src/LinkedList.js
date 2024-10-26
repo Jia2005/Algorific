@@ -259,7 +259,14 @@ const LinkedList = () => {
                 value={position}
                 onChange={handlePositionChange}
                 placeholder="Index (greater than 0)"
-                style={styles.textInput}
+                style={{width: '150px',
+                  padding: '10px',
+                  height: '45px',
+                  fontSize: '16px',
+                  marginBottom: '15px',
+                  borderRadius: '5px',
+                  border: '1px solid #ccc',
+                  marginRight: '0'}}
                 ref={positionRef}
               />
             </div>
