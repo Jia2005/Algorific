@@ -24,12 +24,12 @@ const Node = ({ node, isFirst, x, y, nextPointer, isTraversed }) => (
 const Link = ({ from, to }) => {
   const lineStyle = {
     position: 'absolute',
-    left: from.x + 100,
-    top: from.y + 25,
+    left: from.x + 110,
+    top: from.y + 30,
     width: to.x - (from.x + 100),
     height: '5px',
     backgroundColor: 'black',
-    zIndex: -1,
+    zIndex: 1,
   };
 
   return <div style={lineStyle} />;
@@ -38,11 +38,13 @@ const Link = ({ from, to }) => {
 const LinkedList = () => {
   const [nodes, setNodes] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [mode, setMode] = useState(null);
+  const [mode, setMode] = useState('add');
   const [message, setMessage] = useState('');
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState('');
   const [traversedNodes, setTraversedNodes] = useState([]);
   const containerRef = useRef(null);
+  const inputRef = useRef(null);
+  const positionRef = useRef(null);
 
   const addNode = (value, position) => {
     const newNode = {
@@ -105,7 +107,7 @@ const LinkedList = () => {
     for (const node of nodes) {
       newTraversedNodes.push(node.value);
       setTraversedNodes([...newTraversedNodes]);
-      
+
       if (node.value === value) {
         setMessage(`Found ${value}`);
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -114,16 +116,21 @@ const LinkedList = () => {
         setNodes([...nodes]);
         return;
       }
-      
+
       await new Promise(resolve => setTimeout(resolve, 500));
     }
-    
+
     setMessage('Value not found');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setTraversedNodes([]);
+    nodes.forEach((n) => n.color = 'blue');
+    setNodes([...nodes]);
   };
 
   const handleModeChange = (newMode) => {
     setMode(newMode);
-    setPosition(null);
+    setPosition('');
+    inputRef.current.focus();
   };
 
   const handleInputChange = (e) => {
@@ -131,25 +138,33 @@ const LinkedList = () => {
   };
 
   const handlePositionChange = (e) => {
-    setPosition(parseInt(e.target.value, 10));
+    setPosition(e.target.value);
   };
 
   const handleConfirm = () => {
     const intValue = parseInt(inputValue, 10);
-    if (isNaN(intValue)) {
-      setInputValue('');
-      return;
-    }
-
     if (mode === 'add') {
-      addNode(intValue, null);
-    } else if (mode === 'add-start') {
-      addNode(intValue, 'start');
-    } else if (mode === 'add-after') {
-      if (position > 0 && position <= nodes.length) {
-        addNode(intValue, position);
+      if (!isNaN(intValue)) {
+        addNode(intValue, null);
       } else {
-        setMessage('Invalid index. Please choose a valid index to add after (greater than 0).');
+        setMessage('Invalid Input');
+      }
+    } else if (mode === 'add-start') {
+      if (!isNaN(intValue)) {
+        addNode(intValue, 'start');
+      } else {
+        setMessage('Invalid Input');
+      }
+    } else if (mode === 'add-after') {
+      if (position === '') {
+        setMessage('No index written!');
+      } else {
+        const posValue = parseInt(position, 10);
+        if (posValue > 0 && posValue <= nodes.length) {
+          addNode(intValue, posValue);
+        } else {
+          setMessage('Invalid Index');
+        }
       }
     } else if (mode === 'delete') {
       deleteNode(intValue);
@@ -158,11 +173,25 @@ const LinkedList = () => {
     }
 
     setInputValue('');
+    setPosition('');
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleConfirm();
+    }
   };
 
   useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  useEffect(() => {
     containerRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [nodes]);
+    if (mode) {
+      inputRef.current.focus();
+    }
+  }, [nodes, mode]);
 
   return (
     <div style={styles.container} ref={containerRef}>
@@ -213,29 +242,30 @@ const LinkedList = () => {
           <button onClick={() => handleModeChange('search')} style={styles.button}>Search</button>
         </div>
 
-        {mode && (
-          <div style={styles.inputSection}>
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder={`Value to ${mode}`}
-              style={styles.textInput}
-            />
-            {mode === 'add-after' && nodes.length > 0 && (
-              <div style={styles.inputWrapper}>
-                <input
-                  type="number"
-                  value={position || ''}
-                  onChange={handlePositionChange}
-                  placeholder="Index (greater than 0)"
-                  style={styles.textInput}
-                />
-              </div>
-            )}
-            <button onClick={handleConfirm} style={styles.button}>Confirm</button>
-          </div>
-        )}
+        <div style={styles.inputSection}>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder={`Value to ${mode || 'Add'}`}
+            style={styles.textInput}
+            ref={inputRef}
+          />
+          {mode === 'add-after' && nodes.length > 0 && (
+            <div style={styles.inputWrapper}>
+              <input
+                type="number"
+                value={position}
+                onChange={handlePositionChange}
+                placeholder="Index (greater than 0)"
+                style={styles.textInput}
+                ref={positionRef}
+              />
+            </div>
+          )}
+          <button onClick={handleConfirm} style={{ ...styles.cbutton}}>Confirm</button>
+        </div>
       </div>
     </div>
   );
@@ -315,6 +345,19 @@ const styles = {
   },
   button: {
     background: 'linear-gradient(90deg, #4CAF50, #45a049)',
+    color: '#fff',
+    border: 'none',
+    height: '45px',
+    width: '100px',
+    fontSize: '16px',
+    borderRadius: '10px',
+    cursor: 'pointer',
+    margin: '5px',
+    transition: 'background 0.3s, box-shadow 0.3s',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  },
+  cbutton: {
+    background: 'linear-gradient(90deg, #6abce2, #4194cb)',
     color: '#fff',
     border: 'none',
     height: '45px',

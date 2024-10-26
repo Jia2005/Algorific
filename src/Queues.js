@@ -1,27 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const QueueVisualization = () => {
+const Queues = () => {
   const [queue, setQueue] = useState([]);
   const [maxSize, setMaxSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
-  const [isEnqueuing, setIsEnqueuing] = useState(true);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Delete') {
+        dequeue();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [queue]); 
 
   const enqueue = () => {
+    if (isNaN(inputValue) || inputValue.trim() === '') {
+      setMessage('Invalid Input');
+      setInputValue('');
+      return;
+    }
+
     if (queue.length < maxSize) {
       setQueue([...queue, inputValue]);
       setMessage(`Enqueued: ${inputValue}`);
-      setInputValue('');
     } else {
       setMessage('Queue is full!');
     }
-    setIsEnqueuing(true);
+    setInputValue('');
+  };
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleKeyDownInput = (e) => {
+    if (e.key === 'Enter') {
+      enqueue();
+    }
   };
 
   const dequeue = () => {
     if (queue.length > 0) {
-      const removedValue = queue.shift();
-      setQueue([...queue]);
+      const removedValue = queue[0];
+      setQueue((prevQueue) => prevQueue.slice(1)); 
       setMessage(`Dequeued: ${removedValue}`);
     } else {
       setMessage('Queue is empty!');
@@ -31,10 +61,6 @@ const QueueVisualization = () => {
   const resetQueue = () => {
     setQueue([]);
     setMessage('Queue reset!');
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
   };
 
   const handleQueueSizeChange = (e) => {
@@ -74,28 +100,29 @@ const QueueVisualization = () => {
               style={styles.numberInput}
             />
           </label>
-      </div>    
-
-        {isEnqueuing && (
-          <div style={styles.enqueueInputContainer}>
-            <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter value to enqueue"
-              style={styles.textInput}
-            />
-            <button onClick={enqueue} style={styles.secondary2Button}>
-              Enqueue
-            </button>        
-         </div>
-        )}
-        <div>
-        <button onClick={dequeue} style={styles.primaryButton}>
-           Dequeue
-         </button>
         </div>
-        
+
+        <div style={styles.enqueueInputContainer}>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDownInput}
+            ref={inputRef}
+            placeholder="Enter value to enqueue"
+            style={styles.textInput}
+          />
+          <button onClick={enqueue} style={styles.secondary2Button}>
+            Enqueue
+          </button>
+        </div>
+
+        <div>
+          <button onClick={dequeue} style={styles.primaryButton}>
+            Dequeue
+          </button>
+        </div>
+
         <div style={styles.buttonContainer}>
           <button onClick={resetQueue} style={styles.secondaryButton}>
             Reset Queue
@@ -113,12 +140,12 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: '20px',
-    backgroundColor:'white',
+    backgroundColor: 'white',
   },
   header: {
     marginBottom: '20px',
     textAlign: 'center',
-    color:'black',
+    color: 'black',
   },
   queueContainer: {
     width: '100%',
@@ -176,7 +203,7 @@ const styles = {
   label: {
     fontSize: '18px',
     marginRight: '10px',
-    color:'black',
+    color: 'black',
   },
   numberInput: {
     width: '60px',
@@ -196,25 +223,25 @@ const styles = {
     borderRadius: '10px',
     cursor: 'pointer',
     margin: '10px',
-    height:'40px',
-    width:'100px',
-    marginTop:'6px',
+    height: '40px',
+    width: '100px',
+    marginTop: '6px',
     marginBottom: '6px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
   },
   secondaryButton: {
     backgroundColor: '#f44336',
     color: '#fff',
     border: 'none',
-    height:'40px',
-    width:'150px',
-    marginTop:'6px',
+    height: '40px',
+    width: '150px',
+    marginTop: '6px',
     marginBottom: '6px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     fontSize: '16px',
     borderRadius: '10px',
     cursor: 'pointer',
@@ -223,14 +250,14 @@ const styles = {
     backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
-    height:'40px',
-    width:'100px',
+    height: '40px',
+    width: '100px',
     fontSize: '16px',
-    marginTop:'6px',
+    marginTop: '6px',
     marginBottom: '6px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: '10px',
     cursor: 'pointer',
   },
@@ -248,4 +275,4 @@ const styles = {
   },
 };
 
-export default QueueVisualization;
+export default Queues;

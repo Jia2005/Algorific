@@ -1,26 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Stacks = () => {
   const [stack, setStack] = useState([]);
-  const [stackSize, setStackSize] = useState(5); 
+  const [stackSize, setStackSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Delete') {
+        pop();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [stack]);
 
   const push = () => {
+    if (isNaN(inputValue) || inputValue.trim() === '') {
+      setMessage('Invalid Input');
+      setInputValue('');
+      return;
+    }
+
     if (stack.length < stackSize) {
       setStack([...stack, inputValue]);
-      setMessage(`Pushed Element ${inputValue}`);
-      setInputValue('');
+      setMessage(`Pushed Element: ${inputValue}`);
     } else {
       setMessage('Stack Full');
     }
+    setInputValue('');
   };
 
   const pop = () => {
     if (stack.length > 0) {
-      const poppedValue = stack.pop();
-      setStack([...stack]);
-      setMessage(`Popped Element ${poppedValue}`);
+      const poppedValue = stack[stack.length - 1];
+      setStack((prevStack) => prevStack.slice(0, -1));
+      setMessage(`Popped Element: ${poppedValue}`);
     } else {
       setMessage('Stack Empty');
     }
@@ -36,10 +58,16 @@ const Stacks = () => {
     setMessage('');
   };
 
+  const handleKeyDownInput = (e) => {
+    if (e.key === 'Enter') {
+      push();
+    }
+  };
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={{fontSize:'40px'}}><br></br>Stack Visualization</h1>
+        <h1 style={{ fontSize: '40px' }}>Stack Visualization</h1>
       </header>
       <div style={styles.stackContainer}>
         <div style={styles.stack}>
@@ -74,6 +102,8 @@ const Stacks = () => {
             type="text"
             value={inputValue}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDownInput}
+            ref={inputRef}
             placeholder="Enter value to push"
             style={styles.textInput}
           />
