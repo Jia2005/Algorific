@@ -51,7 +51,7 @@ function Dashboard() {
               <li className="center">
                 <Link to="/home" style={{color:'black'}}>Home</Link></li>
                 <li><Link to="/algo" style={{color:'black'}}>Algorithm</Link></li>
-                <li><Link to="/dashboard" style={{color:'black'}}>Dashboard</Link>
+                <li><Link to="/profile" style={{color:'black'}}>Profile</Link>
               </li>
             </ul>
           </div>
