@@ -113,11 +113,15 @@ body {
     border-radius: 25px;
     text-align: center;
     line-height: 50px;
+    font-weight: bold;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin: 0 auto;
     margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   button:hover {

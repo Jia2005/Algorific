@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
@@ -51,6 +51,7 @@ const Bstgame = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [userInput, setUserInput] = useState('');
+    const inputRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -68,6 +69,12 @@ const Bstgame = () => {
             setTraversalValues(traversal(traversalMethod, bst, []));
         }
     }, [traversalMethod, bst]);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     const traversal = (method, root, result) => {
         switch (method) {
@@ -109,7 +116,7 @@ const Bstgame = () => {
         }
     };
 
-    const renderTree = (node, x, y, dx) => {
+    const renderTree = (node, x, y, dx, depth) => {
         if (!node) return null;
 
         return (
@@ -121,13 +128,13 @@ const Bstgame = () => {
                 {node.left && (
                     <>
                         <line x1={x-20} y1={y} x2={x - 20 - dx} y2={y + 60} stroke="black" />
-                        {renderTree(node.left, x - dx, y + 60, dx / 2)}
+                        {renderTree(node.left, x - dx, y + 60, dx / 2, depth + 1)}
                     </>
                 )}
                 {node.right && (
                     <>
                         <line x1={x+20} y1={y} x2={x + 20 + dx} y2={y + 60} stroke="black" />
-                        {renderTree(node.right, x + dx, y + 60, dx / 2)}
+                        {renderTree(node.right, x + dx, y + 60, dx / 2, depth + 1)}
                     </>
                 )}
             </g>
@@ -135,9 +142,9 @@ const Bstgame = () => {
     };
 
     return (
-        <div className="App" style={{padding: "20px 0"}}>
+        <div className="App" style={{ padding: "20px 0" }}>
             <h1 style={{ color: 'black' }}>BST Traversal Game</h1><br />
-            <select style={{fontSize: "18px"}} onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
+            <select style={{ fontSize: "18px" }} onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
                 <option value="In-order">In-order</option>
                 <option value="Pre-order">Pre-order</option>
                 <option value="Post-order">Post-order</option>
@@ -145,14 +152,15 @@ const Bstgame = () => {
             <h2 style={{ color: 'black' }}>Score: {score}</h2><br />
             <h2 style={{ color: 'black' }}>Current Traversal: {traversalMethod}</h2><br />
             <svg width="800" height="400">
-                {renderTree(bst, 400, 20, 200)}
+                {renderTree(bst, 400, 20, 200, 0)}
             </svg>
-            <div style={{color: "black"}}>
+            <div style={{ color: "black" }}>
                 <h2>Current number: {traversalValues[currentIndex]}</h2><br />
                 What will be the next number ?
                 <input
+                    ref={inputRef}
                     type="text"
-                    style={{justifyContent:'center', display:'flex', alignContent:'center'}}
+                    style={{ justifyContent: 'center', display: 'flex', alignContent: 'center' }}
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                     onKeyDown={(e) => {
