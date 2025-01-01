@@ -8,16 +8,12 @@ import stack from './Images/stacks.jpg';
 import './HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebookF, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 const Navbar = () => {
   const [navbarClass] = useState('navbar');
 
   return (
     <div className={navbarClass} id="myNavbar">
       <a href="/" className='logout'>Logout</a>
-      <a href='/profile'>
-        <FontAwesomeIcon icon={faUser} />
-      </a>
       <a href="/dashboard">Dashboard</a>
       <a href="/algo">Algorithm</a>
     </div>

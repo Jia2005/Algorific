@@ -1,18 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './App.css';
-import swal from 'sweetalert';
+import './bstgame.css';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 function TreeNode(key) {
     return { left: null, right: null, val: key };
 }
 
-function insert(root, key) {
+function getHeight(node) {
+    if (!node) return 0;
+    return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+}
+
+function insert(root, key, currentHeight = 1) {
     if (root === null) return TreeNode(key);
+    
     if (root.val < key) {
-        root.right = insert(root.right, key);
+        if (!root.right || getHeight(root.right) < 2) {
+            root.right = insert(root.right, key, currentHeight + 1);
+        }
     } else {
-        root.left = insert(root.left, key);
+        if (!root.left || getHeight(root.left) < 2) {
+            root.left = insert(root.left, key, currentHeight + 1);
+        }
     }
     return root;
 }
@@ -55,14 +65,8 @@ const Bstgame = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const numbers = Array.from({ length: 10 }, () => Math.floor(Math.random() * 100) + 1);
-        let newBst = null;
-        numbers.forEach(num => {
-            newBst = insert(newBst, num);
-        });
-        setBst(newBst);
-        setTraversalValues(traversal(traversalMethod, newBst, []));
-    }, [traversalMethod]);
+        generateNewTree();
+    }, []);
 
     useEffect(() => {
         if (bst) {
@@ -74,7 +78,29 @@ const Bstgame = () => {
         if (inputRef.current) {
             inputRef.current.focus();
         }
-    }, []);
+    }, [currentIndex]);
+
+    const generateNewTree = () => {
+        const numbers = [];
+        while (numbers.length < 7) {
+            const num = Math.floor(Math.random() * 99) + 1;
+            if (!numbers.includes(num)) {
+                numbers.push(num);
+            }
+        }
+        numbers.sort((a, b) => a - b);
+        
+        let newBst = null;
+        const mid = Math.floor(numbers.length / 2);
+        newBst = insert(newBst, numbers[mid]);
+        
+        for (let i = 0; i < numbers.length; i++) {
+            if (i !== mid) {
+                newBst = insert(newBst, numbers[i]);
+            }
+        }
+        setBst(newBst);
+    };
 
     const traversal = (method, root, result) => {
         switch (method) {
@@ -95,46 +121,101 @@ const Bstgame = () => {
             const correctNextNumber = traversalValues[currentIndex + 1];
             if (guess === correctNextNumber && currentIndex <= traversalValues.length - 3) {
                 setScore(score + 10);
-                swal("Correct!","Keep Going ✨💎","success");
+                Swal.fire({
+                    title: 'Correct!',
+                    text: 'Keep Going ✨💎',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    inputRef.current.focus();
+                });
             } else if (guess === correctNextNumber && currentIndex === traversalValues.length - 2) {
-                setScore(score + 10);
-                swal(`Your final score is ${score}`)
-                .then((value) => {
+                setScore(prevScore => prevScore + 10);
+                Swal.fire({
+                    title: 'Game Completed!',
+                    text: `Final Score: ${score + 10}`,
+                    icon: 'success',
+                    confirmButtonText: 'Home'
+                }).then(() => {
                     navigate('/home');
                 });
             } else {
-                swal("Wrong!",`The next number in series was ${correctNextNumber}`,"error");
+                Swal.fire({
+                    title: 'Wrong!',
+                    text: `The next number was ${correctNextNumber}`,
+                    icon: 'error',
+                    timer: 1500,
+                    showConfirmButton: false
+                }).then(() => {
+                    inputRef.current.focus();
+                });
             }
             setCurrentIndex(currentIndex + 1);
             setUserInput('');
         }
         if(currentIndex === traversalValues.length - 1) {
-            swal(`Your final score is ${score}`)
-            .then((value) => {
+            Swal.fire({
+                title: 'Game Completed!',
+                text: `Final Score: ${score}`,
+                icon: 'success',
+                confirmButtonText: 'Home'
+            }).then(() => {
                 navigate('/home');
             });
         }
     };
 
-    const renderTree = (node, x, y, dx, depth) => {
+    const renderTree = (node, x, y, dx) => {
         if (!node) return null;
+        const levelHeight = 70;
+        const nodeRadius = 25;
 
         return (
             <g key={node.val}>
-                <circle cx={x} cy={y} r="20" fill="lightblue" />
-                <text x={x} y={y} textAnchor="middle" stroke="black" strokeWidth="1px" dy=".3em">
+                <circle 
+                    cx={x} 
+                    cy={y} 
+                    r={nodeRadius} 
+                    fill="rgba(135, 206, 250, 0.7)"
+                    stroke="#4682B4"
+                    strokeWidth="2"
+                />
+                <text 
+                    x={x} 
+                    y={y} 
+                    textAnchor="middle" 
+                    fill="#333"
+                    fontSize="16"
+                    fontWeight="bold"
+                    dy=".3em"
+                >
                     {node.val}
                 </text>
                 {node.left && (
                     <>
-                        <line x1={x-20} y1={y} x2={x - 20 - dx} y2={y + 60} stroke="black" />
-                        {renderTree(node.left, x - dx, y + 60, dx / 2, depth + 1)}
+                        <line 
+                            x1={x - nodeRadius * Math.cos(Math.PI / 4)} 
+                            y1={y + nodeRadius * Math.sin(Math.PI / 4)}
+                            x2={x - dx + nodeRadius * Math.cos(Math.PI / 4)}
+                            y2={y + levelHeight - nodeRadius * Math.sin(Math.PI / 4)}
+                            stroke="#4682B4"
+                            strokeWidth="2"
+                        />
+                        {renderTree(node.left, x - dx, y + levelHeight, dx / 2)}
                     </>
                 )}
                 {node.right && (
                     <>
-                        <line x1={x+20} y1={y} x2={x + 20 + dx} y2={y + 60} stroke="black" />
-                        {renderTree(node.right, x + dx, y + 60, dx / 2, depth + 1)}
+                        <line 
+                            x1={x + nodeRadius * Math.cos(Math.PI / 4)}
+                            y1={y + nodeRadius * Math.sin(Math.PI / 4)}
+                            x2={x + dx - nodeRadius * Math.cos(Math.PI / 4)}
+                            y2={y + levelHeight - nodeRadius * Math.sin(Math.PI / 4)}
+                            stroke="#4682B4"
+                            strokeWidth="2"
+                        />
+                        {renderTree(node.right, x + dx, y + levelHeight, dx / 2)}
                     </>
                 )}
             </g>
@@ -143,28 +224,50 @@ const Bstgame = () => {
 
     return (
         <div className="App" style={{ padding: "20px 0" }}>
-            <h1 style={{ color: 'black' }}>BST Traversal Game</h1><br />
-            <select style={{ fontSize: "18px" }} onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
+            <h1 style={{ color: 'black', marginBottom: '20px' }}>BST Traversal Game</h1>
+            <select 
+                style={{ 
+                    fontSize: "18px",
+                    padding: "8px 15px",
+                    borderRadius: "5px",
+                    border: "2px solid #4682B4",
+                    marginBottom: "20px"
+                }} 
+                onChange={(e) => setTraversalMethod(e.target.value)} 
+                value={traversalMethod}
+            >
                 <option value="In-order">In-order</option>
                 <option value="Pre-order">Pre-order</option>
                 <option value="Post-order">Post-order</option>
-            </select><br /><br />
-            <h2 style={{ color: 'black' }}>Score: {score}</h2><br />
-            <h2 style={{ color: 'black' }}>Current Traversal: {traversalMethod}</h2><br />
-            <svg width="800" height="400">
-                {renderTree(bst, 400, 20, 200, 0)}
+            </select>
+            <h2 style={{ color: 'black', marginBottom: '15px' }}>Score: {score}</h2>
+            <h2 style={{ color: 'black', marginBottom: '20px' }}>Current Traversal: {traversalMethod}</h2>
+            <svg width="800" height="300" style={{ margin: "20px 0" }}>
+                {renderTree(bst, 400, 40, 180)}
             </svg>
             <div style={{ color: "black" }}>
-                <h2>Current number: {traversalValues[currentIndex]}</h2><br />
-                What will be the next number ?
+                <h2 style={{ marginBottom: '15px' }}>Current number: {traversalValues[currentIndex]}</h2>
+                <p style={{ marginBottom: '15px' }}>What will be the next number?</p>
                 <input
                     ref={inputRef}
                     type="text"
-                    style={{ justifyContent: 'center', display: 'flex', alignContent: 'center' }}
+                    style={{ 
+                        fontSize: "18px",
+                        padding: "8px 15px",
+                        borderRadius: "5px",
+                        border: "2px solid #4682B4",
+                        margin: "0 auto",
+                        display: "block",
+                        width: "120px",
+                        textAlign: "center"
+                    }}
                     value={userInput}
                     onChange={(e) => setUserInput(e.target.value)}
                     onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleGuess();
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleGuess();
+                        }
                     }}
                 />
             </div>
