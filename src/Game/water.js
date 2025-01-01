@@ -64,7 +64,7 @@ const Water = () => {
 
   return (
     <div className="game-container">
-      <h1>Stack Implementation Game</h1>
+      <h1>Stack Implementation Game</h1><br/>
       <div className="score" style={{ color: 'black' }}>Score: {score}</div>
       <div className="tubes">
         {tubes.map((tube, index) => (
@@ -78,6 +78,18 @@ const Water = () => {
             ))}
           </div>
         ))}
+      </div><br/><br/>
+      <div className="how-to-play">
+        <h2>How to Play</h2>
+        <p>In this game, you need to stack colored liquids in tubes. You can move liquids between the tubes following these rules:</p>
+        <ul>
+          <li>You can only pour a liquid into an empty tube or onto a tube that has the same color on top.</li>
+          <li>Each tube can hold a maximum of 5 liquids.</li>
+          <li>Your goal is to fill a tube with the same color liquids to complete it.</li>
+          <li>Once a tube is completely filled with a single color, you earn 10 points.</li>
+        </ul>
+        <h3>Score Calculation:</h3>
+        <p>For each tube that you completely fill with liquids of the same color, you will earn 10 points. The game ends when all tubes are either completely filled or no more moves are possible.</p>
       </div>
     </div>
   );

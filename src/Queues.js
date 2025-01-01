@@ -5,6 +5,7 @@ const Queues = () => {
   const [maxSize, setMaxSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -20,12 +21,12 @@ const Queues = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [queue]); 
+  }, [queue]);
 
   const enqueue = () => {
     if (isNaN(inputValue) || inputValue.trim() === '') {
       setMessage('Invalid Input');
-      setInputValue('')
+      setInputValue('');
       return;
     }
 
@@ -51,7 +52,7 @@ const Queues = () => {
   const dequeue = () => {
     if (queue.length > 0) {
       const removedValue = queue[0];
-      setQueue((prevQueue) => prevQueue.slice(1)); 
+      setQueue((prevQueue) => prevQueue.slice(1));
       setMessage(`Dequeued: ${removedValue}`);
     } else {
       setMessage('Queue is empty!');
@@ -69,10 +70,15 @@ const Queues = () => {
     setMessage('');
   };
 
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={{ fontSize: '40px' }}>Queue Visualization</h1>
+        <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button> {/* Info button */}
       </header>
       <div style={styles.queueContainer}>
         <div style={styles.queue}>
@@ -129,12 +135,24 @@ const Queues = () => {
           </button>
         </div>
       </div>
+
+      {showModal && (
+        <div style={styles.modal}>
+          <div style={styles.modalContent}>
+            <h1>How to use</h1><br></br>
+            <p style={{display:'flex', justifyContent:'center'}}>1. For enqueuing an element, write the value and press the 'Enter' key or click 'Enqueue'.</p><br/>
+            <p style={{display:'flex', justifyContent:'center'}}>2. For dequeuing an element, press the 'Delete' key or click 'Dequeue'.</p><br/>
+            <button onClick={toggleModal} style={styles.closeButton}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 const styles = {
   container: {
+    marginTop: '50px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -146,6 +164,16 @@ const styles = {
     marginBottom: '20px',
     textAlign: 'center',
     color: 'black',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  infoButton: {
+    fontSize: '24px',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#4682B4',
   },
   queueContainer: {
     width: '100%',
@@ -272,6 +300,36 @@ const styles = {
     marginBottom: '20px',
     display: 'flex',
     alignItems: 'center',
+  },
+  modal: {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 20,
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: '20px',
+    borderRadius: '10px',
+    width: '400px',
+    textAlign: 'center',
+  },
+  closeButton: {
+    backgroundColor: '#f44336',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    marginTop: '10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
   },
 };
 

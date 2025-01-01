@@ -1,3 +1,4 @@
+import { color } from 'framer-motion';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const Stacks = () => {
@@ -5,6 +6,7 @@ const Stacks = () => {
   const [stackSize, setStackSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const inputRef = useRef(null);
 
   const push = () => {
@@ -62,12 +64,17 @@ const Stacks = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [pop]); // Now using pop in the dependencies
+  }, [pop]); 
+
+  const toggleModal = () => {
+    setShowModal((prev) => !prev);
+  };
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={{ fontSize: '40px' }}>Stack Visualization</h1>
+        <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button> {/* Info button */}
       </header>
       <div style={styles.stackContainer}>
         <div style={styles.stack}>
@@ -118,12 +125,25 @@ const Stacks = () => {
           </button>
         </div>
       </div>
+
+      {showModal && (
+        <div style={styles.modal}>
+          <div style={styles.modalContent}>
+            <h1>How to use</h1><br></br>
+            <p style={{display:'flex', justifyContent:'center'}}>1. For pushing an element, write the value and press the 'Enter' key or click 'Push'.</p><br/>
+            <p style={{display:'flex', justifyContent:'center'}}>2. For popping an element, press the 'Delete' key or click 'Pop'.</p><br/>
+            <button onClick={toggleModal} style={styles.closeButton}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 const styles = {
   container: {
+    marginTop: '50px',
+    padding: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -135,6 +155,16 @@ const styles = {
     textAlign: 'center',
     zIndex: 10,
     color: 'black',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  infoButton: {
+    fontSize: '24px',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#4682B4',
   },
   stackContainer: {
     width: '100%',
@@ -221,6 +251,7 @@ const styles = {
     margin: '10px',
   },
   secondaryButton: {
+    marginTop: '0px',
     backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
@@ -238,7 +269,7 @@ const styles = {
     padding: '10px',
     fontSize: '16px',
     borderRadius: '5px',
-    border: '1px solid #ccc',
+    border: '2px solid black',
     marginRight: '10px',
     width: '200px',
   },
@@ -246,6 +277,36 @@ const styles = {
     marginBottom: '20px',
     display: 'flex',
     alignItems: 'center',
+  },
+  modal: {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    color: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 20,
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: '20px',
+    borderRadius: '10px',
+    width: '400px',
+    textAlign: 'center',
+  },
+  closeButton: {
+    backgroundColor: '#f44336',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    marginTop: '10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
   },
 };
 
