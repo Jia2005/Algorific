@@ -138,7 +138,7 @@ const Bstgame = () => {
                     icon: 'success',
                     confirmButtonText: 'Home'
                 }).then(() => {
-                    navigate('/home');
+                    navigate('/');
                 });
             } else {
                 Swal.fire({
@@ -153,16 +153,6 @@ const Bstgame = () => {
             }
             setCurrentIndex(currentIndex + 1);
             setUserInput('');
-        }
-        if(currentIndex === traversalValues.length - 1) {
-            Swal.fire({
-                title: 'Game Completed!',
-                text: `Final Score: ${score}`,
-                icon: 'success',
-                confirmButtonText: 'Home'
-            }).then(() => {
-                navigate('/home');
-            });
         }
     };
 

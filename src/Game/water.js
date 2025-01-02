@@ -80,7 +80,7 @@ const Water = () => {
       icon: isVictory ? 'success' : 'info',
       confirmButtonText: 'Home',
     }).then(() => {
-      window.location.href = '/home';
+      window.location.href = '/';
     });
   };
 
