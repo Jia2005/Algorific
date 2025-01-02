@@ -1,4 +1,3 @@
-import { color } from 'framer-motion';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const Stacks = () => {
@@ -6,7 +5,7 @@ const Stacks = () => {
   const [stackSize, setStackSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
+  const [showModal, setShowModal] = useState(false);
   const inputRef = useRef(null);
 
   const push = () => {
@@ -64,7 +63,7 @@ const Stacks = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [pop]); 
+  }, [pop]);
 
   const toggleModal = () => {
     setShowModal((prev) => !prev);
@@ -74,64 +73,67 @@ const Stacks = () => {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={{ fontSize: '40px' }}>Stack Visualization</h1>
-        <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button> {/* Info button */}
+        <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button>
       </header>
-      <div style={styles.stackContainer}>
-        <div style={styles.stack}>
-          {stack.length === 0 ? (
-            <p style={styles.emptyMessage}>The stack is empty</p>
-          ) : (
-            stack.map((item, index) => (
-              <div key={index} style={styles.stackBlock}>
-                {item}
-              </div>
-            ))
-          )}
+      
+      <div style={styles.mainContent}>
+        <div style={styles.stackSide}>
+          <div style={styles.stack}>
+            {stack.length === 0 ? (
+              <p style={styles.emptyMessage}>The stack is empty</p>
+            ) : (
+              stack.map((item, index) => (
+                <div key={index} style={styles.stackBlock}>
+                  {item}
+                </div>
+              ))
+            )}
+          </div>
+          {message && <p style={styles.message}>{message}</p>}
         </div>
-        {message && <p style={styles.message}>{message}</p>}
-      </div>
 
-      <div style={styles.inputContainer}>
-        <div style={styles.stackSizeContainer}>
-          <label style={styles.label}>
-            Stack Size:
+        <div style={styles.controlsSide}>
+          <div style={styles.stackSizeContainer}>
+            <label style={styles.label}>
+              Stack Size:
+              <input
+                type="number"
+                value={stackSize}
+                onChange={handleStackSizeChange}
+                style={styles.numberInput}
+              />
+            </label>
+          </div>
+
+          <div style={styles.pushInputContainer}>
             <input
-              type="number"
-              value={stackSize}
-              onChange={handleStackSizeChange}
-              style={styles.numberInput}
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDownInput}
+              ref={inputRef}
+              placeholder="Enter value to push"
+              style={styles.textInput}
             />
-          </label>
-        </div>
+            <button onClick={push} style={styles.secondaryButton}>
+              Push
+            </button>
+          </div>
 
-        <div style={styles.pushInputContainer}>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDownInput}
-            ref={inputRef}
-            placeholder="Enter value to push"
-            style={styles.textInput}
-          />
-          <button onClick={push} style={styles.secondaryButton}>
-            Push
-          </button>
-        </div>
-
-        <div style={styles.buttonContainer}>
-          <button onClick={pop} style={styles.primaryButton}>
-            Pop
-          </button>
+          <div style={styles.buttonContainer}>
+            <button onClick={pop} style={styles.primaryButton}>
+              Pop
+            </button>
+          </div>
         </div>
       </div>
 
       {showModal && (
         <div style={styles.modal}>
           <div style={styles.modalContent}>
-            <h1>How to use</h1><br></br>
-            <p style={{display:'flex', justifyContent:'center'}}>1. For pushing an element, write the value and press the 'Enter' key or click 'Push'.</p><br/>
-            <p style={{display:'flex', justifyContent:'center'}}>2. For popping an element, press the 'Delete' key or click 'Pop'.</p><br/>
+            <h1>How to use</h1><br />
+            <p style={{display: 'flex', justifyContent: 'center'}}>1. For pushing an element, write the value and press the 'Enter' key or click 'Push'.</p><br />
+            <p style={{display: 'flex', justifyContent: 'center'}}>2. For popping an element, press the 'Delete' key or click 'Pop'.</p><br />
             <button onClick={toggleModal} style={styles.closeButton}>Close</button>
           </div>
         </div>
@@ -142,50 +144,63 @@ const Stacks = () => {
 
 const styles = {
   container: {
-    marginTop: '50px',
+    marginTop: '20px',
     padding: '20px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
   },
   header: {
-    position: 'sticky',
-    marginBottom: '10px',
-    textAlign: 'center',
-    zIndex: 10,
-    color: 'black',
+    width: '100%',
+    marginBottom: '100px',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
+  mainContent: {
+    display: 'flex',
+    width: '100%',
+    maxWidth: '1200px',
+    gap: '100px',
+    justifyContent: 'center',
+  },
+  stackSide: {
+    flex: '1',
+    maxWidth: '500px',
+  },
+  controlsSide: {
+    flex: '1',
+    maxWidth: '500px',
+    maxHeight: '400px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: '20px',
+    backgroundColor: '#f5f5f5',
+    borderRadius: '10px',
+  },
   infoButton: {
+    position: 'static',
+    right: '20px',
     fontSize: '24px',
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
     color: '#4682B4',
   },
-  stackContainer: {
-    width: '100%',
-    maxWidth: '600px',
-    marginTop: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: '20px',
-  },
   stack: {
     display: 'flex',
     flexDirection: 'column-reverse',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     width: '100%',
-    maxHeight: '400px',
+    minHeight: '400px',
+    maxHeight: '600px',
     overflowY: 'auto',
     border: '2px solid #ccc',
     borderRadius: '10px',
-    padding: '10px',
     backgroundColor: '#fff',
   },
   stackBlock: {
@@ -197,86 +212,76 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '10px',
-    borderRadius: '5px',
+    borderRadius: '10px',
     fontSize: '18px',
   },
   message: {
     color: 'red',
     marginTop: '10px',
     fontSize: '18px',
+    textAlign: 'center',
   },
   emptyMessage: {
     color: '#888',
     fontSize: '16px',
   },
-  inputContainer: {
-    width: '100%',
-    maxWidth: '600px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   stackSizeContainer: {
-    marginBottom: '20px',
+    marginBottom: '30px',
+    width: '100%',
   },
   label: {
     fontSize: '18px',
-    marginRight: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
     color: 'black',
   },
   numberInput: {
-    width: '60px',
+    width: '80px',
     textAlign: 'center',
-    marginLeft: '100px',
-    padding: '5px',
+    padding: '8px',
     fontSize: '16px',
+    borderRadius: '5px',
+    border: '2px solid #ccc',
+  },
+  pushInputContainer: {
+    marginBottom: '30px',
+    display: 'flex',
+    width: '100%',
+    gap: '10px',
+  },
+  textInput: {
+    flex: '1',
+    padding: '10px',
+    fontSize: '16px',
+    borderRadius: '5px',
+    border: '2px solid #ccc',
   },
   buttonContainer: {
-    marginBottom: '10px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
   },
   primaryButton: {
     backgroundColor: '#f44336',
     color: '#fff',
     border: 'none',
+    padding: '12px 40px',
     fontSize: '16px',
-    height: '40px',
-    width: '100px',
-    marginTop: '6px',
-    marginBottom: '6px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: '5px',
     cursor: 'pointer',
-    margin: '10px',
+    width: '100%',
   },
   secondaryButton: {
-    marginTop: '0px',
     backgroundColor: '#4CAF50',
     color: '#fff',
     border: 'none',
-    height: '40px',
-    width: '100px',
+    padding: '12px 30px',
     fontSize: '16px',
-    marginLeft: '10px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: '5px',
     cursor: 'pointer',
-  },
-  textInput: {
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '5px',
-    border: '2px solid black',
-    marginRight: '10px',
-    width: '200px',
-  },
-  pushInputContainer: {
-    marginBottom: '20px',
-    display: 'flex',
-    alignItems: 'center',
+    whiteSpace: 'nowrap',
   },
   modal: {
     position: 'fixed',
@@ -286,7 +291,6 @@ const styles = {
     bottom: '0',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     display: 'flex',
-    color: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 20,
@@ -297,6 +301,7 @@ const styles = {
     borderRadius: '10px',
     width: '400px',
     textAlign: 'center',
+    color: 'black',
   },
   closeButton: {
     backgroundColor: '#f44336',

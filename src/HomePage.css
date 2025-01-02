@@ -18,7 +18,8 @@ body {
   .navbar a {
     width: max-content;
     float: right;
-    color: #fdfbfb;
+    background-color: white;
+    color: black;
     text-align: center;
     padding: 10px 12px;
     text-decoration: none;
@@ -26,22 +27,13 @@ body {
     border-radius: 10px;
   }
 
-  .navbar .logout {
-    background-color: red;
-    padding: 10px 15px;
-  }
-
-  .navbar .logout:hover {
-    background-color: rgb(255, 52, 52);
-    color: white;
-  }
-  
   .navbar a:hover {
-    background-color: white;
+    background-color: rgb(161, 232, 255);
     color: black;
+    transform: scale(1.02);
   }
   
-  .navbar a.active {
+  .navbar a:active {
     background-color: red;
     color: white;
   }

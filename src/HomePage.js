@@ -13,9 +13,9 @@ const Navbar = () => {
 
   return (
     <div className={navbarClass} id="myNavbar">
-      <a href="/" className='logout'>Logout</a>
       <a href="/dashboard">Dashboard</a>
       <a href="/algo">Algorithm</a>
+      <a href="/" active>Learn</a>
     </div>
   );
 };
