@@ -158,8 +158,8 @@ const Bstgame = () => {
 
     const renderTree = (node, x, y, dx) => {
         if (!node) return null;
-        const levelHeight = 70;
-        const nodeRadius = 25;
+        const levelHeight = 80;
+        const nodeRadius = 30;
 
         return (
             <g key={node.val}>
@@ -167,46 +167,47 @@ const Bstgame = () => {
                     cx={x} 
                     cy={y} 
                     r={nodeRadius} 
-                    fill="rgba(135, 206, 250, 0.7)"
+                    fill="#00bcd4"
                     stroke="#4682B4"
-                    strokeWidth="2"
+                    strokeWidth="3"
+                    style={{ cursor: 'pointer' }}
                 />
                 <text 
                     x={x} 
                     y={y} 
                     textAnchor="middle" 
-                    fill="#333"
-                    fontSize="16"
+                    fill="#fff"
+                    fontSize="18"
                     fontWeight="bold"
                     dy=".3em"
                 >
                     {node.val}
                 </text>
                 {node.left && (
-                    <>
+                    <g>
                         <line 
-                            x1={x - nodeRadius * Math.cos(Math.PI / 4)} 
-                            y1={y + nodeRadius * Math.sin(Math.PI / 4)}
-                            x2={x - dx + nodeRadius * Math.cos(Math.PI / 4)}
-                            y2={y + levelHeight - nodeRadius * Math.sin(Math.PI / 4)}
+                            x1={x} 
+                            y1={y + nodeRadius} 
+                            x2={x - dx} 
+                            y2={y + levelHeight - nodeRadius} 
                             stroke="#4682B4"
-                            strokeWidth="2"
+                            strokeWidth="3"
                         />
                         {renderTree(node.left, x - dx, y + levelHeight, dx / 2)}
-                    </>
+                    </g>
                 )}
                 {node.right && (
-                    <>
+                    <g>
                         <line 
-                            x1={x + nodeRadius * Math.cos(Math.PI / 4)}
-                            y1={y + nodeRadius * Math.sin(Math.PI / 4)}
-                            x2={x + dx - nodeRadius * Math.cos(Math.PI / 4)}
-                            y2={y + levelHeight - nodeRadius * Math.sin(Math.PI / 4)}
+                            x1={x} 
+                            y1={y + nodeRadius} 
+                            x2={x + dx} 
+                            y2={y + levelHeight - nodeRadius} 
                             stroke="#4682B4"
-                            strokeWidth="2"
+                            strokeWidth="3"
                         />
                         {renderTree(node.right, x + dx, y + levelHeight, dx / 2)}
-                    </>
+                    </g>
                 )}
             </g>
         );
@@ -232,7 +233,7 @@ const Bstgame = () => {
             </select>
             <h2 style={{ color: 'black', marginBottom: '15px' }}>Score: {score}</h2>
             <h2 style={{ color: 'black', marginBottom: '20px' }}>Current Traversal: {traversalMethod}</h2>
-            <svg width="800" height="300" style={{ margin: "20px 0" }}>
+            <svg width="800" height="400" style={{ margin: "20px 0" }}>
                 {renderTree(bst, 400, 40, 180)}
             </svg>
             <div style={{ color: "black" }}>

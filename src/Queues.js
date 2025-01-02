@@ -97,15 +97,13 @@ const Queues = () => {
 
       <div style={styles.inputContainer}>
         <div style={styles.queueSizeContainer}>
-          <label style={styles.label}>
-            Queue Size:
+          <label style={styles.label}><br/>Queue Size:</label>
             <input
               type="number"
               value={maxSize}
               onChange={handleQueueSizeChange}
               style={styles.numberInput}
             />
-          </label>
         </div>
 
         <div style={styles.enqueueInputContainer}>
@@ -230,6 +228,7 @@ const styles = {
   },
   label: {
     fontSize: '18px',
+    gap:'20px',
     marginRight: '10px',
     color: 'black',
   },
