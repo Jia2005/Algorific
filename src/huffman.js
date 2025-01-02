@@ -59,7 +59,7 @@ const HuffmanVisualizer = () => {
     };
 
     const toggleModal = () => {
-      setShowModal((prev) => !prev);
+        setShowModal((prev) => !prev);
     };
 
     const renderTree = (node) => {
@@ -77,12 +77,16 @@ const HuffmanVisualizer = () => {
 
     return (
         <div className="huffman-visualizer">
-            <h1 className="title">Huffman Encoding Visualizer</h1>
-            <button onClick={toggleModal} className='infoButton'>ℹ️</button>
-            <br></br><br></br>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h1 className="title">Huffman Encoding Visualizer</h1>
+                <button onClick={toggleModal} className='infoButton' style={{ fontSize: '24px', background: 'transparent', border: 'none', color: '#4682B4', marginTop:'30px' }}>
+                    ℹ️
+                </button>
+            </div><br/><br/><br/><br/>
+
             <div className="content">
                 <div className="input-section">
-                    <p style={{color: 'black', fontSize: '16px', fontWeight: '600'}}>Enter the word you want to encode</p><br/>
+                    <p style={{ color: 'black', fontSize: '16px', fontWeight: '600' }}>Enter the word you want to encode</p><br />
                     <input
                         type="text"
                         value={input}
@@ -104,17 +108,19 @@ const HuffmanVisualizer = () => {
                     <div className="tree-container">{renderTree(tree)}</div>
                 </div>
             </div>
+
             {showModal && (
-          <div className='modal'>
-            <div className='modalContent'>
-              <h1>How to use</h1><br />
-              <p style={{display: 'flex', justifyContent: 'center'}}>1. For pushing an element, write the value and press the 'Enter' key or click 'Push'.</p><br />
-              <p style={{display: 'flex', justifyContent: 'center'}}>2. For popping an element, press the 'Delete' key or click 'Pop'.</p><br />
-              <button onClick={toggleModal} className='CloseButton'>Close</button>
-            </div>
-          </div>
-        )}
-        </div>   
+                <div className='modal'>
+                    <div className='modalContent'>
+                        <h1>How to use</h1><br />
+                        <p style={{ display: 'flex', color: 'black', textAlign:'left'}}>1. Enter a word in the input field.</p>
+                        <p style={{ display: 'flex', color: 'black', textAlign:'left'}}>2. Click 'Encode' to generate Huffman codes and the encoded string.</p>
+                        <p style={{ display: 'flex', color: 'black', textAlign:'left' }}>3. The Huffman tree visualization will appear below the input.</p><br/>
+                        <button onClick={toggleModal} className='CloseButton'>Close</button>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 

@@ -74,7 +74,7 @@ const Stacks = () => {
       <header style={styles.header}>
         <h1 style={{ fontSize: '40px' }}>Stack Visualization</h1>
         <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button>
-      </header>
+      </header><br/>
       
       <div style={styles.mainContent}>
         <div style={styles.stackSide}>
@@ -132,8 +132,8 @@ const Stacks = () => {
         <div style={styles.modal}>
           <div style={styles.modalContent}>
             <h1>How to use</h1><br />
-            <p style={{display: 'flex', justifyContent: 'center'}}>1. For pushing an element, write the value and press the 'Enter' key or click 'Push'.</p><br />
-            <p style={{display: 'flex', justifyContent: 'center'}}>2. For popping an element, press the 'Delete' key or click 'Pop'.</p><br />
+            <p style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}>1. For pushing an element, write the value and press the 'Enter' key or click 'Push'.</p><br />
+            <p style={{display: 'flex', justifyContent: 'center', textAlign: 'left'}}>2. For popping an element, press the 'Delete' key or click 'Pop'.</p><br />
             <button onClick={toggleModal} style={styles.closeButton}>Close</button>
           </div>
         </div>
@@ -189,6 +189,7 @@ const styles = {
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
+    marginTop: '0px',
     color: '#4682B4',
   },
   stack: {

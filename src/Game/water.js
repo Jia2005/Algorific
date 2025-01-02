@@ -148,7 +148,7 @@ const Water = () => {
 
   return (
     <div className="game-container">
-      <h1>Stack Implementation Game</h1>
+      <h1 style={{fontSize:'40px', fontWeight:'bold'}}>Stack Implementation Game</h1>
       
       <div className="difficulty-controls">
         {Object.keys(difficultySettings).map((level) => (

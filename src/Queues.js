@@ -78,8 +78,8 @@ const Queues = () => {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={{ fontSize: '40px' }}>Queue Visualization</h1>
-        <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button> {/* Info button */}
-      </header>
+        <button onClick={toggleModal} style={styles.infoButton}>ℹ️</button> 
+      </header><br/><br/>
       <div style={styles.queueContainer}>
         <div style={styles.queue}>
           {queue.length === 0 ? (
@@ -138,8 +138,8 @@ const Queues = () => {
         <div style={styles.modal}>
           <div style={styles.modalContent}>
             <h1>How to use</h1><br></br>
-            <p style={{display:'flex', justifyContent:'center'}}>1. For enqueuing an element, write the value and press the 'Enter' key or click 'Enqueue'.</p><br/>
-            <p style={{display:'flex', justifyContent:'center'}}>2. For dequeuing an element, press the 'Delete' key or click 'Dequeue'.</p><br/>
+            <p style={{display:'flex', justifyContent:'center', textAlign: 'left'}}>1. For enqueuing an element, write the value and press the 'Enter' key or click 'Enqueue'.</p><br/>
+            <p style={{display:'flex', justifyContent:'center', textAlign: 'left'}}>2. For dequeuing an element, press the 'Delete' key or click 'Dequeue'.</p><br/>
             <button onClick={toggleModal} style={styles.closeButton}>Close</button>
           </div>
         </div>
@@ -171,6 +171,7 @@ const styles = {
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
+    marginTop:'0px',
     color: '#4682B4',
   },
   queueContainer: {

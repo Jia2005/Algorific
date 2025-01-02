@@ -10,9 +10,11 @@
 
 .title {
     text-align: center;
+    margin-top: 50px;
     margin-bottom: 20px;
-    font-size: 2em;
-    color: #333;
+    font-size: 40px;
+    color: black;
+    font-weight: bold;
 }
 
 .content {
@@ -115,44 +117,38 @@
 }
 
 .modal {
-    position: 'fixed';
-    top: '0';
-    left: '0';
-    right: '0';
-    bottom: '0';
-    background-color: 'rgba(0, 0, 0, 0.5)';
-    display: 'flex';
-    justify-content: 'center';
-    align-items: 'center';
-    z-index: 20;
-  }
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
-  .modalContent {
-    background-color: '#fff';
-    padding: '20px';
-    border-radius: '10px';
-    width: '400px';
-    text-align: 'center';
-    color: 'black';
-  }
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
 
-  .infoButton {
-    position: 'static';
-    right: '20px';
-    font-size: '24px';
-    background: 'transparent';
-    border: 'none';
-    cursor: 'pointer';
-    color: '#4682B4';
-  }
+.CloseButton {
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
 
-  .closeButton {
-    background-color: '#f44336';
-    color: '#fff';
-    border: 'none';
-    padding: '10px 20px';
-    font-size:  '16px';
-    margin-top: '10px';
-    border-radius: '5px';
-    cursor: 'pointer';
-  }
+.CloseButton:hover {
+    background-color: #f44336;
+}
