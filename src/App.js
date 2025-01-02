@@ -8,7 +8,7 @@ import BSTApp from './Game/bst';
 import Bstgame from './bstgame';
 import Water from './Game/water';
 import HashingGame from './HashingGame';
-import HuffmanGame from './HuffmanGame';
+import HuffmanVisualizer from './huffman';
 import Dashboard from './Dashboard/dashboard';
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/bstgame" element={<Bstgame />} />
         <Route path="/water" element={<Water />} />
         <Route path="/hashing" element={<HashingGame />} />
-        <Route path="/huffmangame" element={<HuffmanGame />} /> 
+        <Route path="/huffmangame" element={<HuffmanVisualizer />} /> 
         <Route path="/dashboard" element={<Dashboard/>} />
       </Routes>
     </BrowserRouter>
