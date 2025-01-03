@@ -45,7 +45,7 @@ const Bstgame = () => {
         numbers.sort((a, b) => a - b);
 
         let newBst = null;
-        const maxHeight = 4;
+        const maxHeight = 3;
 
         const buildRandomTree = (start, end, currentHeight = 1) => {
             if (start > end || currentHeight > maxHeight) return null;
@@ -154,11 +154,23 @@ const Bstgame = () => {
                 });
             } else if (guess === correctNextNumber && currentIndex === traversalValues.length - 2) {
                 setScore(prevScore => prevScore + 10);
+                if (inputRef.current) {
+                    inputRef.current.blur();
+                }
                 Swal.fire({
                     title: 'Game Completed!',
                     text: `Final Score: ${score + 10}`,
                     icon: 'success',
-                    confirmButtonText: 'Home'
+                    showConfirmButton: true,
+                    confirmButtonText: 'Home',
+                    allowEnterKey: true,
+                    focusConfirm: true,
+                    didOpen: () => {
+                        const confirmButton = document.querySelector('.swal2-confirm');
+                        if (confirmButton) {
+                            confirmButton.focus();
+                        }
+                    }
                 }).then(() => {
                     navigate('/');
                 });
@@ -180,59 +192,25 @@ const Bstgame = () => {
 
     const renderTree = (node, x, y, dx) => {
         if (!node) return null;
-        const levelHeight = 80;
+        const levelHeight = 60;
         const nodeRadius = 30;
 
         return (
             <g key={node.val}>
-                <circle 
-                    cx={x} 
-                    cy={y} 
-                    r={nodeRadius} 
-                    fill="#00bcd4"
-                    stroke="#4682B4"
-                    strokeWidth="3"
-                    style={{ cursor: 'pointer' }}
-                />
-                <text 
-                    x={x} 
-                    y={y} 
-                    textAnchor="middle" 
-                    fill="#fff"
-                    fontSize="18"
-                    fontWeight="bold"
-                    dy=".3em"
-                >
-                    {node.val}
-                </text>
+                <circle cx={x} cy={y} r={nodeRadius} fill="#00bcd4" stroke="#4682B4" strokeWidth="3" style={{ cursor: 'pointer' }}/>
+                <text x={x} y={y} textAnchor="middle" fill="#fff" fontSize="18" fontWeight="bold" dy=".3em">{node.val}</text>
                 {node.left && (
-                <g>
-                    <line 
-                        x1={x - nodeRadius * Math.cos(Math.PI / 8)} 
-                        y1={y + nodeRadius * Math.sin(Math.PI / 8)} 
-                        x2={x - dx * 0.8} 
-                        y2={y + levelHeight - nodeRadius * 0.8} 
-                        stroke="#4682B4"
-                        strokeWidth="3"
-                        strokeLinejoin="round"
-                    />
-                    {renderTree(node.left, x - dx * 0.8, y + levelHeight, dx / 1.5)}
-                </g>
-            )}
-            {node.right && (
-                <g>
-                    <line 
-                        x1={x + nodeRadius * Math.cos(Math.PI / 8)} 
-                        y1={y + nodeRadius * Math.sin(Math.PI / 8)} 
-                        x2={x + dx * 0.8} 
-                        y2={y + levelHeight - nodeRadius * 0.8} 
-                        stroke="#4682B4"
-                        strokeWidth="3"
-                        strokeLinejoin="round"
-                    />
-                    {renderTree(node.right, x + dx * 0.8, y + levelHeight, dx / 1.5)}
-                </g>
-            )}
+                    <g>
+                        <line x1={x - nodeRadius * Math.cos(Math.PI / 8)} y1={y + nodeRadius * Math.sin(Math.PI / 8)} x2={x - dx * 0.8} y2={y + levelHeight - nodeRadius * 0.8} stroke="#4682B4" strokeWidth="3" strokeLinejoin="round"/>
+                        {renderTree(node.left, x - dx * 0.8, y + levelHeight, dx / 1.5)}
+                    </g>
+                )}
+                {node.right && (
+                    <g>
+                        <line x1={x + nodeRadius * Math.cos(Math.PI / 8)} y1={y + nodeRadius * Math.sin(Math.PI / 8)} x2={x + dx * 0.8} y2={y + levelHeight - nodeRadius * 0.8} stroke="#4682B4" strokeWidth="3" strokeLinejoin="round"/>
+                        {renderTree(node.right, x + dx * 0.8, y + levelHeight, dx / 1.5)}
+                    </g>
+                )}
             </g>
         );
     };
@@ -244,13 +222,8 @@ const Bstgame = () => {
     return (
         <div className="App" style={{ padding: "20px 0" }}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <h1 style={{ color: 'black', marginBottom: '20px', marginTop:'40px', fontWeight:'bold', fontSize:'40px' }}>BST Traversal Game</h1>
-                <button 
-                    onClick={toggleModal} 
-                    style={{ fontSize: '24px', background: 'transparent', border: 'none', color: '#4682B4' , marginTop:'20px'}}
-                >
-                    ℹ️
-                </button>
+                <h1 style={{ color: 'black', marginBottom: '20px', fontWeight:'bold', fontSize:'40px' }}>BST Traversal Game</h1>
+                <button onClick={toggleModal} style={{ fontSize: '24px', background: 'transparent', border: 'none', color: '#4682B4', marginTop:'-20px'}}>ℹ️</button>
             </div>
 
             {showModal && (
@@ -261,57 +234,61 @@ const Bstgame = () => {
                         <p style={{textAlign:'left'}}>2. Select a traversal method: In-order, Pre-order, or Post-order.</p>
                         <p style={{textAlign:'left'}}>3. The game will show a number from the selected traversal.</p>
                         <p style={{textAlign:'left'}}>4. Guess what the next number is in the traversal order.</p>
-                        <p style={{textAlign:'left'}}>5. If your guess is correct, you earn points!</p><br/>
+                        <p style={{textAlign:'left'}}>5. Check the answer by either:
+                            <br/>&nbsp;&nbsp;&nbsp;• Pressing the Enter key, or
+                            <br/>&nbsp;&nbsp;&nbsp;• Clicking the Check button
+                        </p>
+                        <p style={{textAlign:'left'}}>6. If your guess is correct, you earn points!</p><br/>
                         <button onClick={toggleModal} style={styles.closeButton}>Close</button>
                     </div>
                 </div>
             )}
 
-            <select 
-                style={{ 
-                    fontSize: "18px",
-                    padding: "8px 15px",
-                    borderRadius: "5px",
-                    border: "2px solid #4682B4",
-                    marginBottom: "20px"
-                }} 
-                onChange={(e) => setTraversalMethod(e.target.value)} 
-                value={traversalMethod}
-            >
+            <select style={{ fontSize: "18px", padding: "8px 15px", borderRadius: "5px", border: "2px solid #4682B4", marginBottom: "20px" }} onChange={(e) => setTraversalMethod(e.target.value)} value={traversalMethod}>
                 <option value="In-order">In-order</option>
                 <option value="Pre-order">Pre-order</option>
                 <option value="Post-order">Post-order</option>
             </select>
-            <h2 style={{ color: 'black', marginBottom: '15px' }}>Score: {score}</h2>
-            <h2 style={{ color: 'black', marginBottom: '20px' }}>Current Traversal: {traversalMethod}</h2>
-            <svg width="800" height="400" style={{ margin: "20px 0" }}>
-                {renderTree(bst, 400, 40, 180)}
+            
+            <h2 style={{ color: 'black', marginBottom: '15px' }}>Score: {score}</h2>            
+            <svg width="800" height="370" style={{ margin: "20px 0" }}>
+                {renderTree(bst, 400, 40, 150)}
             </svg>
+
             <div style={{ color: "black" }}>
                 <h2 style={{ marginBottom: '15px' }}>Current number: {traversalValues[currentIndex]}</h2>
                 <p style={{ marginBottom: '15px' }}>What will be the next number?</p>
-                <input
-                    ref={inputRef}
-                    type="text"
-                    style={{ 
-                        fontSize: "18px",
-                        padding: "8px 15px",
-                        borderRadius: "5px",
-                        border: "2px solid #4682B4",
-                        margin: "0 auto",
-                        display: "block",
-                        width: "120px",
-                        textAlign: "center"
-                    }}
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            handleGuess();
-                        }
-                    }}
-                />
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        style={{ fontSize: "18px", padding: "8px 15px", height:'40px', borderRadius: "5px", border: "2px solid #4682B4", width: "120px", textAlign: "center" }}
+                        value={userInput}
+                        onChange={(e) => setUserInput(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleGuess();
+                            }
+                        }}
+                    />
+                    <button
+                        onClick={handleGuess}
+                        style={{
+                            fontSize: "18px",
+                            padding: "8px 15px",
+                            borderRadius: "5px",
+                            border: "none",
+                            margin: '0px',
+                            backgroundColor: "#4682B4",
+                            color: "white",
+                            cursor: "pointer",
+                            height: "40px"
+                        }}
+                    >
+                        Check
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -348,7 +325,7 @@ const styles = {
         marginTop: '10px',
         borderRadius: '5px',
         cursor: 'pointer',
-      },
+    }
 };
 
 export default Bstgame;
