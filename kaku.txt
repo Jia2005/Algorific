@@ -1,89 +1,43 @@
 import React, { useState, useEffect } from "react";
+import "tailwindcss/tailwind.css";
 
 const bstOperations = {
   insert: [
-    {
-      lines: [
-        "function insert(node, value) {",
-        "    if (node == null) {",
-        "        return newNode(value);",
-        "    }"
-      ],
-      condition: (node, value) => node === null,
-      description: "Creating new node"
-    },
-    {
-      lines: [
-        "    if (value < node.value) {",
-        "        node.left = insert(node.left, value);",
-        "    }"
-      ],
-      condition: (node, value) => value < node.value,
-      description: "Moving to left subtree"
-    },
-    {
-      lines: [
-        "    } else if (value > node.value) {",
-        "        node.right = insert(node.right, value);",
-        "    }"
-      ],
-      condition: (node, value) => value > node.value,
-      description: "Moving to right subtree"
-    },
-    {
-      lines: [
-        "    return node;",
-        "}"
-      ],
-      condition: (node, value) => value === node.value,
-      description: "Node already exists"
-    }
+    "function insert(node, value) {",
+    "    if (node == null) {",
+    "        return newNode(value);",
+    "    }",
+    "    if (value < node.value) {",
+    "        node.left = insert(node.left, value);",
+    "    } else if (value > node.value) {",
+    "        node.right = insert(node.right, value);",
+    "    }",
+    "    return node;",
+    "}",
   ],
   delete: [
-    {
-      lines: [
-        "function deleteNode(node, value) {",
-        "    if (node == null) return null;"
-      ],
-      condition: (node, value) => node === null,
-      description: "Node not found"
-    },
-    {
-      lines: [
-        "    if (value < node.value) {",
-        "        node.left = deleteNode(node.left, value);",
-        "    }"
-      ],
-      condition: (node, value) => value < node.value,
-      description: "Moving to left subtree"
-    },
-    {
-      lines: [
-        "    } else if (value > node.value) {",
-        "        node.right = deleteNode(node.right, value);",
-        "    }"
-      ],
-      condition: (node, value) => value > node.value,
-      description: "Moving to right subtree"
-    },
-    {
-      lines: [
-        "    } else {",
-        "        if (node.left == null) return node.right;",
-        "        if (node.right == null) return node.left;"
-      ],
-      condition: (node, value) => value === node.value && (!node.left || !node.right),
-      description: "Deleting node with one or no children"
-    },
-    {
-      lines: [
-        "        let minNode = findMin(node.right);",
-        "        node.value = minNode.value;",
-        "        node.right = deleteNode(node.right, minNode.value);"
-      ],
-      condition: (node, value) => value === node.value && node.left && node.right,
-      description: "Deleting node with two children"
-    }
+    "function deleteNode(node, value) {",
+    "    if (node == null) return null;",
+    "    if (value < node.value) {",
+    "        node.left = deleteNode(node.left, value);",
+    "    } else if (value > node.value) {",
+    "        node.right = deleteNode(node.right, value);",
+    "    } else {",
+    "        if (node.left == null) return node.right;",
+    "        if (node.right == null) return node.left;",
+    "        let minNode = findMin(node.right);",
+    "        node.value = minNode.value;",
+    "        node.right = deleteNode(node.right, minNode.value);",
+    "    }",
+    "    return node;",
+    "}",
+    "",
+    "function findMin(node) {",
+    "    while (node.left != null) {",
+    "        node = node.left;",
+    "    }",
+    "    return node;",
+    "}"
   ]
 };
 
@@ -222,8 +176,6 @@ const BSTApp = () => {
     }
   };
 
-  const [activeCodeBlock, setActiveCodeBlock] = useState(null);
-
   const executeStep = async () => {
     if (!isExecuting) return;
 
@@ -231,72 +183,67 @@ const BSTApp = () => {
     if (!currentNode) {
       setCurrentNode(tree);
       setTraversedNodes(new Set());
+      setCurrentLine(0);
       return;
     }
 
     setTraversedNodes(prev => new Set([...prev, currentNode.value]));
 
-    const operations = bstOperations[operation];
-    let activeBlock = null;
-
     if (operation === "insert") {
-      if (currentNode === null) {
-        activeBlock = 0; // New node creation
-      } else if (value < currentNode.value) {
-        activeBlock = 1; // Left subtree
+      if (value < currentNode.value) {
         if (currentNode.left === null) {
+          setExplanation(`Inserting ${value} to the left of ${currentNode.value}`);
           setTree(prevTree => insertNode(prevTree, value));
           setIsExecuting(false);
           setCurrentNode(null);
         } else {
+          setExplanation(`Traversing left from ${currentNode.value}`);
           setCurrentNode(currentNode.left);
         }
       } else if (value > currentNode.value) {
-        activeBlock = 2; // Right subtree
         if (currentNode.right === null) {
+          setExplanation(`Inserting ${value} to the right of ${currentNode.value}`);
           setTree(prevTree => insertNode(prevTree, value));
           setIsExecuting(false);
           setCurrentNode(null);
         } else {
+          setExplanation(`Traversing right from ${currentNode.value}`);
           setCurrentNode(currentNode.right);
         }
       } else {
-        activeBlock = 3; // Node exists
+        setExplanation(`${value} already exists in the tree`);
         setIsExecuting(false);
         setCurrentNode(null);
       }
     } else if (operation === "delete") {
-      // Similar logic for delete operation...
-      if (currentNode === null) {
-        activeBlock = 0;
-      } else if (value < currentNode.value) {
-        activeBlock = 1;
+      if (value < currentNode.value) {
         if (currentNode.left === null) {
+          setExplanation(`${value} not found in the tree`);
           setIsExecuting(false);
           setCurrentNode(null);
         } else {
+          setExplanation(`Traversing left from ${currentNode.value}`);
           setCurrentNode(currentNode.left);
         }
       } else if (value > currentNode.value) {
-        activeBlock = 2;
         if (currentNode.right === null) {
+          setExplanation(`${value} not found in the tree`);
           setIsExecuting(false);
           setCurrentNode(null);
         } else {
+          setExplanation(`Traversing right from ${currentNode.value}`);
           setCurrentNode(currentNode.right);
         }
       } else {
-        activeBlock = currentNode.left && currentNode.right ? 4 : 3;
+        setExplanation(`Deleting ${value}`);
         setTree(prevTree => deleteNode(prevTree, value));
         setIsExecuting(false);
         setCurrentNode(null);
       }
     }
 
-    setActiveCodeBlock(activeBlock);
-    setExplanation(operations[activeBlock].description);
+    setCurrentLine(prev => (prev + 1) % bstOperations[operation].length);
   };
-
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -318,70 +265,22 @@ const BSTApp = () => {
 
   const positionedTree = calculateNodePosition(tree, 300, 50, 0, 300);
 
-  const inputStyles = {
-    width: '120px',
-    padding: '8px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    marginRight: '8px'
-  };
-
-  const selectStyles = {
-    padding: '8px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
-    marginRight: '8px'
-  };
-
-  const buttonStyles = {
-    padding: '8px 16px',
-    backgroundColor: '#3498db',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    opacity: isExecuting ? '0.5' : '1'
-  };
-
-  const controlsContainerStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '24px'
-  };
-
-  return (
-    <div style={{ 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'space-between', 
-      gap: '40px',
-      minHeight: '100vh',
-      backgroundColor: '#f0f4f8',
-      padding: '16px'
-    }}>
-      <div style={{
-        flex: 1,
-        minHeight: '85vh',
-        padding: '24px',
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-      }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
-          Binary Search Tree Visualization
-        </h1>
-        <div style={controlsContainerStyles}>
+return (
+    <div className="w-full h-full min-h-screen flex items-center justify-between space-x-4 bg-gray-100 p-4">
+      <div className="w-1/2 min-h-[85vh] p-6 bg-white rounded-lg shadow">
+        <h1 className="text-2xl font-bold mb-4">Binary Search Tree Visualization</h1>
+        <div className="flex items-center space-x-4 mb-6">
           <input
             type="number"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            style={inputStyles}
+            className="w-32 p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder="Enter value"
           />
           <select
             value={operation}
             onChange={(e) => setOperation(e.target.value)}
-            style={selectStyles}
+            className="p-2 border rounded focus:ring-2 focus:ring-blue-500"
           >
             <option value="insert">Insert</option>
             <option value="delete">Delete</option>
@@ -389,21 +288,17 @@ const BSTApp = () => {
           <button
             onClick={handleExecute}
             disabled={isExecuting}
-            style={buttonStyles}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
           >
             Execute
           </button>
         </div>
-        <p style={{ color: '#666', marginBottom: '16px' }}>{explanation}</p>
-        <div style={{ width: '100%', overflow: 'hidden' }}>
+        <p className="text-gray-600 mb-4">{explanation}</p>
+        <div className="w-full overflow-hidden">
           <svg 
             width="600" 
             height="400" 
-            style={{
-              width: '100%',
-              backgroundColor: 'white',
-              borderRadius: '8px'
-            }}
+            className="w-full bg-white rounded-lg"
             viewBox="0 0 600 400"
             preserveAspectRatio="xMidYMid meet"
           >
@@ -416,39 +311,19 @@ const BSTApp = () => {
           </svg>
         </div>
       </div>
-      <div style={{
-        flex: 1,
-        minHeight: '85vh',
-        padding: '24px',
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-      }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>
+      <div className="w-1/2 min-h-[85vh] p-6 bg-white rounded-lg shadow">
+        <h1 className="text-2xl font-bold mb-4">
           BST {operation.charAt(0).toUpperCase() + operation.slice(1)} Algorithm
         </h1>
-        <div style={{ 
-          backgroundColor: '#f8f8f8', 
-          padding: '16px', 
-          borderRadius: '8px',
-          overflowY: 'auto',
-          maxHeight: 'calc(85vh - 100px)'
-        }}>
-          {bstOperations[operation].map((block, blockIndex) => (
-            <div key={blockIndex}>
-              {block.lines.map((line, lineIndex) => (
-                <div
-                  key={`${blockIndex}-${lineIndex}`}
-                  style={{
-                    color: 'black',
-                    fontFamily: 'monospace',
-                    padding: '8px',
-                    backgroundColor: activeCodeBlock === blockIndex ? '#fff3cd' : 'transparent'
-                  }}
-                >
-                  {line}
-                </div>
-              ))}
+        <div className="bg-gray-50 p-4 rounded-lg overflow-auto">
+          {bstOperations[operation].map((line, index) => (
+            <div
+              key={index}
+              className={`font-mono p-2 ${
+                currentLine === index ? 'bg-yellow-200' : ''
+              }`}
+            >
+              {line}
             </div>
           ))}
         </div>
