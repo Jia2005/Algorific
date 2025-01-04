@@ -1,4 +1,3 @@
-import { color } from 'framer-motion';
 import React, { useState, useEffect, useRef } from 'react';
 
 const Queues = () => {
@@ -25,8 +24,9 @@ const Queues = () => {
   }, [queue]);
 
   const enqueue = () => {
-    if (isNaN(inputValue) || inputValue.trim() === '') {
-      setMessage('Invalid Input');
+    const num = Number(inputValue);
+    if (!Number.isInteger(num) || num < 1 || num > 100 || inputValue.includes('.')) {
+      setMessage('Please enter a number between 1 and 100');
       setInputValue('');
       return;
     }
@@ -41,7 +41,10 @@ const Queues = () => {
   };
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    const value = e.target.value;
+    if (value === '' || (/^\d*$/.test(value) && value.length <= 3)) {
+      setInputValue(value);
+    }
   };
 
   const handleKeyDownInput = (e) => {
@@ -110,10 +113,10 @@ const Queues = () => {
           {message && (
             <div style={{
               ...styles.message,
-              backgroundColor: message.includes('Invalid') || message.includes('full') || message.includes('empty')
+              backgroundColor: message.includes('between') || message.includes('full') || message.includes('empty')
                 ? '#FFE5E5'
                 : '#E5FFE5',
-              color: message.includes('Invalid') || message.includes('full') || message.includes('empty')
+              color: message.includes('between') || message.includes('full') || message.includes('empty')
                 ? '#D32F2F'
                 : '#2E7D32'
             }}>
@@ -127,8 +130,8 @@ const Queues = () => {
             <label style={styles.label}>Queue Size:</label>
             <input
               type="number"
-              min="2"
-              max="20"
+              min="1"
+              max="100"
               value={maxSize}
               onChange={handleQueueSizeChange}
               style={styles.numberInput}
@@ -142,7 +145,7 @@ const Queues = () => {
               onChange={handleInputChange}
               onKeyDown={handleKeyDownInput}
               ref={inputRef}
-              placeholder="Enter value to enqueue"
+              placeholder="Enter value to enqueue (1-100)"
               style={styles.textInput}
             />
             <button onClick={enqueue} style={styles.secondary2Button}>
@@ -169,13 +172,16 @@ const Queues = () => {
               <div style={styles.instruction}>
                 <span style={styles.instructionNumber}>1</span>
                 <p style={{ color: 'black' }}>
-                  For enqueuing an element, write the value and press the 'Enter' key or click 'Enqueue'.
+                  For enqueuing an element, enter a number between 1 and 100, then press the 'Enter' key or click 'Enqueue'.
                 </p>
-
               </div>
               <div style={styles.instruction}>
                 <span style={styles.instructionNumber}>2</span>
-                <p style={{ color:'black' }}>For dequeuing an element, press the 'Delete' key or click 'Dequeue'.</p>
+                <p style={{ color: 'black' }}>For dequeuing an element, press the 'Delete' key or click 'Dequeue'.</p>
+              </div>
+              <div style={styles.instruction}>
+                <span style={styles.instructionNumber}>3</span>
+                <p style={{ color: 'black' }}>Input rules: Only numbers between 1 and 100 are accepted. No decimals, alphabets, or numbers over 3 digits allowed.</p>
               </div>
             </div>
             <button onClick={toggleModal} style={styles.closeButton}>
@@ -384,6 +390,7 @@ const styles = {
     borderRadius: '8px',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
+    margin: '0px',
     boxShadow: '0 2px 4px rgba(76, 175, 80, 0.2)',
     ':hover': {
       backgroundColor: '#43A047',

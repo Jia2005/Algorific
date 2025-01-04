@@ -37,10 +37,7 @@ const QueueGame = () => {
       }
     }
 
-    return {
-      operations,
-      targetQueue: finalQueue
-    };
+    return { operations, targetQueue: finalQueue };
   };
 
   const startChallenge = () => {
@@ -64,7 +61,7 @@ const QueueGame = () => {
       setGameState('success');
       
       if (level === MAX_LEVEL) {
-        setMessage(`Congratulations! You've completed all levels with ${score + pointsEarned} points!`); 
+        setMessage(`Congratulations! You've completed all levels with ${score + pointsEarned} points!`);
       } else {
         setTimeout(() => {
           setLevel(level + 1);
@@ -102,58 +99,60 @@ const QueueGame = () => {
     setQueue(queue.slice(1));
   };
 
-  if (!challenge) {
-    return <div className="container">Loading...</div>;
-  }
-
   return (
     <div className="container">
-      <div className="header">
-        <h1>Queue Challenge</h1>
-        <button className="help-button" onClick={() => setShowModal(true)}>?</button>
-      </div>
-
-      <div className="stats">
-        <span>Level: {level}/5</span>
-        <span>Score: {score}</span>
-      </div>
-      <div className="level-info">{levelConfig[level].description} - {levelConfig[level].points} points</div>
-
-      <h2>Operations to Perform:</h2>
-      <div className="operations">
-        {challenge.operations.map((op, idx) => (
-          <span key={idx} className={`operation ${op.type}`}>
-            {op.type === 'enqueue' ? `Enqueue ${op.value}` : 'Dequeue'}
-          </span>
-        ))}
-      </div>
-
-      <div className="queue-display">
-        {queue.length === 0 ? (
-          <span className="empty-queue">Empty Queue</span>
-        ) : (
-          queue.map((item, idx) => (
-            <div key={idx} className="queue-item">{item}</div>
-          ))
-        )}
-      </div>
-
-      <div className="controls">
-        <div className="input-group">
-          <input
-            type="number"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="#"
-          />
-          <button className="enqueue-btn" onClick={enqueue}>Enqueue</button>
+      <div className="content-wrapper">
+        <div className="gradient-section">
+          <div className="header">
+            <h1>Queue Challenge</h1>
+            <button className="help-button" onClick={() => setShowModal(true)}>ℹ️</button>
+          </div>
+          <div className="stats">
+            <span>Level: {level}/5</span>
+            <span>Score: {score}</span>
+          </div>
+          <div className="level-info">{levelConfig[level].description} - {levelConfig[level].points} points</div>
+          <div className="operations-title">Operations to Perform:</div>
+          <div className="operations">
+            {challenge?.operations.map((op, idx) => (
+              <span key={idx} className={`operation ${op.type}`}>
+                {op.type === 'enqueue' ? `Enqueue ${op.value}` : 'Dequeue'}
+              </span>
+            ))}
+          </div>
         </div>
-        <button className="dequeue-btn" onClick={dequeue}>Dequeue</button>
+
+        <div className="main-content">
+          <div className="queue-display">
+            {queue.length === 0 ? (
+              <span className="empty-queue">Empty Queue</span>
+            ) : (
+              queue.map((item, idx) => (
+                <div key={idx} className="queue-item">{item}</div>
+              ))
+            )}
+          </div>
+
+          <div className="controls">
+            <div className="input-group">
+              <input
+                type="number"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="#"
+                min="1"
+                max="99"
+              />
+              <button className="enqueue-btn" onClick={enqueue}>Enqueue</button>
+            </div>
+            <button className="dequeue-btn" onClick={dequeue}>Dequeue</button>
+          </div>
+
+          <button className="check-btn" onClick={checkAnswer}>Check Answer</button>
+
+          {message && <div className={`message ${gameState === 'success' ? 'success' : 'error'}`}>{message}</div>}
+        </div>
       </div>
-
-      <button className="check-btn" onClick={checkAnswer}>Check Answer</button>
-
-      {message && <div className="message">{message}</div>}
 
       {showModal && (
         <div className="modal">
