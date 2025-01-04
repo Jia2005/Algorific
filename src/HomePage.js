@@ -45,7 +45,7 @@ const CardContainer = () => {
         title="Queue" 
         description="A queue is a linear data structure that follows the First-In-First-Out (FIFO) principle."
         learnLink="/queue"
-        playLink="/queue-game"
+        playLink="/queuegame"
       />
       <Card 
         imgSrc={stack}

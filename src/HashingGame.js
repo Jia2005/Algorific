@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sha256 } from 'js-sha256'; // Import the hashing function
+import { sha256 } from 'js-sha256'; 
 import './hashing.css';
 
 const HashingGame = () => {
@@ -7,7 +7,7 @@ const HashingGame = () => {
   const [hashedOutput, setHashedOutput] = useState('');
 
   const handleHash = () => {
-    const hash = sha256(input); // Hash the input using SHA-256
+    const hash = sha256(input); 
     setHashedOutput(hash);
   };
 

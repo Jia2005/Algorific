@@ -1,15 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LinkedList from './LinkedList';
-import Stacks from './Stacks';
-import Queues from './Queues';
+import LinkedList from './Learn/LinkedList';
+import Stacks from './Learn/Stacks';
+import Queues from './Learn/Queues';
 import HomePage from './HomePage'; 
-import BSTApp from './Game/bst';
-import Bstgame from './bstgame';
+import BSTApp from './Algorithms/bst';
+import Bstgame from './Game/bstgame';
 import Water from './Game/water';
 import HashingGame from './HashingGame';
-import HuffmanVisualizer from './huffman';
+import HuffmanVisualizer from './Learn/huffman';
 import Dashboard from './Dashboard/dashboard';
+import QueueGame from './Game/queuegame';
 
 const App = () => {
   return (
@@ -23,8 +24,9 @@ const App = () => {
         <Route path="/bstgame" element={<Bstgame />} />
         <Route path="/water" element={<Water />} />
         <Route path="/hashing" element={<HashingGame />} />
-        <Route path="/huffmangame" element={<HuffmanVisualizer />} /> 
+        <Route path="/huffman" element={<HuffmanVisualizer />} /> 
         <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/queuegame" element={<QueueGame/>} />
       </Routes>
     </BrowserRouter>
   );
