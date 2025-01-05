@@ -158,17 +158,39 @@ const QueueGame = () => {
         <div className="modal">
           <div className="modal-content">
             <h2>How to Play</h2>
-            <ol>
-              <li>Each level presents a sequence of queue operations to perform.</li>
-              <li>Green boxes show numbers to enqueue (add to queue).</li>
-              <li>Red boxes indicate when to dequeue (remove from front).</li>
-              <li>Use the input field and Enqueue button to add numbers.</li>
-              <li>Use the Dequeue button to remove numbers from the front.</li>
-              <li>Complete all operations in order to match the target queue.</li>
-              <li>Click Check Answer to verify your solution.</li>
-              <li>Complete all 5 levels to win!</li>
-            </ol>
-            <button onClick={() => setShowModal(false)}>Got it!</button>
+            <div className='instruction'>
+                <span className='instructionNumber'>1</span>
+                <p style={{ color: 'black' }}>Each level presents a sequence of queue operations to perform.</p>
+            </div>
+            <div className='instruction'>
+                <span className='instructionNumber'>2</span>
+                <p style={{ color: 'black' }}>Green boxes show numbers to enqueue (add to queue).</p>
+            </div>
+            <div className='instruction'>
+                <span className='instructionNumber'>3</span>
+                <p style={{ color: 'black' }}>Red boxes indicate when to dequeue (remove from front).</p>
+            </div>
+            <div className='instruction'>
+                <span className='instructionNumber'>4</span>
+                <p style={{ color: 'black' }}>Use the input field and Enqueue button to add numbers.</p>
+            </div>
+            <div className='instruction'>
+                <span className='instructionNumber'>5</span>
+                <p style={{ color: 'black' }}>Use the Dequeue button to remove numbers from the front.</p>
+            </div>
+            <div className='instruction'>
+                <span className='instructionNumber'>6</span>
+                <p style={{ color: 'black' }}>Complete all operations in order to match the target queue.</p>
+            </div>
+            <div className='instruction'>
+                <span className='instructionNumber'>7</span>
+                <p style={{ color: 'black' }}>Click Check Answer to verify your solution.</p>
+            </div><br/>
+            <div className='instruction'>
+                <span className='instructionNumber'>8</span>
+                <p style={{ color: 'black' }}>Complete all 5 levels to win!</p>
+            </div>
+            <button onClick={() => setShowModal(false)} className='closeButton'>Got it!</button>
           </div>
         </div>
       )}

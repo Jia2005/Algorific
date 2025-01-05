@@ -1,21 +1,23 @@
 .container {
-    min-height: 100vh;
+    max-width: max-content;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    height: 100%;
+    margin-top: -100px;
+    margin-left: 400px;
     background-color: #F0F4F8;
+    overflow: hidden;
     background-image: linear-gradient(120deg, #f0f4f8 0%, #e6eef5 100%);
   }
   
   .content-wrapper {
-    width: 100%;
-    max-width: 1200px;
+    align-items: center;
+    justify-content: center;
     background-color: #FFFFFF;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
   }
   
   .gradient-section {
@@ -99,7 +101,7 @@
   .operation.enqueue {
     background-color: #4CAF50;
   }
-  
+
   .operation.dequeue {
     background-color: #EF5350;
   }
@@ -183,6 +185,12 @@
     box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
   }
   
+  .enqueue-btn:hover {
+    background-color: #2f8031;
+    transform: scale(1.02);
+    transition-timing-function: ease-in-out;
+  }
+
   .dequeue-btn {
     background-color: #EF5350;
     color: #FFF;
@@ -193,6 +201,12 @@
     border-radius: 8px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(239, 83, 80, 0.2);
+  }
+
+  .dequeue-btn:hover {
+    background-color: #a23331;
+    transform: scale(1.02);
+    transition-timing-function: ease-in-out;
   }
   
   .check-btn {
@@ -281,7 +295,48 @@
     cursor: pointer;
     width: 100%;
   }
+
+  .instruction {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .instructionNumber {
+    width: 30px;
+    height: 30px;
+    background-color: #E3F2FD;
+    color: #1A237E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .closeButton {
+    background-color: #1A237E;
+    color: #FFF;
+    margin-left: 0;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+  }
   
+  .closeButton:hover {
+    background-color: #303F9F;
+    transform: scale(1.02);
+    transition-duration: 3ms;
+    transition-timing-function: ease-in-out;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;

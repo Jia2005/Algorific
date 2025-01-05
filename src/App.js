@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/algo" element={<BSTApp />} />
         <Route path="/bstgame" element={<Bstgame />} />
         <Route path="/water" element={<Water />} />
-        <Route path="/hashing" element={<HashingGame />} />
+        <Route path="/hash" element={<HashingGame />} />
         <Route path="/huffman" element={<HuffmanVisualizer />} /> 
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/queuegame" element={<QueueGame/>} />
