@@ -25,8 +25,8 @@ const Queues = () => {
 
   const enqueue = () => {
     const num = Number(inputValue);
-    if (!Number.isInteger(num) || num < 1 || num > 100 || inputValue.includes('.')) {
-      setMessage('Please enter a number between 1 and 100');
+    if (!Number.isInteger(num) || num < 1 || num > 1000 || inputValue.includes('.')) {
+      setMessage('Please enter a number between 1 and 999');
       setInputValue('');
       return;
     }
@@ -70,7 +70,7 @@ const Queues = () => {
 
   const handleQueueSizeChange = (e) => {
     const value = Number(e.target.value);
-    if (value >= 1 && value <= 100) {
+    if (value >= 1 && value <= 999) {
       setMaxSize(value);
       setQueue([]);
       setMessage('');
@@ -145,7 +145,7 @@ const Queues = () => {
               onChange={handleInputChange}
               onKeyDown={handleKeyDownInput}
               ref={inputRef}
-              placeholder="Enter value to enqueue (1-100)"
+              placeholder="Enter value to enqueue (1-999)"
               style={styles.textInput}
             />
             <button onClick={enqueue} style={styles.secondary2Button}>
@@ -172,7 +172,7 @@ const Queues = () => {
               <div style={styles.instruction}>
                 <span style={styles.instructionNumber}>1</span>
                 <p style={{ color: 'black' }}>
-                  For enqueuing an element, enter a number between 1 and 100, then press the 'Enter' key or click 'Enqueue'.
+                  For enqueuing an element, enter a number between 1 and 999, then press the 'Enter' key or click 'Enqueue'.
                 </p>
               </div>
               <div style={styles.instruction}>

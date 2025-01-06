@@ -25,8 +25,8 @@ const Stacks = () => {
 
   const push = () => {
     const num = Number(inputValue);
-    if (!Number.isInteger(num) || num < 1 || num > 100 || inputValue.includes('.')) {
-      setMessage('Please enter a number between 1 and 100');
+    if (!Number.isInteger(num) || num < 1 || num > 1000 || inputValue.includes('.')) {
+      setMessage('Please enter a number between 1 and 999');
       setInputValue('');
       return;
     }
@@ -148,7 +148,7 @@ const Stacks = () => {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDownInput}
                 ref={inputRef}
-                placeholder="Enter value to push (1-100)"
+                placeholder="Enter value to push (1-999)"
                 style={styles.textInput}
               />
               <button onClick={push} style={styles.secondary2Button}>

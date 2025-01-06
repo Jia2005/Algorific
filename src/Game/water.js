@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './water.css';
 import Swal from 'sweetalert2';
+import './water.css';
 
 const difficultySettings = {
   easy: { tubes: 4, colors: 3, score: 5 },
@@ -40,6 +40,7 @@ const Water = () => {
   const [selectedTube, setSelectedTube] = useState(null);
   const [score, setScore] = useState(0);
   const [filledTubes, setFilledTubes] = useState([]);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     checkGameState();
@@ -147,58 +148,67 @@ const Water = () => {
   };
 
   return (
-    <div className="game-container">
-      <h1 style={{fontSize:'40px', fontWeight:'bold'}}>Stack Implementation Game</h1>
-      
-      <div className="difficulty-controls">
-        {Object.keys(difficultySettings).map((level) => (
-          <button
-            key={level}
-            onClick={() => handleDifficultyChange(level)}
-            className={`difficulty-btn ${difficulty === level ? 'active' : ''}`}
-          >
-            {level.charAt(0).toUpperCase() + level.slice(1)}
-          </button>
-        ))}
-      </div>
+    <div className='main-container'>
+      <div className="game-container">
+        <header className="game-header">
+          <h1>Stack Implementation Game</h1>
+          <button onClick={() => setShowInstructions(true)} className="info-button">ℹ️</button>
+        </header>
+        
+        <div className="difficulty-controls">
+          {Object.keys(difficultySettings).map((level) => (
+            <button
+              key={level}
+              onClick={() => handleDifficultyChange(level)}
+              className={`difficulty-btn ${difficulty === level ? 'active' : ''}`}
+            >
+              {level.charAt(0).toUpperCase() + level.slice(1)}
+            </button>
+          ))}
+        </div>
 
-      <div className="score" style={{ color: 'black' }}>Score: {score}</div>
-      
-      <div className="tubes">
-        {tubes.map((tube, index) => (
-          <div
-            key={index}
-            className={`tube ${selectedTube === index ? 'selected' : ''} ${filledTubes.includes(index) ? 'filled' : ''}`}
-            onClick={() => handleTubeClick(index)}
-          >
-            {tube.slice().reverse().map((color, idx) => (
-              <div
-                key={idx}
-                className="liquid"
-                style={{ backgroundColor: color }}
-              />
-            ))}
+        <div className="score">Score: {score}</div>
+        
+        <div className="tubes">
+          {tubes.map((tube, index) => (
+            <div
+              key={index}
+              className={`tube ${selectedTube === index ? 'selected' : ''} ${filledTubes.includes(index) ? 'filled' : ''}`}
+              onClick={() => handleTubeClick(index)}
+            >
+              {tube.slice().reverse().map((color, idx) => (
+                <div
+                  key={idx}
+                  className="liquid"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {showInstructions && (
+          <div className="modal">
+            <div className="modal-content">
+              <h2>How to Play</h2>
+              <div className="modal-body">
+                <div className="instruction">
+                  <span className="instruction-number">1</span>
+                  <p>Choose a difficulty level to start the game. Each level has different numbers of tubes and colors.</p>
+                </div>
+                <div className="instruction">
+                  <span className="instruction-number">2</span>
+                  <p>Click a tube to select it, then click another tube to pour the liquid. The liquid can only be poured into empty tubes or tubes with matching colors on top.</p>
+                </div>
+                <div className="instruction">
+                  <span className="instruction-number">3</span>
+                  <p>Fill tubes with matching colors to score points. Points awarded vary by difficulty: Easy (+5), Medium (+10), Hard (+15).</p>
+                </div>
+              </div>
+              <button onClick={() => setShowInstructions(false)} className="close-button">Close</button>
+            </div>
           </div>
-        ))}
-      </div><br/><br/>
-
-      <div className="how-to-play">
-        <h2>How to Play</h2>
-        <p>This game requires to stack colored liquids in tubes.</p>
-        <p>Difficulty Levels:</p>
-        <ul>
-          <li>Easy: 5 tubes, 3 colors (+5 points)</li>
-          <li>Medium: 6 tubes, 4 colors (+10 points)</li>
-          <li>Hard: 7 tubes, 5 colors (+15 points)</li>
-        </ul><br/>
-        <p>Rules:</p>
-        <ul>
-          <li>Liquid can be poured only into an empty tube or onto a tube that has the same color on top.</li>
-          <li>Each tube can hold a maximum of 5 liquids.</li>
-          <li>The goal is to fill a tube with the same color liquids to complete it.</li>
-          <li>Points are awarded based on difficulty level.</li>
-          <li>The game ends when all tubes are either completely filled or no more moves are possible.</li>
-        </ul>
+        )}
       </div>
     </div>
   );

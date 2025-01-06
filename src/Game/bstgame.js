@@ -230,15 +230,32 @@ const Bstgame = () => {
                 <div style={styles.modal}>
                     <div style={styles.modalContent}>
                         <h1>How to Play</h1><br/>
-                        <p style={{textAlign:'left'}}>1. The game displays a binary search tree (BST) structure.</p>
-                        <p style={{textAlign:'left'}}>2. Select a traversal method: In-order, Pre-order, or Post-order.</p>
-                        <p style={{textAlign:'left'}}>3. The game will show a number from the selected traversal.</p>
-                        <p style={{textAlign:'left'}}>4. Guess what the next number is in the traversal order.</p>
-                        <p style={{textAlign:'left'}}>5. Check the answer by either:
-                            <br/>&nbsp;&nbsp;&nbsp;• Pressing the Enter key, or
-                            <br/>&nbsp;&nbsp;&nbsp;• Clicking the Check button
-                        </p>
-                        <p style={{textAlign:'left'}}>6. If your guess is correct, you earn points!</p><br/>
+                        <div style={styles.instruction}>
+                            <span style={styles.instructionNumber}>1</span>
+                            <p style={{ color: 'black' }}>The game displays a binary search tree (BST) structure.</p>
+                        </div>
+                        <div style={styles.instruction}>
+                            <span style={styles.instructionNumber}>2</span>
+                            <p style={{ color: 'black', textAlign: 'left' }}>Select a traversal method: In-order, Pre-order, or Post-order.</p>
+                        </div>
+                        <div style={styles.instruction}>
+                            <span style={styles.instructionNumber}>3</span>
+                            <p style={{ color: 'black' }}>The game will show a number from the selected traversal.</p>
+                        </div>
+                        <div style={styles.instruction}>
+                            <span style={styles.instructionNumber}>4</span>
+                            <p style={{ color: 'black' }}>Guess what the next number is in the traversal order.</p>
+                        </div>
+                        <div style={styles.instruction}>
+                            <span style={styles.instructionNumber}>5</span>
+                            <p style={{ color: 'black' }}>Check the answer by either:
+                            <br/>• Pressing the Enter key, or
+                            <br/>• Clicking the Check button</p>
+                        </div>
+                        <div style={styles.instruction}>
+                            <span style={styles.instructionNumber}>6</span>
+                            <p style={{ color: 'black' }}> If your guess is correct, you earn points!</p>
+                        </div>
                         <button onClick={toggleModal} style={styles.closeButton}>Close</button>
                     </div>
                 </div>
@@ -316,16 +333,37 @@ const styles = {
         width: '100%',
         textAlign: 'center'
     },
-    closeButton: {
-        backgroundColor: '#f44336',
-        color: '#fff',
-        border: 'none',
-        padding: '10px 20px',
+    instruction: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '15px',
         fontSize: '16px',
-        marginTop: '10px',
-        borderRadius: '5px',
+        lineHeight: 1.6,
+      },
+      instructionNumber: {
+        width: '30px',
+        height: '30px',
+        backgroundColor: '#E3F2FD',
+        color: '#1A237E',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        flexShrink: 0,
+      },
+      closeButton: {
+        backgroundColor: '#1A237E',
+        color: '#FFF',
+        border: 'none',
+        padding: '12px 24px',
+        fontSize: '16px',
+        fontWeight: '600',
+        borderRadius: '8px',
         cursor: 'pointer',
-    }
+        width: '100%',
+        marginTop: '25px',
+      },
 };
 
 export default Bstgame;
