@@ -27,8 +27,8 @@ const HuffmanVisualizer = () => {
       steps.push({
         queue: nodes.map((node) =>
           node.char
-            ? `'${node.char}'`
-            : `(${renderTree(node.left)} + ${renderTree(node.right)})`
+            ? `${node.char}`
+            : `${renderTree(node.left)}${renderTree(node.right)}`
         ),
         tree: null,
       });
@@ -47,8 +47,8 @@ const HuffmanVisualizer = () => {
       steps.push({
         queue: nodes.map((node) =>
           node.char
-            ? `'${node.char}'`
-            : `(${renderTree(node.left)} + ${renderTree(node.right)})`
+            ? `${node.char}`
+            : `${renderTree(node.left)}${renderTree(node.right)}`
         ),
         tree: newNode,
       });
@@ -59,8 +59,8 @@ const HuffmanVisualizer = () => {
 
   const renderTree = (node) => {
     if (!node) return "";
-    if (node.char) return `'${node.char}'`;
-    return `(${renderTree(node.left)} + ${renderTree(node.right)})`;
+    if (node.char) return `${node.char}`;
+    return `${renderTree(node.left)}${renderTree(node.right)}`;
   };
 
   const renderHuffmanTree = (node, x, y, dx) => {
@@ -124,9 +124,9 @@ const HuffmanVisualizer = () => {
 
   const renderQueue = (nodes) => {
     return nodes.map((node, index) => (
-      <text key={index} x={100 + index * 120} y={30} fontSize="14">
+      <div key={index} className="node">
         {node}
-      </text>
+      </div>
     ));
   };
 
@@ -152,9 +152,9 @@ const HuffmanVisualizer = () => {
           <button onClick={runAnimation} className="run-button">
             Generate Tree
           </button>
-          <svg height="50" style={{ margin: "20px 0" }}>
-            <g>{renderQueue(steps[currentStep]?.queue || [])}</g>
-          </svg>
+          <div className="queue-huffman">
+            {renderQueue(steps[currentStep]?.queue || [])}
+          </div>
           <div className="navigation-buttons">
             <button
               onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 0))}
