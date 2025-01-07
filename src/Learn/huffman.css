@@ -1,154 +1,151 @@
 .huffman-visualizer {
+  text-align: center;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  color: black;
+}
+
+.huffman-visualizer h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.huffman-visualizer .input-text {
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.huffman-visualizer .input-text:focus {
+  border-color: #4e7dff;
+  box-shadow: 0 0 5px rgba(78, 125, 255, 0.5);
+}
+
+.huffman-visualizer .run-button {
+  padding: 10px 20px;
+  background-color: #4e7dff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.huffman-visualizer .run-button:hover {
+  background-color: #3c6dff;
+}
+
+.huffman-visualizer .tree-node-container {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+}
+
+.huffman-visualizer .tree-node {
+  padding: 8px 16px;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+  border: 2px solid #4e7dff;
+  margin: 5px 0;
+  display: inline-block;
+}
+
+.huffman-visualizer .lines {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.huffman-visualizer .line-left,
+.huffman-visualizer .line-right {
+  height: 2px;
+  width: 40px;
+  background-color: #4e7dff;
+  position: absolute;
+  top: -10px;
+}
+
+.huffman-visualizer .line-left {
+  transform: rotate(45deg);
+  left: -40px;
+}
+
+.huffman-visualizer .line-right {
+  transform: rotate(-45deg);
+  right: -40px;
+}
+
+.huffman-visualizer .children {
+  display: flex;
+  justify-content: space-between;
+}
+
+.huffman-visualizer .navigation-buttons {
+  margin-top: 20px;
+}
+
+.huffman-visualizer .navigation-buttons button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #4e7dff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.huffman-visualizer .navigation-buttons button:disabled {
+  background-color: #d3d3d3;
+}
+
+.huffman-visualizer .navigation-buttons button:hover {
+  background-color: #3c6dff;
+}
+
+.huffman-visualizer .queue-box rect {
+  transition: all 0.3s;
+}
+
+.huffman-visualizer .queue-box rect:hover {
+  fill: #87cefa;
+}
+
+.huffman-visualizer .queue-box {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.huffman-visualizer .queue-box text {
+  font-size: 14px;
+  text-anchor: middle;
+  fill: #000;
+}
+
+.divider {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+}
+
+.queue-huffman {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: white;
-    min-height: 100vh;
+    flex-wrap: wrap;
+    margin: 20px 0;
 }
 
-.title {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    font-size: 40px;
-    color: black;
-    font-weight: bold;
-}
-
-.content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-}
-
-.input-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.input-section input {
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.input-section button {
-    padding: 10px;
-    font-size: 1em;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.input-section button:hover {
-    background-color: #2a902f;
-    transform: scale(1.02);
-    transition-timing-function: ease-in-out;
-
-}
-
-.output-section {
-    margin-top: 20px;
-    width: 100%;
-}
-
-.output-section h3 {
-    margin-top: 20px;
-}
-
-.output-section pre, .output-section p {
-    background-color: #f0f0f0;
-    padding: 10px;
-    margin-top: 20px;
-    color: black;
-    font-weight: 300;
-    border-radius: 4px;
-    overflow-x: auto;
-}
-
-.tree-section {
-    flex: 1;
-    margin-top: 20px;
-}
-
-.tree-section h2 {
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tree-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tree-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
-}
-
-.tree-label {
-    background-color: rgb(16, 225, 218);
-    padding: 5px 10px;
-    border-radius: 4px;
-    color: black;
-    border: 1px solid darkgray;
-}
-
-.tree-children {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modalContent {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-    text-align: center;
-}
-
-.CloseButton {
-    font-size: 16px;
-    padding: 8px 15px;
-    border-radius: 5px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.CloseButton:hover {
-    background-color: #f44336;
+.queue-huffman .node {
+    background-color: rgb(156, 232, 255);
+    padding: 10px 15px;
+    min-width: 50px;
+    margin-right: 10px;
+    border: 1px solid black;
 }
