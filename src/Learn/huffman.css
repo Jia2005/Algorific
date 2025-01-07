@@ -1,31 +1,20 @@
-/* App.css */
-
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f4f4f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-}
-
 .huffman-visualizer {
   text-align: center;
-  width: 90%;
-  max-width: 800px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
 }
 
-h2 {
+.huffman-visualizer h2 {
   font-size: 2.5rem;
   color: #333;
   margin-bottom: 20px;
 }
 
-.input-text {
+.huffman-visualizer .input-text {
   padding: 10px;
-  width: 80%;
   font-size: 1rem;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -33,12 +22,12 @@ h2 {
   outline: none;
 }
 
-.input-text:focus {
+.huffman-visualizer .input-text:focus {
   border-color: #4e7dff;
   box-shadow: 0 0 5px rgba(78, 125, 255, 0.5);
 }
 
-.run-button {
+.huffman-visualizer .run-button {
   padding: 10px 20px;
   background-color: #4e7dff;
   color: white;
@@ -48,17 +37,17 @@ h2 {
   cursor: pointer;
 }
 
-.run-button:hover {
+.huffman-visualizer .run-button:hover {
   background-color: #3c6dff;
 }
 
-.tree-node-container {
+.huffman-visualizer .tree-node-container {
   position: relative;
   display: inline-block;
   margin: 20px;
 }
 
-.tree-node {
+.huffman-visualizer .tree-node {
   padding: 8px 16px;
   background-color: #f9f9f9;
   border-radius: 50%;
@@ -67,7 +56,7 @@ h2 {
   display: inline-block;
 }
 
-.lines {
+.huffman-visualizer .lines {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -75,8 +64,8 @@ h2 {
   transform: translate(-50%, -50%);
 }
 
-.line-left,
-.line-right {
+.huffman-visualizer .line-left,
+.huffman-visualizer .line-right {
   height: 2px;
   width: 40px;
   background-color: #4e7dff;
@@ -84,26 +73,26 @@ h2 {
   top: -10px;
 }
 
-.line-left {
+.huffman-visualizer .line-left {
   transform: rotate(45deg);
   left: -40px;
 }
 
-.line-right {
+.huffman-visualizer .line-right {
   transform: rotate(-45deg);
   right: -40px;
 }
 
-.children {
+.huffman-visualizer .children {
   display: flex;
   justify-content: space-between;
 }
 
-.navigation-buttons {
+.huffman-visualizer .navigation-buttons {
   margin-top: 20px;
 }
 
-.navigation-buttons button {
+.huffman-visualizer .navigation-buttons button {
   padding: 10px 20px;
   margin: 0 10px;
   background-color: #4e7dff;
@@ -114,29 +103,34 @@ h2 {
   cursor: pointer;
 }
 
-.navigation-buttons button:disabled {
+.huffman-visualizer .navigation-buttons button:disabled {
   background-color: #d3d3d3;
 }
 
-.navigation-buttons button:hover {
+.huffman-visualizer .navigation-buttons button:hover {
   background-color: #3c6dff;
 }
 
-.queue-box rect {
+.huffman-visualizer .queue-box rect {
   transition: all 0.3s;
 }
 
-.queue-box rect:hover {
+.huffman-visualizer .queue-box rect:hover {
   fill: #87cefa;
 }
 
-.queue-box {
+.huffman-visualizer .queue-box {
   display: inline-block;
   margin-right: 15px;
 }
 
-.queue-box text {
+.huffman-visualizer .queue-box text {
   font-size: 14px;
   text-anchor: middle;
   fill: #000;
+}
+
+.divider {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
 }
