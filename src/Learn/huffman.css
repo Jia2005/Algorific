@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  color: black;
 }
 
 .huffman-visualizer h2 {
@@ -132,5 +133,19 @@
 
 .divider {
     display: grid;
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 2fr 5fr;
+}
+
+.queue-huffman {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.queue-huffman .node {
+    background-color: rgb(156, 232, 255);
+    padding: 10px 15px;
+    min-width: 50px;
+    margin-right: 10px;
+    border: 1px solid black;
 }
