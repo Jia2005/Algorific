@@ -182,7 +182,7 @@ public:
       width: '100%',
       marginBottom: '24px',
       boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
-      height: '340px',
+      height: '300px',
       position: 'relative'
     },
     stackContainer: {
@@ -199,8 +199,8 @@ public:
       overflowY: 'auto'
     },
     stackBlock: {
-      width: '400px',
-      height: '60px',
+      width: '440px',
+      height: '50px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
