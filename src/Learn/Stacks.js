@@ -5,6 +5,7 @@ const Stacks = () => {
   const [maxSize, setMaxSize] = useState(5);
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('pseudo');
   const inputRef = useRef(null);
 
@@ -278,13 +279,90 @@ public:
       fontSize: '15px',
       fontWeight: '500',
       textAlign: 'center'
-    }
+    },
+    modal: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000,
+      backdropFilter: 'blur(5px)'
+    },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: '30px',
+      borderRadius: '15px',
+      maxWidth: '500px',
+      width: '90%',
+      textAlign: 'left'
+    },
+    modalTitle: {
+      fontSize: '24px',
+      marginBottom: '20px',
+      color: '#1A237E',
+      textAlign: 'center',
+      fontWeight: 'bold'
+    },
+    modalInstruction: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      marginBottom: '15px',
+      color: '#333'
+    },
+    modalNumber: {
+      minWidth: '24px',
+      height: '24px',
+      backgroundColor: '#E3F2FD',
+      color: '#1A237E',
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 'bold'
+    },
+    closeButton: {
+      backgroundColor: '#1A237E',
+      color: '#FFF',
+      margin: '0',
+      fontSize: '16px',
+      fontWeight: '600',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      width: '100%',
+      display:'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height:'48px',
+      marginTop: '30px',
+      transition: 'all 0.3s ease',
+      }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.panel}>
+      <div style={{ display: 'flex',justifyContent:'center', gap: '20px', alignItems: 'center', marginBottom: '24px' }}>
         <h2 style={styles.title}>Stack Visualization</h2>
+        <button 
+            onClick={() => setShowModal(true)}
+            style={{
+              background: 'none',
+              border: 'none',
+              marginTop:'-25px',
+              fontSize: '24px',
+              cursor: 'pointer',
+              color: '#1A237E'
+            }}
+          >
+            ℹ️
+          </button>
+        </div>
         <div style={styles.stackVisualization}>
           <div style={styles.stackContainer}>
             {stack.length === 0 ? (
@@ -402,6 +480,35 @@ public:
         }}>
           <code>{codeExamples[selectedLanguage]}</code>
         </pre>
+        {showModal && (
+        <div style={styles.modal}>
+          <div style={styles.modalContent}>
+            <h2 style={styles.modalTitle}>How to Use Stack Visualization</h2>
+            <div style={styles.modalInstruction}>
+              <span style={styles.modalNumber}>1</span>
+              <p>Enter a number (1-999) in the input field.</p>
+            </div>
+            <div style={styles.modalInstruction}>
+              <span style={styles.modalNumber}>2</span>
+              <p>Click 'Push' or press Enter to add the number to the stack.</p>
+            </div>
+            <div style={styles.modalInstruction}>
+              <span style={styles.modalNumber}>3</span>
+              <p>Click 'Pop' or press Delete to remove the top element.</p>
+            </div>
+            <div style={styles.modalInstruction}>
+              <span style={styles.modalNumber}>4</span>
+              <p>Use the stack size input to adjust maximum capacity.</p>
+            </div>
+            <button 
+              onClick={() => setShowModal(false)}
+              style={styles.closeButton}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       </div>
     </div>
   );

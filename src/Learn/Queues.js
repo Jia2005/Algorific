@@ -332,26 +332,22 @@ public:
       display:'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height:'50px',
+      height:'48px',
       marginTop: '30px',
       transition: 'all 0.3s ease',
-        hover: {
-          backgroundColor: '#303F9F',
-          transform: 'scale(1.02)',
-          transitionDuration: '3ms',
-        }
       }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.panel}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <div style={{ display: 'flex',justifyContent:'center', gap: '20px', alignItems: 'center', marginBottom: '24px' }}>
           <h2 style={styles.title}>Queue Visualization</h2>
           <button 
             onClick={() => setShowModal(true)}
             style={{
               background: 'none',
+              marginTop:'-25px',
               border: 'none',
               fontSize: '24px',
               cursor: 'pointer',
