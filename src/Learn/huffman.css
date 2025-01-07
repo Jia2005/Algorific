@@ -1,154 +1,142 @@
+/* App.css */
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
 .huffman-visualizer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: white;
-    min-height: 100vh;
+  text-align: center;
+  width: 90%;
+  max-width: 800px;
 }
 
-.title {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    font-size: 40px;
-    color: black;
-    font-weight: bold;
+h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
+.input-text {
+  padding: 10px;
+  width: 80%;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
 }
 
-.input-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 20px;
+.input-text:focus {
+  border-color: #4e7dff;
+  box-shadow: 0 0 5px rgba(78, 125, 255, 0.5);
 }
 
-.input-section input {
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 10px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.run-button {
+  padding: 10px 20px;
+  background-color: #4e7dff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-.input-section button {
-    padding: 10px;
-    font-size: 1em;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.run-button:hover {
+  background-color: #3c6dff;
 }
 
-.input-section button:hover {
-    background-color: #2a902f;
-    transform: scale(1.02);
-    transition-timing-function: ease-in-out;
-
-}
-
-.output-section {
-    margin-top: 20px;
-    width: 100%;
-}
-
-.output-section h3 {
-    margin-top: 20px;
-}
-
-.output-section pre, .output-section p {
-    background-color: #f0f0f0;
-    padding: 10px;
-    margin-top: 20px;
-    color: black;
-    font-weight: 300;
-    border-radius: 4px;
-    overflow-x: auto;
-}
-
-.tree-section {
-    flex: 1;
-    margin-top: 20px;
-}
-
-.tree-section h2 {
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tree-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.tree-node-container {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
 }
 
 .tree-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
+  padding: 8px 16px;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+  border: 2px solid #4e7dff;
+  margin: 5px 0;
+  display: inline-block;
 }
 
-.tree-label {
-    background-color: rgb(16, 225, 218);
-    padding: 5px 10px;
-    border-radius: 4px;
-    color: black;
-    border: 1px solid darkgray;
+.lines {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
 }
 
-.tree-children {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+.line-left,
+.line-right {
+  height: 2px;
+  width: 40px;
+  background-color: #4e7dff;
+  position: absolute;
+  top: -10px;
 }
 
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.line-left {
+  transform: rotate(45deg);
+  left: -40px;
 }
 
-.modalContent {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-    text-align: center;
+.line-right {
+  transform: rotate(-45deg);
+  right: -40px;
 }
 
-.CloseButton {
-    font-size: 16px;
-    padding: 8px 15px;
-    border-radius: 5px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    margin-top: 10px;
-    cursor: pointer;
+.children {
+  display: flex;
+  justify-content: space-between;
 }
 
-.CloseButton:hover {
-    background-color: #f44336;
+.navigation-buttons {
+  margin-top: 20px;
+}
+
+.navigation-buttons button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #4e7dff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.navigation-buttons button:disabled {
+  background-color: #d3d3d3;
+}
+
+.navigation-buttons button:hover {
+  background-color: #3c6dff;
+}
+
+.queue-box rect {
+  transition: all 0.3s;
+}
+
+.queue-box rect:hover {
+  fill: #87cefa;
+}
+
+.queue-box {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.queue-box text {
+  font-size: 14px;
+  text-anchor: middle;
+  fill: #000;
 }
