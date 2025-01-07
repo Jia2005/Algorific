@@ -47,8 +47,8 @@ const HuffmanVisualizer = () => {
       steps.push({
         queue: nodes.map((node) =>
           node.char
-            ? `${node.char}`
-            : `${renderTree(node.left)}${renderTree(node.right)}`
+            ? `${node.char} : ${node.freq}`
+            : `${renderTree(node.left)}${renderTree(node.right)} : ${node.freq}`
         ),
         tree: newNode,
       });
@@ -107,10 +107,10 @@ const HuffmanVisualizer = () => {
             y={y}
             textAnchor="middle"
             fill="#000"
-            fontSize="12"
+            fontSize="14"
             dy=".3em"
           >
-            {`'${node.char}'`}
+            {`${node.char}`}
           </text>
         )}
 
