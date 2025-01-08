@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './Queues.css';
 
 const Queues = () => {
   const [queue, setQueue] = useState([]);
@@ -13,95 +14,164 @@ const Queues = () => {
     pseudo: `Queue Operations Pseudocode:
 
 enqueue(element):
-  if queue is full:
-    return overflow
-  increment rear
-  queue[rear] = element
-  return success
+    if queue is full:
+        return overflow
+    increment rear
+    queue[rear] = element
+    return success
 
 dequeue():
-  if queue is empty:
-    return underflow
-  element = queue[front]
-  increment front
-  return element`,
+    if queue is empty:
+        return underflow
+    element = queue[front]
+    increment front
+    return element`,
 
-    cpp: `template <typename T>
-class Queue {
-private:
-    T* arr;
-    int front, rear, size;
+    cpp: `<span style="color: #FF79C6">template</span> <span style="color: #BD93F9">&lt;</span><span style="color: #FF79C6">typename</span> <span style="color: #50FA7B">T</span><span style="color: #BD93F9">&gt;</span>
+<span style="color: #FF79C6">class</span> <span style="color: #50FA7B">Queue</span> {
+<span style="color: #FF79C6">private</span>:
+    <span style="color: #50FA7B">T</span>* arr;
+    <span style="color: #FF79C6">int</span> front, rear, size;
     
-public:
-    Queue(int s) {
-        front = rear = -1;
+<span style="color: #FF79C6">public</span>:
+    <span style="color: #50FA7B">Queue</span>(<span style="color: #FF79C6">int</span> s) {
+        front = rear = -<span style="color: #BD93F9">1</span>;
         size = s;
-        arr = new T[s];
+        arr = <span style="color: #FF79C6">new</span> <span style="color: #50FA7B">T</span>[s];
     }
     
-    void enqueue(T x) {
-        if (rear == size-1) return;
-        if (front == -1) front = 0;
+    <span style="color: #FF79C6">void</span> <span style="color: #50FA7B">enqueue</span>(<span style="color: #50FA7B">T</span> x) {
+        <span style="color: #FF79C6">if</span> (rear == size-<span style="color: #BD93F9">1</span>) 
+            <span style="color: #FF79C6">return</span>;
+            
+        <span style="color: #FF79C6">if</span> (front == -<span style="color: #BD93F9">1</span>) 
+            front = <span style="color: #BD93F9">0</span>;
+            
         arr[++rear] = x;
     }
     
-    T dequeue() {
-        if (front == -1) return T();
-        T x = arr[front];
-        if (front == rear)
-            front = rear = -1;
-        else
+    <span style="color: #50FA7B">T</span> <span style="color: #50FA7B">dequeue</span>() {
+        <span style="color: #FF79C6">if</span> (front == -<span style="color: #BD93F9">1</span>) 
+            <span style="color: #FF79C6">return</span> <span style="color: #50FA7B">T</span>();
+            
+        <span style="color: #50FA7B">T</span> x = arr[front];
+        
+        <span style="color: #FF79C6">if</span> (front == rear)
+            front = rear = -<span style="color: #BD93F9">1</span>;
+        <span style="color: #FF79C6">else</span>
             front++;
-        return x;
+            
+        <span style="color: #FF79C6">return</span> x;
     }
-};`,
+};</span>`,
 
-    java: `class Queue<T> {
-    private T[] arr;
-    private int front, rear, size;
+    java: `<span style="color: #FF79C6">class</span> <span style="color: #50FA7B">Queue</span><span style="color: #BD93F9">&lt;</span><span style="color: #50FA7B">T</span><span style="color: #BD93F9">&gt;</span> {
+    <span style="color: #FF79C6">private</span> <span style="color: #50FA7B">T</span>[] arr;
+    <span style="color: #FF79C6">private</span> <span style="color: #FF79C6">int</span> front, rear, size;
     
-    @SuppressWarnings("unchecked")
-    Queue(int s) {
-        front = rear = -1;
+    <span style="color: #BD93F9">@SuppressWarnings</span>(<span style="color: #F1FA8C">"unchecked"</span>)
+    <span style="color: #50FA7B">Queue</span>(<span style="color: #FF79C6">int</span> s) {
+        front = rear = -<span style="color: #BD93F9">1</span>;
         size = s;
-        arr = (T[]) new Object[s];
+        arr = (<span style="color: #50FA7B">T</span>[]) <span style="color: #FF79C6">new</span> <span style="color: #50FA7B">Object</span>[s];
     }
     
-    void enqueue(T x) {
-        if (rear == size-1) return;
-        if (front == -1) front = 0;
+    <span style="color: #FF79C6">void</span> <span style="color: #50FA7B">enqueue</span>(<span style="color: #50FA7B">T</span> x) {
+        <span style="color: #FF79C6">if</span> (rear == size-<span style="color: #BD93F9">1</span>) 
+            <span style="color: #FF79C6">return</span>;
+            
+        <span style="color: #FF79C6">if</span> (front == -<span style="color: #BD93F9">1</span>) 
+            front = <span style="color: #BD93F9">0</span>;
+            
         arr[++rear] = x;
     }
     
-    T dequeue() {
-        if (front == -1) return null;
-        T x = arr[front];
-        if (front == rear)
-            front = rear = -1;
-        else
+    <span style="color: #50FA7B">T</span> <span style="color: #50FA7B">dequeue</span>() {
+        <span style="color: #FF79C6">if</span> (front == -<span style="color: #BD93F9">1</span>) 
+            <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">null</span>;
+            
+        <span style="color: #50FA7B">T</span> x = arr[front];
+        
+        <span style="color: #FF79C6">if</span> (front == rear)
+            front = rear = -<span style="color: #BD93F9">1</span>;
+        <span style="color: #FF79C6">else</span>
             front++;
-        return x;
+            
+        <span style="color: #FF79C6">return</span> x;
     }
 }`,
+    c: `<span style="color: #FF79C6">#define</span> <span style="color: #50FA7B">MAX_SIZE</span> <span style="color: #BD93F9">100</span>
 
-    python: `class Queue:
-    def __init__(self, size):
-        self.size = size
-        self.queue = []
+    <span style="color: #FF79C6">typedef</span> <span style="color: #FF79C6">struct</span> {
+        <span style="color: #FF79C6">int</span> items[<span style="color: #50FA7B">MAX_SIZE</span>];
+        <span style="color: #FF79C6">int</span> front;
+        <span style="color: #FF79C6">int</span> rear;
+        <span style="color: #FF79C6">int</span> size;
+    } <span style="color: #50FA7B">Queue</span>;
+
+    <span style="color: #FF79C6">void</span> <span style="color: #50FA7B">initQueue</span>(<span style="color: #50FA7B">Queue</span>* q, <span style="color: #FF79C6">int</span> s) {
+        q->front = -<span style="color: #BD93F9">1</span>;
+        q->rear = -<span style="color: #BD93F9">1</span>;
+        q->size = s;
+    }
+
+    <span style="color: #FF79C6">int</span> <span style="color: #50FA7B">isEmpty</span>(<span style="color: #50FA7B">Queue</span>* q) {
+        <span style="color: #FF79C6">return</span> q->front == -<span style="color: #BD93F9">1</span>;
+    }
+
+    <span style="color: #FF79C6">int</span> <span style="color: #50FA7B">isFull</span>(<span style="color: #50FA7B">Queue</span>* q) {
+        <span style="color: #FF79C6">return</span> q->rear == q->size - <span style="color: #BD93F9">1</span>;
+    }
+
+    <span style="color: #FF79C6">void</span> <span style="color: #50FA7B">enqueue</span>(<span style="color: #50FA7B">Queue</span>* q, <span style="color: #FF79C6">int</span> value) {
+        <span style="color: #FF79C6">if</span> (isFull(q)) {
+            <span style="color: #FF79C6">return</span>;
+        }
         
-    def enqueue(self, item):
-        if len(self.queue) >= self.size:
-            return None
-        self.queue.append(item)
+        <span style="color: #FF79C6">if</span> (isEmpty(q)) {
+            q->front = <span style="color: #BD93F9">0</span>;
+        }
         
-    def dequeue(self):
-        if len(self.queue) < 1:
-            return None
-        return self.queue.pop(0)
+        q->items[++q->rear] = value;
+    }
+
+    <span style="color: #FF79C6">int</span> <span style="color: #50FA7B">dequeue</span>(<span style="color: #50FA7B">Queue</span>* q) {
+        <span style="color: #FF79C6">if</span> (isEmpty(q)) {
+            <span style="color: #FF79C6">return</span> -<span style="color: #BD93F9">1</span>;
+        }
         
-    def display(self):
-        return self.queue`
+        <span style="color: #FF79C6">int</span> value = q->items[q->front];
+        
+        <span style="color: #FF79C6">if</span> (q->front == q->rear) {
+            q->front = q->rear = -<span style="color: #BD93F9">1</span>;
+        } <span style="color: #FF79C6">else</span> {
+            q->front++;
+        }
+        
+        <span style="color: #FF79C6">return</span> value;
+    }`,
+
+    python: `<span style="color: #FF79C6">class</span> <span style="color: #50FA7B">Queue</span>:
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">__init__</span>(<span style="color: #F8F8F2">self</span>, <span style="color: #F8F8F2">size</span>):
+        <span style="color: #F8F8F2">self</span>.size = size
+        <span style="color: #F8F8F2">self</span>.queue = []
+        
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">enqueue</span>(<span style="color: #F8F8F2">self</span>, <span style="color: #F8F8F2">item</span>):
+        <span style="color: #FF79C6">if</span> <span style="color: #F8F8F2">len</span>(<span style="color: #F8F8F2">self</span>.queue) >= <span style="color: #F8F8F2">self</span>.size:
+            <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">None</span>
+            
+        <span style="color: #F8F8F2">self</span>.queue.append(item)
+        
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">dequeue</span>(<span style="color: #F8F8F2">self</span>):
+        <span style="color: #FF79C6">if</span> <span style="color: #F8F8F2">len</span>(<span style="color: #F8F8F2">self</span>.queue) < <span style="color: #BD93F9">1</span>:
+            <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">None</span>
+            
+        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.queue.pop(<span style="color: #BD93F9">0</span>)
+        
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">display</span>(<span style="color: #F8F8F2">self</span>):
+        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.queue`
   };
+
 
   useEffect(() => {
     inputRef.current.focus();
@@ -157,218 +227,25 @@ public:
     }
   };
 
-  const styles = {
-    container: {
-      display: 'flex',
-      width: '100%',
-      gap: '24px',
-      padding: '24px',
-      backgroundColor: '#F0F4F8',
-      minHeight: '100vh',
-      backgroundImage: 'linear-gradient(120deg, #f0f4f8 0%, #e6eef5 100%)'
-    },
-    panel: {
-      width: '50%',
-      backgroundColor: 'white',
-      borderRadius: '16px',
-      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-      padding: '32px'
-    },
-    title: {
-      fontSize: '28px',
-      fontWeight: 'bold',
-      background: 'linear-gradient(120deg, #1A237E 0%, #3949AB 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      marginBottom: '24px',
-      textAlign: 'center'
-    },
-    queueVisualization: {
-      backgroundColor: '#F8FAFC',
-      borderRadius: '12px',
-      padding: '24px',
-      border: '2px solid #E3E8EF',
-      overflowX: 'auto',
-      width: '100%',
-      marginBottom: '24px',
-      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)'
-    },
-    queue: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: '16px',
-      width: 'fit-content',
-      minHeight: '100px',
-      padding: '8px'
-    },
-    queueBlock: {
-      minWidth: '100px',
-      height: '80px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'white',
-      fontSize: '22px',
-      fontWeight: 'bold',
-      borderRadius: '12px',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      flexShrink: 0,
-      transition: 'transform 0.2s ease',
-      cursor: 'default'
-    },
-    sizeContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      marginBottom: '16px',
-      justifyContent: 'center'
-    },
-    sizeInput: {
-      width: '80px',
-      padding: '8px',
-      borderRadius: '8px',
-      border: '2px solid #E2E8F0',
-      textAlign: 'center'
-    },
-    sizeLabel: {
-      fontSize: '16px',
-      color: '#4A5568',
-      fontWeight: '500'
-    },
-    inputContainer: {
-      display: 'flex',
-      gap: '12px',
-      marginBottom: '16px'
-    },
-    input: {
-      flex: 1,
-      padding: '14px',
-      borderRadius: '10px',
-      border: '2px solid #E2E8F0',
-      fontSize: '16px',
-      transition: 'all 0.2s ease',
-      outline: 'none'
-    },
-    buttonContainer: {
-      display: 'flex',
-      gap: '12px',
-      justifyContent: 'center'
-    },
-    button: {
-      padding: '14px 28px',
-      borderRadius: '10px',
-      border: 'none',
-      color: 'white',
-      fontSize: '16px',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-    },
-    message: {
-      padding: '14px',
-      borderRadius: '10px',
-      marginTop: '20px',
-      fontSize: '15px',
-      fontWeight: '500',
-      textAlign: 'center'
-    },
-    modal: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 1000,
-      backdropFilter: 'blur(5px)'
-    },
-    modalContent: {
-      backgroundColor: 'white',
-      padding: '30px',
-      borderRadius: '15px',
-      maxWidth: '500px',
-      width: '90%',
-      textAlign: 'left'
-    },
-    modalTitle: {
-      fontSize: '24px',
-      marginBottom: '20px',
-      color: '#1A237E',
-      textAlign: 'center',
-      fontWeight: 'bold'
-    },
-    modalInstruction: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      marginBottom: '15px',
-      color: '#333'
-    },
-    modalNumber: {
-      minWidth: '24px',
-      height: '24px',
-      backgroundColor: '#E3F2FD',
-      color: '#1A237E',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: 'bold'
-    },
-    closeButton: {
-      backgroundColor: '#1A237E',
-      color: '#FFF',
-      margin: '0',
-      fontSize: '16px',
-      fontWeight: '600',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      width: '100%',
-      display:'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height:'48px',
-      marginTop: '30px',
-      transition: 'all 0.3s ease',
-      }
-  };
-
   return (
-    <div style={styles.container}>
-      <div style={styles.panel}>
-        <div style={{ display: 'flex',justifyContent:'center', gap: '20px', alignItems: 'center', marginBottom: '24px' }}>
-          <h2 style={styles.title}>Queue Visualization</h2>
-          <button 
-            onClick={() => setShowModal(true)}
-            style={{
-              background: 'none',
-              marginTop:'-25px',
-              border: 'none',
-              fontSize: '24px',
-              cursor: 'pointer',
-              color: '#1A237E'
-            }}
-          >
+    <div className="queue-container">
+      <div className="panel">
+        <div className="header-container">
+          <h2 className="title">Queue Visualization</h2>
+          <button className="info-button" onClick={() => setShowModal(true)}>
             ℹ️
           </button>
         </div>
-        <div style={styles.queueVisualization}>
-          <div style={styles.queue}>
+        <div className="queue-visualization">
+          <div className="queue">
             {queue.length === 0 ? (
-              <p style={{color: '#94A3B8', fontStyle: 'italic', fontSize: '16px', width: '100%', textAlign: 'center'}}>
-                Queue is empty
-              </p>
+              <p className="queue-empty">Queue is empty</p>
             ) : (
               queue.map((item, index) => (
                 <div
                   key={index}
+                  className="queue-block"
                   style={{
-                    ...styles.queueBlock,
                     backgroundColor: `hsl(${200 + index * 15}, 75%, 65%)`
                   }}
                 >
@@ -378,19 +255,19 @@ public:
             )}
           </div>
         </div>
-        <div style={styles.sizeContainer}>
-          <label style={styles.sizeLabel}>Queue Size:</label>
+        <div className="size-container">
+          <label className="size-label">Queue Size:</label>
           <input
             type="number"
             min="1"
             max="100"
             value={maxSize}
             onChange={handleSizeChange}
-            style={styles.sizeInput}
+            className="size-input"
           />
-        </div><br/>
-
-        <div style={styles.inputContainer}>
+        </div>
+        
+        <div className="input-container">
           <input
             type="text"
             value={inputValue}
@@ -398,112 +275,92 @@ public:
             onKeyDown={handleKeyDownInput}
             ref={inputRef}
             placeholder="Enter value (1-999)"
-            style={styles.input}
+            className="queue-input"
           />
           <button 
             onClick={enqueue}
-            style={{
-              ...styles.button,
-              backgroundColor: '#3B82F6'
-            }}
+            className="queue-button enqueue-button"
           >
             Enqueue
           </button>
-        </div><br/><br/>
+        </div>
 
-        <div style={styles.buttonContainer}>
+        <div className="button-container">
           <button
             onClick={dequeue}
-            style={{
-              ...styles.button,
-              backgroundColor: '#10B981'
-            }}
+            className="queue-button dequeue-button"
           >
             Dequeue
           </button>
           <button
             onClick={() => setQueue([])}
-            style={{
-              ...styles.button,
-              backgroundColor: '#EF4444'
-            }}
+            className="queue-button reset-button"
           >
             Reset
           </button>
         </div>
 
         {message && (
-          <div style={{
-            ...styles.message,
-            backgroundColor: message.includes('between') || message.includes('full') || message.includes('empty')
-              ? '#FEE2E2'
-              : '#DCFCE7',
-            color: message.includes('between') || message.includes('full') || message.includes('empty')
-              ? '#DC2626'
-              : '#16A34A'
-          }}>
+          <div className={`message ${
+            message.includes('between') || message.includes('full') || message.includes('empty')
+              ? 'message-error'
+              : 'message-success'
+          }`}>
             {message}
           </div>
         )}
       </div>
 
-      <div style={styles.panel}>
-        <h2 style={styles.title}>Implementation</h2>
+      <div className="panel">
+        <h2 className="title">Implementation</h2>
         <select
           value={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '12px',
-            borderRadius: '8px',
-            border: '2px solid #E2E8F0',
-            marginBottom: '16px'
-          }}
+          className="language-select"
         >
           <option value="pseudo">Pseudocode</option>
+          <option value="c">C</option>
           <option value="cpp">C++</option>
           <option value="java">Java</option>
           <option value="python">Python</option>
         </select>
-        <pre style={{
-          backgroundColor: '#1A202C',
-          color: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          overflow: 'auto',
-          maxHeight: '600px'
-        }}>
-          <code>{codeExamples[selectedLanguage]}</code>
+        <pre className="code-block">
+          <code 
+            dangerouslySetInnerHTML={{ 
+              __html: codeExamples[selectedLanguage] 
+            }} 
+          />
         </pre>
+        
         {showModal && (
-        <div style={styles.modal}>
-          <div style={styles.modalContent}>
-            <h2 style={styles.modalTitle}>How to Use Queue Visualization</h2>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>1</span>
-              <p>Enter a number (1-999) in the input field.</p>
+          <div className="modal">
+            <div className="modal-content">
+              <h2 className="modal-title">How to Use Queue Visualization</h2>
+              <div className="modal-instruction">
+                <span className="modal-number">1</span>
+                <p>Enter a number (1-999) in the input field.</p>
+              </div>
+              <div className="modal-instruction">
+                <span className="modal-number">2</span>
+                <p>Click 'Enqueue' or press Enter to add the number to the queue.</p>
+              </div>
+              <div className="modal-instruction">
+                <span className="modal-number">3</span>
+                <p>Click 'Dequeue' or press Delete to remove the front element.</p>
+              </div>
+              <div className="modal-instruction">
+                <span className="modal-number">4</span>
+                <p>Use the queue size input to adjust maximum capacity.</p>
+              </div>
+              <button 
+                onClick={() => setShowModal(false)}
+                className="close-button"
+              >
+                Close
+              </button>
             </div>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>2</span>
-              <p>Click 'Enqueue' or press Enter to add the number to the queue.</p>
-            </div>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>3</span>
-              <p>Click 'Dequeue' or press Delete to remove the front element.</p>
-            </div>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>4</span>
-              <p>Use the queue size input to adjust maximum capacity.</p>
-            </div>
-            <button 
-              onClick={() => setShowModal(false)}
-              style={styles.closeButton}
-            >
-              Close
-            </button>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );

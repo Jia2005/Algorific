@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './Stacks.css';
 
 const Stacks = () => {
   const [stack, setStack] = useState([]);
@@ -26,70 +27,121 @@ pop():
   decrement top
   return element`,
 
-    cpp: `template <typename T>
-class Stack {
-private:
-    T* arr;
-    int top, size;
+    cpp: `<span style="color: #FF79C6">template</span> <span style="color: #BD93F9">&lt;</span><span style="color: #FF79C6">typename</span> <span style="color: #50FA7B">T</span><span style="color: #BD93F9">&gt;</span>
+<span style="color: #FF79C6">class</span> <span style="color: #50FA7B">Stack</span> {
+<span style="color: #FF79C6">private</span>:
+    <span style="color: #50FA7B">T</span>* arr;
+    <span style="color: #FF79C6">int</span> top, size;
     
-public:
-    Stack(int s) {
-        top = -1;
+<span style="color: #FF79C6">public</span>:
+    <span style="color: #50FA7B">Stack</span>(<span style="color: #FF79C6">int</span> s) {
+        top = -<span style="color: #BD93F9">1</span>;
         size = s;
-        arr = new T[s];
+        arr = <span style="color: #FF79C6">new</span> <span style="color: #50FA7B">T</span>[s];
     }
     
-    void push(T x) {
-        if (top >= size-1) return;
+    <span style="color: #FF79C6">void</span> <span style="color: #50FA7B">push</span>(<span style="color: #50FA7B">T</span> x) {
+        <span style="color: #FF79C6">if</span> (top >= size-<span style="color: #BD93F9">1</span>) <span style="color: #FF79C6">return</span>;
         arr[++top] = x;
     }
     
-    T pop() {
-        if (top < 0) return T();
-        return arr[top--];
+    <span style="color: #50FA7B">T</span> <span style="color: #50FA7B">pop</span>() {
+        <span style="color: #FF79C6">if</span> (top < <span style="color: #BD93F9">0</span>) <span style="color: #FF79C6">return</span> <span style="color: #50FA7B">T</span>();
+        <span style="color: #FF79C6">return</span> arr[top--];
     }
-};`,
+};</span>`,
+    c: `<span style="color: #FF79C6">#include</span> <span style="color: #50FA7B">&lt;stdio.h&gt;</span>
+<span style="color: #FF79C6">#include</span> <span style="color: #50FA7B">&lt;stdlib.h&gt;</span>
+<span style="color: #FF79C6">#include</span> <span style="color: #50FA7B">&lt;string.h&gt;</span>
 
-    java: `class Stack<T> {
-    private T[] arr;
-    private int top;
-    private int size;
+<span style="color: #FF79C6">#define</span> <span style="color: #BD93F9">true</span> <span style="color: #FF79C6">1</span>
+<span style="color: #FF79C6">#define</span> <span style="color: #BD93F9">false</span> <span style="color: #FF79C6">0</span>
+
+<span style="color: #FF79C6">typedef</span> <span style="color: #FF79C6">struct</span> {
+    <span style="color: #FF79C6">void</span>* arr;
+    <span style="color: #FF79C6">int</span> top;
+    <span style="color: #FF79C6">int</span> size;
+    <span style="color: #FF79C6">size_t</span> element_size;
+} <span style="color: #50FA7B">Stack</span>;
+
+<span style="color: #FF79C6">Stack</span>* <span style="color: #50FA7B">init_stack</span>(<span style="color: #FF79C6">int</span> size, <span style="color: #FF79C6">size_t</span> element_size) {
+    <span style="color: #FF79C6">Stack</span>* stack = (<span style="color: #FF79C6">Stack</span>*)<span style="color: #FF79C6">malloc</span>(<span style="color: #FF79C6">sizeof</span>(<span style="color: #FF79C6">Stack</span>));
+    stack->top = -<span style="color: #BD93F9">1</span>;
+    stack->size = size;
+    stack->element_size = element_size;
+    stack->arr = <span style="color: #FF79C6">malloc</span>(element_size * size);
+    <span style="color: #FF79C6">return</span> stack;
+}
+
+<span style="color: #FF79C6">void</span> <span style="color: #50FA7B">push</span>(<span style="color: #FF79C6">Stack</span>* stack, <span style="color: #FF79C6">void</span>* element) {
+    <span style="color: #FF79C6">if</span> (stack->top >= stack->size - <span style="color: #BD93F9">1</span>) <span style="color: #FF79C6">return</span>;  <span style="color: #FF79C6">/*</span> Stack overflow <span style="color: #FF79C6">*/
+    stack->top++;
+    <span style="color: #FF79C6">void</span>* target = (<span style="color: #FF79C6">char</span>*)stack->arr + stack->top * stack->element_size;
+    <span style="color: #FF79C6">memcpy</span>(target, element, stack->element_size);
+}
+
+<span style="color: #50FA7B">void*</span> <span style="color: #50FA7B">pop</span>(<span style="color: #FF79C6">Stack</span>* stack) {
+    <span style="color: #FF79C6">if</span> (stack->top < <span style="color: #BD93F9">0</span>) <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">NULL</span>;  <span style="color: #FF79C6">/*</span> Stack underflow <span style="color: #FF79C6">*/
+    <span style="color: #FF79C6">void</span>* element = (<span style="color: #FF79C6">char</span>*)stack->arr + stack->top * stack->element_size;
+    stack->top--;
+    <span style="color: #FF79C6">return</span> element;
+}
+
+<span style="color: #50FA7B">int</span> <span style="color: #FF79C6">main</span>() {
+    <span style="color: #50FA7B">Stack</span>* int_stack = <span style="color: #50FA7B">init_stack</span>(<span style="color: #FF79C6">10</span>, <span style="color: #FF79C6">sizeof</span>(<span style="color: #50FA7B">int</span>));
+
+    <span style="color: #50FA7B">int</span> a = <span style="color: #BD93F9">5</span>, b = <span style="color: #BD93F9">10</span>, c = <span style="color: #BD93F9">15</span>;
+    <span style="color: #50FA7B">push</span>(int_stack, &a);
+    <span style="color: #50FA7B">push</span>(int_stack, &b);
+    <span style="color: #50FA7B">push</span>(int_stack, &c);
+
+    <span style="color: #50FA7B">int</span>* popped_value = (<span style="color: #50FA7B">int</span>*)<span style="color: #50FA7B">pop</span>(int_stack);
+    <span style="color: #FF79C6">printf</span>(<span style="color: #FF79C6">"Popped value: %d\n"</span>, *popped_value);
+
+    <span style="color: #FF79C6">free</span>(int_stack->arr);
+    <span style="color: #FF79C6">free</span>(int_stack);
+    <span style="color: #FF79C6">return</span> <span style="color: #BD93F9">0</span>;`,
+
+    java: `<span style="color: #FF79C6">class</span> <span style="color: #50FA7B">Stack</span><span style="color: #BD93F9">&lt;</span><span style="color: #50FA7B">T</span><span style="color: #BD93F9">&gt;</span> {
+    <span style="color: #FF79C6">private</span> <span style="color: #50FA7B">T</span>[] arr;
+    <span style="color: #FF79C6">private</span> <span style="color: #FF79C6">int</span> top;
+    <span style="color: #FF79C6">private</span> <span style="color: #FF79C6">int</span> size;
     
-    @SuppressWarnings("unchecked")
-    Stack(int s) {
-        top = -1;
+    <span style="color: #BD93F9">@SuppressWarnings</span>(<span style="color: #F1FA8C">"unchecked"</span>)
+    <span style="color: #50FA7B">Stack</span>(<span style="color: #FF79C6">int</span> s) {
+        top = -<span style="color: #BD93F9">1</span>;
         size = s;
-        arr = (T[]) new Object[s];
+        arr = (<span style="color: #50FA7B">T</span>[]) <span style="color: #FF79C6">new</span> <span style="color: #50FA7B">Object</span>[s];
     }
     
-    void push(T x) {
-        if (top >= size-1) return;
+    <span style="color: #FF79C6">void</span> <span style="color: #50FA7B">push</span>(<span style="color: #50FA7B">T</span> x) {
+        <span style="color: #FF79C6">if</span> (top >= size-<span style="color: #BD93F9">1</span>) <span style="color: #FF79C6">return</span>;
         arr[++top] = x;
     }
     
-    T pop() {
-        if (top < 0) return null;
-        return arr[top--];
+    <span style="color: #50FA7B">T</span> <span style="color: #50FA7B">pop</span>() {
+        <span style="color: #FF79C6">if</span> (top < <span style="color: #BD93F9">0</span>) <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">null</span>;
+        <span style="color: #FF79C6">return</span> arr[top--];
     }
 }`,
 
-    python: `class Stack:
-    def __init__(self, size):
-        self.size = size
-        self.stack = []
+    python: `<span style="color: #FF79C6">class</span> <span style="color: #50FA7B">Stack</span>:
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">__init__</span>(<span style="color: #F8F8F2">self</span>, <span style="color: #F8F8F2">size</span>):
+        <span style="color: #F8F8F2">self</span>.size = size
+        <span style="color: #F8F8F2">self</span>.stack = []
         
-    def push(self, item):
-        if len(self.stack) >= self.size:
-            return None
-        self.stack.append(item)
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">push</span>(<span style="color: #F8F8F2">self</span>, <span style="color: #F8F8F2">item</span>):
+        <span style="color: #FF79C6">if</span> <span style="color: #F8F8F2">len</span>(<span style="color: #F8F8F2">self</span>.stack) >= <span style="color: #F8F8F2">self</span>.size:
+            <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">None</span>
+        <span style="color: #F8F8F2">self</span>.stack.append(item)
         
-    def pop(self):
-        if len(self.stack) < 1:
-            return None
-        return self.stack.pop()
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">pop</span>(<span style="color: #F8F8F2">self</span>):
+        <span style="color: #FF79C6">if</span> <span style="color: #F8F8F2">len</span>(<span style="color: #F8F8F2">self</span>.stack) < <span style="color: #BD93F9">1</span>:
+            <span style="color: #FF79C6">return</span> <span style="color: #FF79C6">None</span>
+        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.stack.pop()
         
-    def display(self):
-        return self.stack`
+    <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">display</span>(<span style="color: #F8F8F2">self</span>):
+        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.stack`
   };
 
   useEffect(() => {
@@ -146,233 +198,23 @@ public:
     }
   };
 
-  const styles = {
-    container: {
-      display: 'flex',
-      width: '100%',
-      gap: '24px',
-      margin: '0px',
-      padding: '10px',
-      backgroundColor: '#F0F4F8',
-      minHeight: '100vh',
-      backgroundImage: 'linear-gradient(120deg, #f0f4f8 0%, #e6eef5 100%)',
-      
-    },
-    panel: {
-      width: '50%',
-      backgroundColor: 'white',
-      borderRadius: '16px',
-      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-      padding: '32px'
-    },
-    title: {
-      fontSize: '30px',
-      fontWeight: 'bold',
-      background: 'linear-gradient(120deg, #1A237E 0%, #3949AB 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      marginBottom: '24px',
-      textAlign: 'center'
-    },
-    stackVisualization: {
-      backgroundColor: '#F8FAFC',
-      borderRadius: '12px',
-      padding: '24px',
-      border: '2px solid #E3E8EF',
-      width: '100%',
-      marginBottom: '24px',
-      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
-      height: '300px',
-      position: 'relative'
-    },
-    stackContainer: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      display: 'flex',
-      flexDirection: 'column-reverse',
-      alignItems: 'center',
-      padding: '24px',
-      gap: '8px',
-      maxHeight: '100%',
-      overflowY: 'auto'
-    },
-    stackBlock: {
-      width: '440px',
-      height: '50px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'white',
-      fontSize: '22px',
-      fontWeight: 'bold',
-      borderRadius: '12px',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      transition: 'all 0.3s ease',
-      flexShrink: 0
-    },
-    emptyMessage: {
-      color: '#94A3B8',
-      fontStyle: 'italic',
-      fontSize: '16px',
-      width: '100%',
-      textAlign: 'center',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'
-    },
-    sizeContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      marginBottom: '16px',
-      justifyContent: 'center'
-    },
-    sizeInput: {
-      width: '80px',
-      padding: '8px',
-      borderRadius: '8px',
-      border: '2px solid #E2E8F0',
-      textAlign: 'center'
-    },
-    sizeLabel: {
-      fontSize: '16px',
-      color: '#4A5568',
-      fontWeight: '500'
-    },
-    inputContainer: {
-      display: 'flex',
-      gap: '12px',
-      marginBottom: '16px'
-    },
-    input: {
-      flex: 1,
-      padding: '14px',
-      borderRadius: '10px',
-      border: '2px solid #E2E8F0',
-      fontSize: '16px',
-      transition: 'all 0.2s ease',
-      outline: 'none'
-    },
-    buttonContainer: {
-      display: 'flex',
-      gap: '12px',
-      justifyContent: 'center'
-    },
-    button: {
-      padding: '14px 28px',
-      borderRadius: '10px',
-      border: 'none',
-      color: 'white',
-      fontSize: '16px',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-    },
-    message: {
-      padding: '14px',
-      borderRadius: '10px',
-      marginTop: '20px',
-      fontSize: '15px',
-      fontWeight: '500',
-      textAlign: 'center'
-    },
-    modal: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 1000,
-      backdropFilter: 'blur(5px)'
-    },
-    modalContent: {
-      backgroundColor: 'white',
-      padding: '30px',
-      borderRadius: '15px',
-      maxWidth: '500px',
-      width: '90%',
-      textAlign: 'left'
-    },
-    modalTitle: {
-      fontSize: '24px',
-      marginBottom: '20px',
-      color: '#1A237E',
-      textAlign: 'center',
-      fontWeight: 'bold'
-    },
-    modalInstruction: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px',
-      marginBottom: '15px',
-      color: '#333'
-    },
-    modalNumber: {
-      minWidth: '24px',
-      height: '24px',
-      backgroundColor: '#E3F2FD',
-      color: '#1A237E',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: 'bold'
-    },
-    closeButton: {
-      backgroundColor: '#1A237E',
-      color: '#FFF',
-      margin: '0',
-      fontSize: '16px',
-      fontWeight: '600',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      width: '100%',
-      display:'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height:'48px',
-      marginTop: '30px',
-      transition: 'all 0.3s ease',
-      }
-  };
-
   return (
-    <div style={styles.container}>
-      <div style={styles.panel}>
-      <div style={{ display: 'flex',justifyContent:'center', gap: '20px', alignItems: 'center', marginBottom: '24px' }}>
-        <h2 style={styles.title}>Stack Visualization</h2>
-        <button 
-            onClick={() => setShowModal(true)}
-            style={{
-              background: 'none',
-              border: 'none',
-              marginTop:'-25px',
-              fontSize: '24px',
-              cursor: 'pointer',
-              color: '#1A237E'
-            }}
-          >
-            ℹ️
-          </button>
+    <div className="stack-container">
+      <div className="panel">
+        <div className="header-container">
+          <h2 className="title">Stack Visualization</h2>
+          <button className="info-button" onClick={() => setShowModal(true)}>ℹ️</button>
         </div>
-        <div style={styles.stackVisualization}>
-          <div style={styles.stackContainer}>
+        <div className="stack-visualization">
+          <div className="stack-container2">
             {stack.length === 0 ? (
-              <p style={styles.emptyMessage}>Stack is empty</p>
+              <p className="empty-message">Stack is empty</p>
             ) : (
               stack.map((item, index) => (
                 <div
                   key={index}
+                  className="stack-block"
                   style={{
-                    ...styles.stackBlock,
                     backgroundColor: `hsl(${200 + index * 15}, 75%, 65%)`
                   }}
                 >
@@ -383,19 +225,19 @@ public:
           </div>
         </div>
 
-        <div style={styles.sizeContainer}>
-          <label style={styles.sizeLabel}>Stack Size:</label>
+        <div className="size-container">
+          <label className="size-label">Stack Size:</label>
           <input
             type="number"
             min="1"
             max="100"
             value={maxSize}
             onChange={handleSizeChange}
-            style={styles.sizeInput}
+            className="size-input"
           />
         </div>
 
-        <div style={styles.inputContainer}>
+        <div className="input-container">
           <input
             type="text"
             value={inputValue}
@@ -403,112 +245,63 @@ public:
             onKeyDown={handleKeyDownInput}
             ref={inputRef}
             placeholder="Enter value (1-999)"
-            style={styles.input}
+            className="input"
           />
-          <button 
-            onClick={push}
-            style={{
-              ...styles.button,
-              backgroundColor: '#3B82F6'
-            }}
-          >
-            Push
-          </button>
+          <button onClick={push} className="button push-button">Push</button>
         </div>
 
-        <div style={styles.buttonContainer}>
-          <button
-            onClick={pop}
-            style={{
-              ...styles.button,
-              backgroundColor: '#10B981'
-            }}
-          >
-            Pop
-          </button>
-          <button
-            onClick={() => setStack([])}
-            style={{
-              ...styles.button,
-              backgroundColor: '#EF4444'
-            }}
-          >
-            Reset
-          </button>
+        <div className="button-container">
+          <button onClick={pop} className="button pop-button">Pop</button>
+          <button onClick={() => setStack([])} className="button reset-button">Reset</button>
         </div>
 
         {message && (
-          <div style={{
-            ...styles.message,
-            backgroundColor: message.includes('between') || message.includes('full') || message.includes('empty')
-              ? '#FEE2E2'
-              : '#DCFCE7',
-            color: message.includes('between') || message.includes('full') || message.includes('empty')
-              ? '#DC2626'
-              : '#16A34A'
-          }}>
+          <div className={`message ${message.includes('between') || message.includes('full') || message.includes('empty') ? 'error-message' : 'success-message'}`}>
             {message}
           </div>
         )}
       </div>
 
-      <div style={styles.panel}>
-        <h2 style={styles.title}>Implementation</h2>
+      <div className="panel">
+        <h2 className="title">Implementation</h2>
         <select
           value={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '12px',
-            borderRadius: '8px',
-            border: '2px solid #E2E8F0',
-            marginBottom: '16px'
-          }}
+          className="language-select"
         >
           <option value="pseudo">Pseudocode</option>
+          <option value="c">C</option>
           <option value="cpp">C++</option>
           <option value="java">Java</option>
           <option value="python">Python</option>
         </select>
-        <pre style={{
-          backgroundColor: '#1A202C',
-          color: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-          overflow: 'auto',
-          maxHeight: '600px'
-        }}>
-          <code>{codeExamples[selectedLanguage]}</code>
+        <pre className="code-container">
+          <code dangerouslySetInnerHTML={{ __html: codeExamples[selectedLanguage] }} />
         </pre>
         {showModal && (
-        <div style={styles.modal}>
-          <div style={styles.modalContent}>
-            <h2 style={styles.modalTitle}>How to Use Stack Visualization</h2>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>1</span>
-              <p>Enter a number (1-999) in the input field.</p>
+          <div className="modal">
+            <div className="modal-content">
+              <h2 className="modal-title">How to Use Stack Visualization</h2>
+              <div className="modal-instruction">
+                <span className="modal-number">1</span>
+                <p>Enter a number (1-999) in the input field.</p>
+              </div>
+              <div className="modal-instruction">
+                <span className="modal-number">2</span>
+                <p>Click 'Push' or press Enter to add the number to the stack.</p>
+              </div>
+              <div className="modal-instruction">
+                <span className="modal-number">3</span>
+                <p>Click 'Pop' or press Delete to remove the top element.</p>
+              </div>
+              <div className="modal-instruction">
+                <span className="modal-number">4</span>
+                <p>Use the stack size input to adjust maximum capacity.</p>
+              </div>
+              <button onClick={() => setShowModal(false)} className="close-button">Close</button>
             </div>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>2</span>
-              <p>Click 'Push' or press Enter to add the number to the stack.</p>
-            </div>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>3</span>
-              <p>Click 'Pop' or press Delete to remove the top element.</p>
-            </div>
-            <div style={styles.modalInstruction}>
-              <span style={styles.modalNumber}>4</span>
-              <p>Use the stack size input to adjust maximum capacity.</p>
-            </div>
-            <button 
-              onClick={() => setShowModal(false)}
-              style={styles.closeButton}
-            >
-              Close
-            </button>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );
