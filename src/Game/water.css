@@ -36,11 +36,18 @@
 }
 
 .info-button {
-  font-size: 24px;
-  background: transparent;
+  background: none;
   border: none;
+  margin-top: 8px;
+  padding: 1px;
+  font-size: 24px;
   cursor: pointer;
-  color: #3949AB;
+  color: #1A237E;
+}
+
+.info-button:hover {
+background-color: #0022cd;
+border-radius: 5px;
 }
 
 .difficulty-controls {
@@ -54,6 +61,9 @@
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
+  font-family: 'Bolbly One SC', cursive;
+  font-weight: 500;
+  font-size: 14px;
   background-color: #e2e8f0;
   cursor: pointer;
   transition: all 0.2s ease-in-out;

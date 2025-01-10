@@ -204,7 +204,7 @@ pop():
         <div className="header-container">
           <h2 className="title">Stack Visualization</h2>
           <button className="info-button" onClick={() => setShowModal(true)}>ℹ️</button>
-        </div>
+        </div><br/>
         <div className="stack-visualization">
           <div className="stack-container2">
             {stack.length === 0 ? (
@@ -263,7 +263,7 @@ pop():
       </div>
 
       <div className="panel">
-        <h2 className="title">Implementation</h2>
+        <h2 className="title">Implementation</h2><br/><br/>
         <select
           value={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}

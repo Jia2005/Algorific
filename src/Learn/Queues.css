@@ -21,8 +21,8 @@
     font-weight: bold;
     background: linear-gradient(120deg, #1A237E 0%, #3949AB 100%);
     -webkit-background-clip: text;
+    margin-top: 10px; 
     -webkit-text-fill-color: transparent;
-    margin-bottom: 24px;
     text-align: center;
   }
   
@@ -174,7 +174,7 @@
     color: white;
     padding: 20px;
     overflow: auto;
-    max-height: 540px;
+    max-height: 520px;
     border-radius: 20px;
     line-height: 1.6;
   }
@@ -249,11 +249,17 @@
   
   .info-button {
     background: none;
-    margin-top: -25px;
     border: none;
+    margin-top: 8px;
+    padding: 1px;
     font-size: 24px;
     cursor: pointer;
     color: #1A237E;
+  }
+  
+  .info-button:hover {
+  background-color: #0022cd;
+  border-radius: 5px;
   }
   
   .header-container {

@@ -43,6 +43,11 @@
   color: #3949AB;
 }
 
+.info-button:hover {
+  background-color: #0022cd;
+  border-radius: 5px;
+}
+
 .difficulty-controls {
   margin: 20px 0;
   display: flex;

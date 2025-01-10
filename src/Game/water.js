@@ -9,12 +9,13 @@ const difficultySettings = {
 };
 
 const pastelColors = [
-  'rgba(255, 182, 193, 1)',
-  'rgba(135, 206, 235, 1)',
-  'rgba(152, 251, 152, 1)',
-  'rgba(255, 218, 185, 1)',
-  'rgba(221, 160, 221, 1)',
+  'rgba(255, 105, 180, 1)', 
+  'rgb(114, 194, 244)', 
+  'rgb(255, 237, 102)',
+  'rgb(122, 255, 129)', 
+  'rgb(224, 147, 254)',
 ];
+
 
 const generateTubes = (settings) => {
   const tubes = [];
@@ -152,7 +153,7 @@ const Water = () => {
       <div className="game-container">
         <header className="game-header">
           <h1>Stack Implementation Game</h1>
-          <button onClick={() => setShowInstructions(true)} className="info-button">ℹ️</button>
+          <button onClick={() => setShowInstructions(true)} className="info-button" style={{marginTop:'-1px'}}>ℹ️</button>
         </header>
         
         <div className="difficulty-controls">

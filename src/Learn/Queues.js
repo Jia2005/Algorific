@@ -235,7 +235,7 @@ dequeue():
           <button className="info-button" onClick={() => setShowModal(true)}>
             ℹ️
           </button>
-        </div>
+        </div><br/>
         <div className="queue-visualization">
           <div className="queue">
             {queue.length === 0 ? (
@@ -312,7 +312,7 @@ dequeue():
       </div>
 
       <div className="panel">
-        <h2 className="title">Implementation</h2>
+        <h2 className="title">Implementation</h2><br/><br/>
         <select
           value={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}
