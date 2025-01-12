@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Stacks.css';
+import React, { useState, useEffect, useRef } from "react";
+import "./Stacks.css";
 
 const Stacks = () => {
   const [stack, setStack] = useState([]);
   const [maxSize, setMaxSize] = useState(5);
-  const [inputValue, setInputValue] = useState('');
-  const [message, setMessage] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('pseudo');
+  const [selectedLanguage, setSelectedLanguage] = useState("pseudo");
   const inputRef = useRef(null);
 
   const codeExamples = {
@@ -141,32 +141,37 @@ pop():
         <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.stack.pop()
         
     <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">display</span>(<span style="color: #F8F8F2">self</span>):
-        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.stack`
+        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.stack`,
   };
 
   useEffect(() => {
     inputRef.current.focus();
     const handleKeyDown = (e) => {
-      if (e.key === 'Delete') pop();
+      if (e.key === "Delete") pop();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [stack]);
 
   const push = () => {
     const num = Number(inputValue);
-    if (!Number.isInteger(num) || num < 1 || num > 1000 || inputValue.includes('.')) {
-      setMessage('Please enter a number between 1 and 999');
-      setInputValue('');
+    if (
+      !Number.isInteger(num) ||
+      num < 1 ||
+      num > 1000 ||
+      inputValue.includes(".")
+    ) {
+      setMessage("Please enter a number between 1 and 999");
+      setInputValue("");
       return;
     }
     if (stack.length < maxSize) {
       setStack([...stack, inputValue]);
       setMessage(`Pushed: ${inputValue}`);
     } else {
-      setMessage('Stack is full!');
+      setMessage("Stack is full!");
     }
-    setInputValue('');
+    setInputValue("");
   };
 
   const pop = () => {
@@ -175,19 +180,19 @@ pop():
       setStack(stack.slice(0, -1));
       setMessage(`Popped: ${poppedValue}`);
     } else {
-      setMessage('Stack is empty!');
+      setMessage("Stack is empty!");
     }
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    if (value === '' || (/^\d*$/.test(value) && value.length <= 3)) {
+    if (value === "" || (/^\d*$/.test(value) && value.length <= 3)) {
       setInputValue(value);
     }
   };
 
   const handleKeyDownInput = (e) => {
-    if (e.key === 'Enter') push();
+    if (e.key === "Enter") push();
   };
 
   const handleSizeChange = (e) => {
@@ -203,8 +208,11 @@ pop():
       <div className="panel">
         <div className="header-container">
           <h2 className="title">Stack Visualization</h2>
-          <button className="info-button" onClick={() => setShowModal(true)}>ℹ️</button>
-        </div><br/>
+          <button className="info-button" onClick={() => setShowModal(true)}>
+            ℹ️
+          </button>
+        </div>
+        <br />
         <div className="stack-visualization">
           <div className="stack-container2">
             {stack.length === 0 ? (
@@ -215,7 +223,7 @@ pop():
                   key={index}
                   className="stack-block"
                   style={{
-                    backgroundColor: `hsl(${200 + index * 15}, 75%, 65%)`
+                    backgroundColor: `hsl(${200 + index * 15}, 75%, 65%)`,
                   }}
                 >
                   {item}
@@ -247,23 +255,47 @@ pop():
             placeholder="Enter value (1-999)"
             className="input"
           />
-          <button onClick={push} className="button push">Push</button>
+          <button onClick={push} className="button push">
+            Push
+          </button>
         </div>
 
         <div className="button-container">
-          <button onClick={pop} className="button pop">Pop</button>
-          <button onClick={() => setStack([])} className="button reset">Reset</button>
-        </div><br/>
+          <button onClick={pop} className="button pop">
+            Pop
+          </button>
+          <button onClick={() => setStack([])} className="button reset">
+            Reset
+          </button>
+        </div>
+        <br />
 
         {message && (
-          <div className={`message ${message.includes('between') || message.includes('full') || message.includes('empty') ? 'error-message' : 'success-message'}`} style={{fontSize:'16px', fontWeight:'600', display:'flex', justifyContent:'center', alignItems:'center'}}>
+          <div
+            className={`message ${
+              message.includes("between") ||
+              message.includes("full") ||
+              message.includes("empty")
+                ? "error-message"
+                : "success-message"
+            }`}
+            style={{
+              fontSize: "16px",
+              fontWeight: "600",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {message}
           </div>
         )}
       </div>
 
       <div className="panel">
-        <h2 className="title">Implementation</h2><br/><br/>
+        <h2 className="title">Implementation</h2>
+        <br />
+        <br />
         <select
           value={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -276,7 +308,9 @@ pop():
           <option value="python">Python</option>
         </select>
         <pre className="code-container">
-          <code dangerouslySetInnerHTML={{ __html: codeExamples[selectedLanguage] }} />
+          <code
+            dangerouslySetInnerHTML={{ __html: codeExamples[selectedLanguage] }}
+          />
         </pre>
         {showModal && (
           <div className="modal">
@@ -288,7 +322,9 @@ pop():
               </div>
               <div className="modal-instruction">
                 <span className="modal-number">2</span>
-                <p>Click 'Push' or press Enter to add the number to the stack.</p>
+                <p>
+                  Click 'Push' or press Enter to add the number to the stack.
+                </p>
               </div>
               <div className="modal-instruction">
                 <span className="modal-number">3</span>
@@ -298,7 +334,12 @@ pop():
                 <span className="modal-number">4</span>
                 <p>Use the stack size input to adjust maximum capacity.</p>
               </div>
-              <button onClick={() => setShowModal(false)} className="close-button">Close</button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="close-button"
+              >
+                Close
+              </button>
             </div>
           </div>
         )}
