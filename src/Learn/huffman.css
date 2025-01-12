@@ -8,10 +8,8 @@
   color: black;
 }
 
-.huffman-visualizer h2 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 20px;
+.huffman-visualizer h1 {
+  margin: 15px 0;
 }
 
 .huffman-visualizer .input-text {
@@ -40,6 +38,10 @@
 
 .huffman-visualizer .run-button:hover {
   background-color: #3c6dff;
+}
+
+.huffman-visualizer .navigation-buttons button:hover:disabled {
+  background-color: #cabcbb;
 }
 
 .huffman-visualizer .tree-node-container {
@@ -89,10 +91,6 @@
   justify-content: space-between;
 }
 
-.huffman-visualizer .navigation-buttons {
-  margin-top: 20px;
-}
-
 .huffman-visualizer .navigation-buttons button {
   padding: 10px 20px;
   margin: 0 10px;
@@ -133,13 +131,24 @@
 
 .divider {
   display: grid;
+  margin: 0 10px;
+  gap: 10px;
   grid-template-columns: 2fr 5fr;
+}
+
+.divider .div {
+  background-color: rgb(198, 231, 252);
+  border-radius: 10px;
+  padding: 10px 0;
 }
 
 .queue-huffman {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 10px;
+  background-color: navy;
+  margin: 15px 0;
+  padding: 10px;
+  padding-top: 0;
 }
 
 .queue-huffman .node {
