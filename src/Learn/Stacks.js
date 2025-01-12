@@ -253,10 +253,10 @@ pop():
         <div className="button-container">
           <button onClick={pop} className="button pop-button">Pop</button>
           <button onClick={() => setStack([])} className="button reset-button">Reset</button>
-        </div>
+        </div><br/>
 
         {message && (
-          <div className={`message ${message.includes('between') || message.includes('full') || message.includes('empty') ? 'error-message' : 'success-message'}`}>
+          <div className={`message ${message.includes('between') || message.includes('full') || message.includes('empty') ? 'error-message' : 'success-message'}`} style={{fontSize:'16px', fontWeight:'600', display:'flex', justifyContent:'center', alignItems:'center'}}>
             {message}
           </div>
         )}

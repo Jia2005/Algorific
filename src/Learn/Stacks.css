@@ -147,8 +147,11 @@
     padding: 14px;
     border-radius: 10px;
     margin-top: 20px;
-    font-size: 15px;
-    font-weight: 500;
+    height: 40px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
     text-align: center;
   }
   

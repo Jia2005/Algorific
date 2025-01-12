@@ -297,15 +297,15 @@ dequeue():
             className="queue-button reset-button"
           >
             Reset
-          </button>
-        </div>
+          </button><br/>
+        </div><br/>
 
         {message && (
           <div className={`message ${
             message.includes('between') || message.includes('full') || message.includes('empty')
               ? 'message-error'
               : 'message-success'
-          }`}>
+          }`} style={{fontSize:'16px', fontWeight:'600', display:'flex', justifyContent:'center', alignItems:'center'}}>
             {message}
           </div>
         )}
