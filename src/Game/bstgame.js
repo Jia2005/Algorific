@@ -202,13 +202,13 @@ const Bstgame = () => {
                 {node.left && (
                     <g>
                         <line x1={x - nodeRadius * Math.cos(Math.PI / 8)} y1={y + nodeRadius * Math.sin(Math.PI / 8)} x2={x - dx * 0.8} y2={y + levelHeight - nodeRadius * 0.8} stroke="#4682B4" strokeWidth="3" strokeLinejoin="round"/>
-                        {renderTree(node.left, x - dx * 0.8, y + levelHeight, dx / 1.5)}
+                        {renderTree(node.left, x - dx * 0.8, y + levelHeight, dx / 1.8)}
                     </g>
                 )}
                 {node.right && (
                     <g>
                         <line x1={x + nodeRadius * Math.cos(Math.PI / 8)} y1={y + nodeRadius * Math.sin(Math.PI / 8)} x2={x + dx * 0.8} y2={y + levelHeight - nodeRadius * 0.8} stroke="#4682B4" strokeWidth="3" strokeLinejoin="round"/>
-                        {renderTree(node.right, x + dx * 0.8, y + levelHeight, dx / 1.5)}
+                        {renderTree(node.right, x + dx * 0.8, y + levelHeight, dx / 1.8)}
                     </g>
                 )}
             </g>
@@ -223,40 +223,40 @@ const Bstgame = () => {
         <div className="App" style={{ padding: "20px 0" }}>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <h1 style={{ color: 'black', marginBottom: '20px', fontWeight:'bold', fontSize:'40px' }}>BST Traversal Game</h1>
-                <button onClick={toggleModal} style={{ fontSize: '24px', background: 'transparent', border: 'none', color: '#4682B4', marginTop:'-20px'}}>ℹ️</button>
+                <button onClick={toggleModal} className='bstgame-info'>ℹ️</button>
             </div>
 
             {showModal && (
-                <div style={styles.modal}>
-                    <div style={styles.modalContent}>
+                <div className='modal'>
+                    <div className='modalContent'>
                         <h1>How to Play</h1><br/>
-                        <div style={styles.instruction}>
-                            <span style={styles.instructionNumber}>1</span>
+                        <div className='instruction'>
+                            <span className='instructionNumber'>1</span>
                             <p style={{ color: 'black' }}>The game displays a binary search tree (BST) structure.</p>
                         </div>
-                        <div style={styles.instruction}>
-                            <span style={styles.instructionNumber}>2</span>
+                        <div className='instruction'>
+                            <span className='instructionNumber'>2</span>
                             <p style={{ color: 'black', textAlign: 'left' }}>Select a traversal method: In-order, Pre-order, or Post-order.</p>
                         </div>
-                        <div style={styles.instruction}>
-                            <span style={styles.instructionNumber}>3</span>
+                        <div className='instruction'>
+                            <span className='instructionNumber'>3</span>
                             <p style={{ color: 'black' }}>The game will show a number from the selected traversal.</p>
                         </div>
-                        <div style={styles.instruction}>
-                            <span style={styles.instructionNumber}>4</span>
+                        <div className='instruction'>
+                            <span className='instructionNumber'>4</span>
                             <p style={{ color: 'black' }}>Guess what the next number is in the traversal order.</p>
                         </div>
-                        <div style={styles.instruction}>
-                            <span style={styles.instructionNumber}>5</span>
+                        <div className='instruction'>
+                            <span className='instructionNumber'>5</span>
                             <p style={{ color: 'black' }}>Check the answer by either:
                             <br/>• Pressing the Enter key, or
                             <br/>• Clicking the Check button</p>
                         </div>
-                        <div style={styles.instruction}>
-                            <span style={styles.instructionNumber}>6</span>
+                        <div className='instruction'>
+                            <span className='instructionNumber'>6</span>
                             <p style={{ color: 'black' }}> If your guess is correct, you earn points!</p>
                         </div>
-                        <button onClick={toggleModal} style={styles.closeButton}>Close</button>
+                        <button onClick={toggleModal} className='closeButton'>Close</button>
                     </div>
                 </div>
             )}
@@ -309,61 +309,6 @@ const Bstgame = () => {
             </div>
         </div>
     );
-};
-
-const styles = {
-    modal: {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: '1000'
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        color: 'black',
-        maxWidth: '500px',
-        width: '100%',
-        textAlign: 'center'
-    },
-    instruction: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        gap: '15px',
-        fontSize: '16px',
-        lineHeight: 1.6,
-      },
-      instructionNumber: {
-        width: '30px',
-        height: '30px',
-        backgroundColor: '#E3F2FD',
-        color: '#1A237E',
-        borderRadius: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontWeight: 'bold',
-        flexShrink: 0,
-      },
-      closeButton: {
-        backgroundColor: '#1A237E',
-        color: '#FFF',
-        border: 'none',
-        padding: '12px 24px',
-        fontSize: '16px',
-        fontWeight: '600',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        width: '100%',
-        marginTop: '25px',
-      },
 };
 
 export default Bstgame;
