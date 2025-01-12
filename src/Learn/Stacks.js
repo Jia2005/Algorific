@@ -247,12 +247,12 @@ pop():
             placeholder="Enter value (1-999)"
             className="input"
           />
-          <button onClick={push} className="button push-button">Push</button>
+          <button onClick={push} className="button push">Push</button>
         </div>
 
         <div className="button-container">
-          <button onClick={pop} className="button pop-button">Pop</button>
-          <button onClick={() => setStack([])} className="button reset-button">Reset</button>
+          <button onClick={pop} className="button pop">Pop</button>
+          <button onClick={() => setStack([])} className="button reset">Reset</button>
         </div><br/>
 
         {message && (
