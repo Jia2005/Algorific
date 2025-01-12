@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Queues.css';
+import React, { useState, useEffect, useRef } from "react";
+import "./Queues.css";
 
 const Queues = () => {
   const [queue, setQueue] = useState([]);
   const [maxSize, setMaxSize] = useState(5);
-  const [inputValue, setInputValue] = useState('');
-  const [message, setMessage] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('pseudo');
+  const [selectedLanguage, setSelectedLanguage] = useState("pseudo");
   const inputRef = useRef(null);
 
   const codeExamples = {
@@ -169,33 +169,37 @@ dequeue():
         <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.queue.pop(<span style="color: #BD93F9">0</span>)
         
     <span style="color: #FF79C6">def</span> <span style="color: #50FA7B">display</span>(<span style="color: #F8F8F2">self</span>):
-        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.queue`
+        <span style="color: #FF79C6">return</span> <span style="color: #F8F8F2">self</span>.queue`,
   };
-
 
   useEffect(() => {
     inputRef.current.focus();
     const handleKeyDown = (e) => {
-      if (e.key === 'Delete') dequeue();
+      if (e.key === "Delete") dequeue();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [queue]);
 
   const enqueue = () => {
     const num = Number(inputValue);
-    if (!Number.isInteger(num) || num < 1 || num > 1000 || inputValue.includes('.')) {
-      setMessage('Please enter a number between 1 and 999');
-      setInputValue('');
+    if (
+      !Number.isInteger(num) ||
+      num < 1 ||
+      num > 1000 ||
+      inputValue.includes(".")
+    ) {
+      setMessage("Please enter a number between 1 and 999");
+      setInputValue("");
       return;
     }
     if (queue.length < maxSize) {
       setQueue([...queue, inputValue]);
       setMessage(`Enqueued: ${inputValue}`);
     } else {
-      setMessage('Queue is full!');
+      setMessage("Queue is full!");
     }
-    setInputValue('');
+    setInputValue("");
   };
 
   const dequeue = () => {
@@ -204,19 +208,19 @@ dequeue():
       setQueue((prevQueue) => prevQueue.slice(1));
       setMessage(`Dequeued: ${removedValue}`);
     } else {
-      setMessage('Queue is empty!');
+      setMessage("Queue is empty!");
     }
   };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    if (value === '' || (/^\d*$/.test(value) && value.length <= 3)) {
+    if (value === "" || (/^\d*$/.test(value) && value.length <= 3)) {
       setInputValue(value);
     }
   };
 
   const handleKeyDownInput = (e) => {
-    if (e.key === 'Enter') enqueue();
+    if (e.key === "Enter") enqueue();
   };
 
   const handleSizeChange = (e) => {
@@ -235,7 +239,8 @@ dequeue():
           <button className="info-button" onClick={() => setShowModal(true)}>
             ℹ️
           </button>
-        </div><br/>
+        </div>
+        <br />
         <div className="queue-visualization">
           <div className="queue">
             {queue.length === 0 ? (
@@ -246,7 +251,7 @@ dequeue():
                   key={index}
                   className="queue-block"
                   style={{
-                    backgroundColor: `hsl(${200 + index * 15}, 75%, 65%)`
+                    backgroundColor: `hsl(${200 + index * 15}, 75%, 65%)`,
                   }}
                 >
                   {item}
@@ -266,7 +271,7 @@ dequeue():
             className="size-input"
           />
         </div>
-        
+
         <div className="input-container">
           <input
             type="text"
@@ -277,19 +282,13 @@ dequeue():
             placeholder="Enter value (1-999)"
             className="queue-input"
           />
-          <button 
-            onClick={enqueue}
-            className="queue-button enqueue-button"
-          >
+          <button onClick={enqueue} className="queue-button enqueue-button">
             Enqueue
           </button>
         </div>
 
         <div className="button-container">
-          <button
-            onClick={dequeue}
-            className="queue-button dequeue-button"
-          >
+          <button onClick={dequeue} className="queue-button dequeue-button">
             Dequeue
           </button>
           <button
@@ -297,22 +296,37 @@ dequeue():
             className="queue-button reset-button"
           >
             Reset
-          </button><br/>
-        </div><br/>
+          </button>
+          <br />
+        </div>
+        <br />
 
         {message && (
-          <div className={`message ${
-            message.includes('between') || message.includes('full') || message.includes('empty')
-              ? 'message-error'
-              : 'message-success'
-          }`} style={{fontSize:'16px', fontWeight:'600', display:'flex', justifyContent:'center', alignItems:'center'}}>
+          <div
+            className={`message ${
+              message.includes("between") ||
+              message.includes("full") ||
+              message.includes("empty")
+                ? "message-error"
+                : "message-success"
+            }`}
+            style={{
+              fontSize: "16px",
+              fontWeight: "600",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {message}
           </div>
         )}
       </div>
 
       <div className="panel">
-        <h2 className="title">Implementation</h2><br/><br/>
+        <h2 className="title">Implementation</h2>
+        <br />
+        <br />
         <select
           value={selectedLanguage}
           onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -325,13 +339,13 @@ dequeue():
           <option value="python">Python</option>
         </select>
         <pre className="code-block">
-          <code 
-            dangerouslySetInnerHTML={{ 
-              __html: codeExamples[selectedLanguage] 
-            }} 
+          <code
+            dangerouslySetInnerHTML={{
+              __html: codeExamples[selectedLanguage],
+            }}
           />
         </pre>
-        
+
         {showModal && (
           <div className="modal">
             <div className="modal-content">
@@ -342,17 +356,21 @@ dequeue():
               </div>
               <div className="modal-instruction">
                 <span className="modal-number">2</span>
-                <p>Click 'Enqueue' or press Enter to add the number to the queue.</p>
+                <p>
+                  Click 'Enqueue' or press Enter to add the number to the queue.
+                </p>
               </div>
               <div className="modal-instruction">
                 <span className="modal-number">3</span>
-                <p>Click 'Dequeue' or press Delete to remove the front element.</p>
+                <p>
+                  Click 'Dequeue' or press Delete to remove the front element.
+                </p>
               </div>
               <div className="modal-instruction">
                 <span className="modal-number">4</span>
                 <p>Use the queue size input to adjust maximum capacity.</p>
               </div>
-              <button 
+              <button
                 onClick={() => setShowModal(false)}
                 className="close-button"
               >
