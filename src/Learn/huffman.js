@@ -19,19 +19,21 @@ const HuffmanVisualizer = () => {
       char,
       freq,
     }));
-    const steps = [];
+    const stepsCurr = [];
+
+    nodes.sort((a, b) => a.freq - b.freq);
+
+    stepsCurr.push({
+      queue: nodes.map((node) =>
+        node.char
+          ? `${node.char}`
+          : `${renderTree(node.left)}${renderTree(node.right)}`
+      ),
+      tree: null,
+    });
 
     while (nodes.length > 1) {
       nodes.sort((a, b) => a.freq - b.freq);
-
-      steps.push({
-        queue: nodes.map((node) =>
-          node.char
-            ? `${node.char}`
-            : `${renderTree(node.left)}${renderTree(node.right)}`
-        ),
-        tree: null,
-      });
 
       const left = nodes.shift();
       const right = nodes.shift();
@@ -44,7 +46,7 @@ const HuffmanVisualizer = () => {
 
       nodes.push(newNode);
 
-      steps.push({
+      stepsCurr.push({
         queue: nodes.map((node) =>
           node.char
             ? `${node.char} : ${node.freq}`
@@ -54,7 +56,7 @@ const HuffmanVisualizer = () => {
       });
     }
 
-    setSteps(steps);
+    setSteps(stepsCurr);
   };
 
   const renderTree = (node) => {
