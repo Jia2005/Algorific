@@ -141,7 +141,7 @@ const HuffmanVisualizer = () => {
 
   return (
     <div className="huffman-visualizer">
-      <h2>Huffman Encoding Visualization</h2>
+      <h1>Huffman Encoding Visualization</h1>
       <div className="divider">
         <div className="div">
           <input
