@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Algorific/static/css/main.3d6fa452.css",
-    "main.js": "/Algorific/static/js/main.07a5d2b9.js",
+    "main.js": "/Algorific/static/js/main.f1aa67df.js",
     "static/js/453.204459fa.chunk.js": "/Algorific/static/js/453.204459fa.chunk.js",
     "static/media/emerald.png": "/Algorific/static/media/emerald.e40aa23281462f20c522.png",
     "static/media/Sandy Beach.jpg": "/Algorific/static/media/Sandy Beach.3e2c99c4bc7a8b469322.jpg",
@@ -29,11 +29,11 @@
     "static/media/Dense Jungle.jpg": "/Algorific/static/media/Dense Jungle.06fb24753e4f10a2b2e2.jpg",
     "index.html": "/Algorific/index.html",
     "main.3d6fa452.css.map": "/Algorific/static/css/main.3d6fa452.css.map",
-    "main.07a5d2b9.js.map": "/Algorific/static/js/main.07a5d2b9.js.map",
+    "main.f1aa67df.js.map": "/Algorific/static/js/main.f1aa67df.js.map",
     "453.204459fa.chunk.js.map": "/Algorific/static/js/453.204459fa.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3d6fa452.css",
-    "static/js/main.07a5d2b9.js"
+    "static/js/main.f1aa67df.js"
   ]
 }
