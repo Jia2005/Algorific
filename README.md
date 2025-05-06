@@ -50,3 +50,8 @@ Check it out live:
 Got a brilliant idea? Found a bug that's driving you nuts? Want me to add that weird algorithm your professor mentioned once that you can't find anywhere else? Drop it in the issues or shoot me a PR!
 
 Built with 💻, fueled by ☕, and motivated by the collective frustration of CS students everywhere.
+
+----
+
+Got a brilliant idea? Found a bug? Want me to add a specific algorithm?
+Open an issue or submit a PR - let's make learning algorithms better together!
