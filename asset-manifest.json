@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Algorific/static/css/main.3d6fa452.css",
-    "main.js": "/Algorific/static/js/main.fed886ec.js",
+    "main.css": "/Algorific/static/css/main.1987cd2a.css",
+    "main.js": "/Algorific/static/js/main.2559c155.js",
     "static/js/453.204459fa.chunk.js": "/Algorific/static/js/453.204459fa.chunk.js",
     "static/media/emerald.png": "/Algorific/static/media/emerald.e40aa23281462f20c522.png",
     "static/media/Sandy Beach.jpg": "/Algorific/static/media/Sandy Beach.3e2c99c4bc7a8b469322.jpg",
@@ -13,7 +13,7 @@
     "static/media/Crystal Pond.webp": "/Algorific/static/media/Crystal Pond.292b582552b2bd483073.webp",
     "static/media/Volcano.webp": "/Algorific/static/media/Volcano.8d5b8b9d794fdc8160bb.webp",
     "static/media/ruby.png": "/Algorific/static/media/ruby.c024bd03dcfff661f70a.png",
-    "static/media/about.jpg": "/Algorific/static/media/about.bcc98a0f6a2544f63c99.jpg",
+    "static/media/Logo.png": "/Algorific/static/media/Logo.698a26a898b0366a3d1e.png",
     "static/media/sapphire.png": "/Algorific/static/media/sapphire.bd2007bcc9a4d61fa481.png",
     "static/media/huff.jpg": "/Algorific/static/media/huff.14db8dc6da515a0cb518.jpg",
     "static/media/scroll.png": "/Algorific/static/media/scroll.0ad28c2e0d6377603a6c.png",
@@ -28,12 +28,12 @@
     "static/media/Mountain Cave.jpg": "/Algorific/static/media/Mountain Cave.5ca26731b7e00bb79bdb.jpg",
     "static/media/Dense Jungle.jpg": "/Algorific/static/media/Dense Jungle.06fb24753e4f10a2b2e2.jpg",
     "index.html": "/Algorific/index.html",
-    "main.3d6fa452.css.map": "/Algorific/static/css/main.3d6fa452.css.map",
-    "main.fed886ec.js.map": "/Algorific/static/js/main.fed886ec.js.map",
+    "main.1987cd2a.css.map": "/Algorific/static/css/main.1987cd2a.css.map",
+    "main.2559c155.js.map": "/Algorific/static/js/main.2559c155.js.map",
     "453.204459fa.chunk.js.map": "/Algorific/static/js/453.204459fa.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3d6fa452.css",
-    "static/js/main.fed886ec.js"
+    "static/css/main.1987cd2a.css",
+    "static/js/main.2559c155.js"
   ]
 }
