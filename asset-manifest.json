@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Algorific/static/css/main.1987cd2a.css",
-    "main.js": "/Algorific/static/js/main.2559c155.js",
+    "main.css": "/Algorific/static/css/main.c4567871.css",
+    "main.js": "/Algorific/static/js/main.83f5e8c3.js",
     "static/js/453.204459fa.chunk.js": "/Algorific/static/js/453.204459fa.chunk.js",
     "static/media/emerald.png": "/Algorific/static/media/emerald.e40aa23281462f20c522.png",
     "static/media/Sandy Beach.jpg": "/Algorific/static/media/Sandy Beach.3e2c99c4bc7a8b469322.jpg",
@@ -28,12 +28,12 @@
     "static/media/Mountain Cave.jpg": "/Algorific/static/media/Mountain Cave.5ca26731b7e00bb79bdb.jpg",
     "static/media/Dense Jungle.jpg": "/Algorific/static/media/Dense Jungle.06fb24753e4f10a2b2e2.jpg",
     "index.html": "/Algorific/index.html",
-    "main.1987cd2a.css.map": "/Algorific/static/css/main.1987cd2a.css.map",
-    "main.2559c155.js.map": "/Algorific/static/js/main.2559c155.js.map",
+    "main.c4567871.css.map": "/Algorific/static/css/main.c4567871.css.map",
+    "main.83f5e8c3.js.map": "/Algorific/static/js/main.83f5e8c3.js.map",
     "453.204459fa.chunk.js.map": "/Algorific/static/js/453.204459fa.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1987cd2a.css",
-    "static/js/main.2559c155.js"
+    "static/css/main.c4567871.css",
+    "static/js/main.83f5e8c3.js"
   ]
 }
